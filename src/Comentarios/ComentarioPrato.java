@@ -12,9 +12,20 @@ import BaseDados.DBConnector;
  */
 public class ComentarioPrato {
 
-    boolean save(int id, String comentario, int nota) {
+    public boolean save(int id, String comentario, int nota) {
         DBConnector db = new DBConnector();
         return db.inserirComentarioPrato(id, comentario, nota);
     }
+
+    public boolean find(int idComent) {
+        DBConnector db = new DBConnector();
+        return db.findComent(idComent);
+    }
+
+    public void destroy(int idComent) {
+        DBConnector db = new DBConnector();
+        db.destroyComent(idComent);
+    }
+
     
 }

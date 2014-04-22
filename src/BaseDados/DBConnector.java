@@ -23,5 +23,13 @@ public class DBConnector {
     public void saveFoto(int id, File foto) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    public boolean findComent(int idComent) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void destroyComent(int idComent) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
     
 }

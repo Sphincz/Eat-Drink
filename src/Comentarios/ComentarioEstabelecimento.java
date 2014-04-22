@@ -18,5 +18,15 @@ public class ComentarioEstabelecimento {
         return db.inserirComentarioEstabelecimento(id, comentario, nota);
         
     }
+
+    public boolean find(int idComent) {
+        DBConnector db = new DBConnector();
+        return db.findComent(idComent);
+    }
+
+    public void destroy(int idComent) {
+        DBConnector db = new DBConnector();
+        db.destroyComent(idComent);
+    }
     
 }

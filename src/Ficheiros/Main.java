@@ -19,13 +19,4 @@ public class Main {
         InterfacePesquisa window = new InterfacePesquisa();
         window.execute();
     }
-    
-    public void antonio(){
-        System.out.println("porra");
-        System.out.println("erro");
-    }
-    
-    public void novo_metodo(){
-    	System.out.println("que nao faz nada");
-    }
 }

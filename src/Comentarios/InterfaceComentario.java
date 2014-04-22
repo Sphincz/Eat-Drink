@@ -27,4 +27,11 @@ public class InterfaceComentario extends JFrame{
         return controlComent.save(tipo, id, comentario, nota);
     }
     
+    public void delete(int idComent){
+        boolean apagou = controlComent.delete(idComent);
+        if(apagou){
+            this.setVisible(false);
+        }
+    }
+    
 }
