@@ -15,14 +15,29 @@ public class Fotografia {
     private File foto;
     private int id;
     
-    Fotografia(int id, File foto) {
+    public Fotografia(int id, File foto) {
         this.foto=foto;
         this.id=id;
+    }
+
+    public Fotografia() {
+        
     }
 
     public void save() {
         DBConnector db = new DBConnector();
         db.saveFoto(id, foto);
+    }
+
+    public boolean find(int idFoto) {
+        DBConnector db = new DBConnector();
+        boolean encontrou = db.findFoto(idFoto);
+        return encontrou;
+    }
+
+    public void destroy(int idFoto) {
+        DBConnector db = new DBConnector();
+        db.destroyFoto(idFoto);
     }
     
 }

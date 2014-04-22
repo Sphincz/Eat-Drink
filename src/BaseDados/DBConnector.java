@@ -4,7 +4,9 @@
  */
 package BaseDados;
 
+import Controller.Estabelecimento;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,6 +32,26 @@ public class DBConnector {
 
     public void destroyComent(int idComent) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public boolean findFoto(int idFoto) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void destroyFoto(int idFoto) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void findEstabelecimentos(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
+        throw new UnsupportedOperationException("Not yet implemented");
+        //for
+        //Estabelecimento e = new Estabalecimento(id, nome, prato, fotografia);
+    }
+
+    public void findComentarios(int userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
+        throw new UnsupportedOperationException("Not yet implemented");
+        //for
+        //ComentarioEstabelecimento c = new ComentarioEstabelecimento(userID, comentarioID, comentario);
     }
     
 }

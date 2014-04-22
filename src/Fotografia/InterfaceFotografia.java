@@ -25,6 +25,13 @@ public class InterfaceFotografia extends JFrame{
         controlFoto.uploadFotografia(comentID, file);
     }
     
+    public void delete(int idFoto){
+        boolean apagou = controlFoto.deleteFotografia(idFoto);
+        if(apagou){
+            this.setVisible(false);
+        }
+    }
+    
     
     
 }
