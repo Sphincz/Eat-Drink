@@ -4,7 +4,6 @@
  */
 package Controller;
 
-import Comentarios.ControllerComentario;
 import javax.swing.JFrame;
 
 /**
@@ -12,7 +11,10 @@ import javax.swing.JFrame;
  * @author Group 1 - LEI | 2014 © SID 
  */
 public class InterfacePesquisa extends JFrame{
-    private ControllerPesquisa controlPesquisa;
+
+	private static final long serialVersionUID = 1L;
+
+	private ControllerPesquisa controlPesquisa;
     
     private JFrame window;
     private final int WIDTH=600;

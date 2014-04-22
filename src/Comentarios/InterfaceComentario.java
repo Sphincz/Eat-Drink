@@ -12,7 +12,8 @@ import javax.swing.JFrame;
  * @author Nuno
  */
 public class InterfaceComentario extends JFrame{
-    private ControllerComentario controlComent;
+	private static final long serialVersionUID = 1L;
+	private ControllerComentario controlComent;
 
     public InterfaceComentario(ControllerComentario controlComent){
         this.controlComent=controlComent;

@@ -11,7 +11,8 @@ import javax.swing.JFrame;
  * @author Nuno
  */
 public class InterfaceFotografia extends JFrame{
-    private ControllerFotografia controlFoto;
+	private static final long serialVersionUID = 1L;
+	private ControllerFotografia controlFoto;
 
     public void init() {
         controlFoto = new ControllerFotografia();
