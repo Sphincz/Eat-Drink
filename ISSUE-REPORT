@@ -1,1 +1,3 @@
 - A coluna 'comentários' nao deveria existir, visto que existe uma função que permite ver os comentários (Ver comentarios);
+- A avalia�ao poderia ter um limite pre-definido. Nao deveria ser baseado em suposi�ao atraves da imagem fornecida.
+- Foram alteradas algumas TextArea para ComboBox, pois fazem mais sentido quando se pretende adicionar um comentario/fotografia.

@@ -1,7 +1,6 @@
 package Controller;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JCheckBox;
@@ -10,11 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -23,10 +23,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import Comentarios.InterfaceComentario;
+import Fotografia.InterfaceFotografia;
+
 public class InterfacePesquisa extends JFrame {
 	
 	
 	public InterfacePesquisa() {
+		setTitle("Eat&Drink - Pesquisar");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
@@ -63,19 +67,15 @@ public class InterfacePesquisa extends JFrame {
 		getContentPane().add(textField_2);
 		
 		JLabel lblAvaliao = new JLabel("Avalia\u00E7\u00E3o >=");
-		lblAvaliao.setBounds(348, 61, 68, 14);
+		lblAvaliao.setBounds(344, 61, 68, 14);
 		getContentPane().add(lblAvaliao);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(426, 58, 78, 20);
-		getContentPane().add(spinner);
-		
 		JLabel lblFotografia = new JLabel("Fotografia:");
-		lblFotografia.setBounds(537, 64, 58, 14);
+		lblFotografia.setBounds(530, 61, 58, 14);
 		getContentPane().add(lblFotografia);
 		
 		JCheckBox checkBox = new JCheckBox("");
-		checkBox.setBounds(590, 59, 21, 23);
+		checkBox.setBounds(590, 57, 21, 23);
 		getContentPane().add(checkBox);
 		
 		JLabel lblComentrio = new JLabel("Coment\u00E1rio:");
@@ -113,14 +113,32 @@ public class InterfacePesquisa extends JFrame {
 		
 		JButton btnAdicionarComentrio = new JButton("Adicionar coment\u00E1rio");
 		btnAdicionarComentrio.setBounds(220, 444, 170, 23);
+		btnAdicionarComentrio.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InterfaceComentario.init();
+			}
+		});
 		getContentPane().add(btnAdicionarComentrio);
 		
 		JButton btnAdicionarFotografia = new JButton("Adicionar fotografia");
 		btnAdicionarFotografia.setBounds(220, 478, 170, 23);
+		btnAdicionarFotografia.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InterfaceFotografia.init();
+			}
+		});
 		getContentPane().add(btnAdicionarFotografia);
 		
 		JButton btnSair = new JButton("Sair");
 		btnSair.setBounds(551, 478, 60, 23);
+		btnSair.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		getContentPane().add(btnSair);
 		
 		String[] columnNames = {"Utilizador",
@@ -166,6 +184,11 @@ public class InterfacePesquisa extends JFrame {
 		scrollPane.setBounds(21, 133, 590, 289);
 		scrollPane.setViewportView(table);
 		getContentPane().add(scrollPane);
+		
+		SpinnerModel model = new SpinnerNumberModel(3, 0, 5, 1);
+		JSpinner spinner = new JSpinner(model);
+		spinner.setBounds(426, 57, 82, 20);
+		getContentPane().add(spinner);
 
 	}
 	
@@ -190,6 +213,7 @@ public class InterfacePesquisa extends JFrame {
 					InterfacePesquisa frame = new InterfacePesquisa();
 					frame.setVisible(true);
 					frame.setSize(650, 550);
+					frame.setLocation(350, 75);
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
