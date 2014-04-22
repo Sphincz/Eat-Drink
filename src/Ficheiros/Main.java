@@ -21,6 +21,6 @@ public class Main {
     }
     
     public void porra(){
-        
+        int i=0;
     }
 }
