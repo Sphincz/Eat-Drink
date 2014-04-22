@@ -1,0 +1,9 @@
+primeiro diagrama de sequencia:
+
+ultimo save para a base de dados é preciso passar valores como argumentos
+
+segundo diagrama de sequencia:
+
+nao faz sentido ir pesquisar todos os comentarios se já foram carregados antes e se para adicionar uma foto ao comentario ja temos esse comentario. não foi feita essa pesquisa, considerada desnecessaria.
+
+no metodo uploadFotografia foi preciso adicionar o ID do comentario para que possa se adicionar na base de dados a fotografia ao comentario correto. o ultimo save() tem de ter argumentos!
