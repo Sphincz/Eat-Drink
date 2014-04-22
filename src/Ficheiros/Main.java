@@ -24,4 +24,8 @@ public class Main {
         System.out.println("porra");
         System.out.println("erro");
     }
+    
+    public void novo_metodo(){
+    	System.out.println("que nao faz nada");
+    }
 }
