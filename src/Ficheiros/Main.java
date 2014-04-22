@@ -19,8 +19,4 @@ public class Main {
         InterfacePesquisa window = new InterfacePesquisa();
         window.execute();
     }
-    
-    public void porra(){
-        int i=0;
-    }
 }
