@@ -19,4 +19,8 @@ public class Main {
         InterfacePesquisa window = new InterfacePesquisa();
         window.execute();
     }
+    
+    public void antonio(){
+        System.out.println("erro");
+    }
 }
