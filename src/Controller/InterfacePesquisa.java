@@ -150,16 +150,16 @@ public class InterfacePesquisa extends JFrame {
 
 		
 		Object[][] data = {
-				{"João Camexias", "Toni",
-					"Snowboarding", new Integer(5), "É uma merda!",  new Boolean(true)},
-					{"Adolfo Dias", "Toni",
-						"Rowing", new Integer(3), "É uma merda!", new Boolean(true)},
-						{"Oscar Alho", "Toni",
-							"Knitting", new Integer(2), "É uma merda!", new Boolean(false)},
+				{"João Ribeiro", "Toni",
+					"Snowboarding", new Integer(5), "Bom!",  new Boolean(true)},
+					{"Adolfo Rodrigues", "Toni",
+						"Rowing", new Integer(3), "Bom!", new Boolean(true)},
+						{"Oscar Dias", "Toni",
+							"Knitting", new Integer(2), "Bom!", new Boolean(false)},
 							{"Jagodes Temivel", "Toni",
-								"Speed reading", new Integer(20), "É uma merda!", new Boolean(true)},
+								"Speed reading", new Integer(20), "Bom!", new Boolean(true)},
 								{"E eu", "Toni",
-									"Pool", new Integer(10), "É uma merda!", new Boolean(false)}
+									"Pool", new Integer(10), "Bom!", new Boolean(false)}
 		};
 
 		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {

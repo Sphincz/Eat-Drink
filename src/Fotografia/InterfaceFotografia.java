@@ -5,9 +5,7 @@
 package Fotografia;
 import java.awt.EventQueue;
 import java.io.File;
-import java.util.Locale;
 
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
