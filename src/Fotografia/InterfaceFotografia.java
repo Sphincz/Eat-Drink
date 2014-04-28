@@ -3,20 +3,24 @@
  * and open the template in the editor.
  */
 package Fotografia;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -29,48 +33,44 @@ public class InterfaceFotografia extends JFrame{
 		getContentPane().setLayout(null);
 		
 		JLabel lblColocadoPor = new JLabel("Colocado por:");
-		lblColocadoPor.setBounds(25, 40, 67, 14);
+		lblColocadoPor.setBounds(25, 11, 67, 14);
 		getContentPane().add(lblColocadoPor);
 		
 		JLabel lblSphincz = new JLabel("Sphincz");
-		lblSphincz.setBounds(102, 40, 46, 14);
+		lblSphincz.setBounds(102, 11, 46, 14);
 		getContentPane().add(lblSphincz);
 		
 		JLabel lblEm = new JLabel("Em:");
-		lblEm.setBounds(74, 65, 18, 14);
+		lblEm.setBounds(74, 36, 18, 14);
 		getContentPane().add(lblEm);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(102, 65, 46, 14);
+		lblNewLabel.setBounds(102, 36, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblEstabelecimento = new JLabel("Estabelecimento:");
-		lblEstabelecimento.setBounds(10, 90, 82, 14);
+		lblEstabelecimento.setBounds(10, 61, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(102, 89, 118, 17);
+		comboBox.setBounds(102, 60, 118, 17);
 		getContentPane().add(comboBox);
 		
 		JLabel lblPrato = new JLabel("Prato:");
-		lblPrato.setBounds(62, 115, 30, 14);
+		lblPrato.setBounds(62, 86, 30, 14);
 		getContentPane().add(lblPrato);
 		
 		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(102, 114, 118, 17);
+		comboBox_1.setBounds(102, 85, 118, 17);
 		getContentPane().add(comboBox_1);
 		
 		JButton btnApagar = new JButton("Apagar");
-		btnApagar.setBounds(10, 153, 89, 23);
+		btnApagar.setBounds(10, 128, 89, 23);
 		getContentPane().add(btnApagar);
 		
 		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(260, 153, 89, 23);
+		btnAdicionar.setBounds(260, 128, 89, 23);
 		getContentPane().add(btnAdicionar);
-		
-		JLabel lblProcurarImagem = new JLabel("Procurar imagem:");
-		lblProcurarImagem.setBounds(10, 15, 84, 14);
-		getContentPane().add(lblProcurarImagem);
 		
 		UIManager.put("FileChooser.lookInLabelText","Procurar em:"); 
 		UIManager.put("FileChooser.filesOfTypeLabelText","Tipo de ficheiros:"); 
@@ -84,23 +84,28 @@ public class InterfaceFotografia extends JFrame{
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileFilter(filter);
 		
-		final JButton btnAbrir = new JButton("Procurar...");
-		btnAbrir.setBounds(102, 11, 85, 23);
-		btnAbrir.addActionListener(new ActionListener() {
+		final JPanel fotoPanel = new JPanel();
+		fotoPanel.setBounds(260, 11, 89, 89);
+		fotoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		fotoPanel.addMouseListener(new MouseListener(){
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int returnVal = fc.showOpenDialog(btnAbrir);
+			public void mouseClicked(MouseEvent arg0) {
+				int returnVal = fc.showOpenDialog(fotoPanel);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 	                File file = fc.getSelectedFile();
 	                System.out.println(file);
 				}
 			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
 		});
-		getContentPane().add(btnAbrir);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(246, 11, 103, 114);
-		getContentPane().add(textArea);
+		getContentPane().add(fotoPanel);
 	}
 	private static final long serialVersionUID = 1L;
 	private static ControllerFotografia controlFoto;
@@ -112,7 +117,7 @@ public class InterfaceFotografia extends JFrame{
 				try {
 					InterfaceFotografia frame = new InterfaceFotografia();
 					frame.setVisible(true);
-					frame.setSize(375, 225);
+					frame.setSize(375, 200);
 					frame.setLocation(350, 75);
 					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				} catch (Exception e) {
