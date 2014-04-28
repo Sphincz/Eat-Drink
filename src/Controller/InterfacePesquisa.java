@@ -43,28 +43,28 @@ public class InterfacePesquisa extends JFrame {
 		lblUtilizador.setBounds(22, 26, 48, 14);
 		getContentPane().add(lblUtilizador);
 		
-		textField = new JTextField();
-		textField.setBounds(80, 23, 200, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		user = new JTextField();
+		user.setBounds(80, 23, 200, 20);
+		getContentPane().add(user);
+		user.setColumns(10);
 		
 		JLabel lblEstabelecimento = new JLabel("Estabelecimento:");
 		lblEstabelecimento.setBounds(334, 29, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(426, 26, 185, 20);
-		getContentPane().add(textField_1);
+		estabelecimento = new JTextField();
+		estabelecimento.setColumns(10);
+		estabelecimento.setBounds(426, 26, 185, 20);
+		getContentPane().add(estabelecimento);
 		
 		JLabel lblPrato = new JLabel("Prato:");
 		lblPrato.setBounds(40, 61, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(80, 58, 200, 20);
-		getContentPane().add(textField_2);
+		prato = new JTextField();
+		prato.setColumns(10);
+		prato.setBounds(80, 58, 200, 20);
+		getContentPane().add(prato);
 		
 		JLabel lblAvaliao = new JLabel("Avalia\u00E7\u00E3o >=");
 		lblAvaliao.setBounds(344, 61, 68, 14);
@@ -74,25 +74,38 @@ public class InterfacePesquisa extends JFrame {
 		lblFotografia.setBounds(530, 61, 58, 14);
 		getContentPane().add(lblFotografia);
 		
-		JCheckBox checkBox = new JCheckBox("");
-		checkBox.setBounds(590, 57, 21, 23);
-		getContentPane().add(checkBox);
+		fotografia = new JCheckBox("");
+		fotografia.setBounds(590, 57, 21, 23);
+		getContentPane().add(fotografia);
 		
 		JLabel lblComentrio = new JLabel("Coment\u00E1rio:");
 		lblComentrio.setBounds(10, 95, 61, 14);
 		getContentPane().add(lblComentrio);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(80, 92, 200, 20);
-		getContentPane().add(textField_3);
+		comentario = new JTextField();
+		comentario.setColumns(10);
+		comentario.setBounds(80, 92, 200, 20);
+		getContentPane().add(comentario);
 		
 		JLabel lblPesquisar = new JLabel("Pesquisar:");
 		lblPesquisar.setBounds(364, 95, 52, 14);
 		getContentPane().add(lblPesquisar);
 		
+		SpinnerModel model = new SpinnerNumberModel(3, 0, 5, 1);
+		avaliacao = new JSpinner(model);
+		avaliacao.setBounds(426, 57, 82, 20);
+		getContentPane().add(avaliacao);
+		
 		JButton btnEstabelecimento = new JButton("Estabelecimento");
 		btnEstabelecimento.setBounds(426, 91, 110, 23);
+		btnEstabelecimento.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ControllerPesquisa controllerPes = new ControllerPesquisa();
+				controllerPes.searchEstabelecimento(user.getText(), estabelecimento.getText(), prato.getText(), 
+						(int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
+			}	
+		});
 		getContentPane().add(btnEstabelecimento);
 		
 		JButton btnPrato = new JButton("Prato");
@@ -184,11 +197,6 @@ public class InterfacePesquisa extends JFrame {
 		scrollPane.setBounds(21, 133, 590, 289);
 		scrollPane.setViewportView(table);
 		getContentPane().add(scrollPane);
-		
-		SpinnerModel model = new SpinnerNumberModel(3, 0, 5, 1);
-		JSpinner spinner = new JSpinner(model);
-		spinner.setBounds(426, 57, 82, 20);
-		getContentPane().add(spinner);
 
 	}
 	
@@ -196,10 +204,12 @@ public class InterfacePesquisa extends JFrame {
 
 	private JPanel contentPane;
 	private ControllerPesquisa controlPesquisa;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField user;
+	private JTextField estabelecimento;
+	private JTextField prato;
+	private JTextField comentario;
+	private JSpinner avaliacao;
+	private JCheckBox fotografia;
 	private JTable table;
 
 	/**

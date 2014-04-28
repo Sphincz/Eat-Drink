@@ -5,14 +5,41 @@
 package BaseDados;
 
 import Controller.Estabelecimento;
+
 import java.io.File;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  *
  * @author Nuno
  */
+
+
 public class DBConnector {
+	
+	private ResultSet result; 
+	private Statement statement;
+	private String dburl = "jdbc:sqlanywhere:Tds:localhost:2638?eng=EatDrink";
+	private String user = "dba", password = "sql";
+	private Connection con;
+	
+	public DBConnector() {
+        // Connect to Sybase Database
+        try {
+			con = DriverManager.getConnection(dburl, user, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 
     public boolean inserirComentarioEstabelecimento(int id, String comentario, int nota) {
         throw new UnsupportedOperationException("Not yet implemented");
@@ -43,7 +70,23 @@ public class DBConnector {
     }
 
     public void findEstabelecimentos(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        try{
+        	statement = con.createStatement();
+	        result = statement.executeQuery("SELECT GETDATE()");
+	        
+	        if (result.next()) {
+	            Date currentDate = result.getDate(1); // get first column returned
+	            System.out.println("Current Date from Sybase is : "+currentDate);
+	        }
+	        
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+        
         //for
         //Estabelecimento e = new Estabalecimento(id, nome, prato, fotografia);
     }
