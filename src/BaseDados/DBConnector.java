@@ -44,13 +44,15 @@ public class DBConnector {
 	
 
     public boolean inserirComentarioEstabelecimento(int id, String comentario, int nota) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
+    	return true;
         //se insistir atualiza
     }
     
     public boolean inserirComentarioPrato(int id, String comentario, int nota) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
         //se insistir atualiza
+    	return true;
     }
 
     public void saveFoto(int id, File foto) {
@@ -58,19 +60,21 @@ public class DBConnector {
     }
 
     public boolean findComent(int idComent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
+    	return true;
     }
 
     public void destroyComent(int idComent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public boolean findFoto(int idFoto) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
+    	return true;
     }
 
     public void destroyFoto(int idFoto) {
-        throw new UnsupportedOperationException("Not yet implemented");
+       // throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public void findEstabelecimentos(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
@@ -96,22 +100,30 @@ public class DBConnector {
     }
 
     public void findComentarios(int userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
         //for
         //ComentarioEstabelecimento c = new ComentarioEstabelecimento(userID, comentarioID, comentario);
     }
 
     public void findPratos(String estabelecimento, Prato prato, boolean fotografia) {
-        throw new UnsupportedOperationException("Not yet implemented");
+       // throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public void findAllComents(int userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public int destroyFoto(File file) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
         //devolver ID
+    	return 0;
     }
+
+
+
+	public int saveFoto(File file) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
 }

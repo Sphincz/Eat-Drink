@@ -42,7 +42,7 @@ public class Fotografia {
 
     public void save(File file) {
         DBConnector db = new DBConnector();
-        int id = db.destroyFoto(file);
+        int id = db.saveFoto(file);
     }
     
 }
