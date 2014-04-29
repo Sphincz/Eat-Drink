@@ -1,6 +1,7 @@
 package Controller;
 
 import APIs.APIUtilizadores;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -20,16 +21,26 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import Comentarios.ComentarioEstabelecimento;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
 
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
-	
+	private static InterfacePesquisa frame;
+	private static DefaultTableModel tableModel;
+	private static String[] columnNames = {"Utilizador",
+            "Estabelecimento",
+            "Prato",
+            "Avaliação",
+            "Comentário",
+            "Fotografia"};
+
 	public InterfacePesquisa() {
 		setTitle("Eat&Drink - Pesquisar");
 		try {
@@ -155,12 +166,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		});
 		getContentPane().add(btnSair);
 		
-		String[] columnNames = {"Utilizador",
-                "Estabelecimento",
-                "Prato",
-                "Avaliação",
-                "Comentário",
-                "Fotografia"};
+		
 
 		
 		Object[][] data = {
@@ -176,7 +182,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 									"Pool", new Integer(10), "Bom!", new Boolean(false)}
 		};
 
-		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+		tableModel = new DefaultTableModel(null, columnNames) {
 			private static final long serialVersionUID = 1L;
 			@Override
 		    public boolean isCellEditable(int row, int column) {
@@ -211,7 +217,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private JTextField comentario;
 	private JSpinner avaliacao;
 	private JCheckBox fotografia;
-	private JTable table;
+	private static JTable table;
 
 	/**
 	 * Launch the application.
@@ -219,9 +225,11 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	public void execute() {
 		controlPesquisa = new ControllerPesquisa();
 		EventQueue.invokeLater(new Runnable() {
+			
+
 			public void run() {
 				try {
-					InterfacePesquisa frame = new InterfacePesquisa();
+					frame = new InterfacePesquisa();
 					frame.setVisible(true);
 					frame.setSize(650, 550);
 					frame.setLocation(350, 75);
@@ -258,4 +266,36 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
         upload.init();
         return true;
     }
+
+
+	public static void preencherPesquisa(ArrayList<Estabelecimento> listaEstabelecimentos, ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			tableModel.removeRow(i);
+			frame.repaint();
+		}
+		for (int i = 0; i < listaComentariosEstabelecimento.size(); i++) {
+			System.out.println("merda");
+			Object[] data = {
+				listaComentariosEstabelecimento.get(i).getUserID(),
+				getEstabelecimentoNomeByComentID(listaEstabelecimentos, listaComentariosEstabelecimento.get(i).getIdEstabelecimento()),
+				" ---- ", listaComentariosEstabelecimento.get(i).getNota(),
+				listaComentariosEstabelecimento.get(i).getComentario(),
+				true
+			
+			};
+		tableModel.addRow(data);
+		}
+		
+		
+	}
+
+
+	private static Object getEstabelecimentoNomeByComentID(ArrayList<Estabelecimento> listaEstabelecimentos, int idEstabelecimento) {
+		for (int i = 0; i < listaEstabelecimentos.size(); i++) {
+			if(listaEstabelecimentos.get(i).getId()==idEstabelecimento){
+				return listaEstabelecimentos.get(i).getDesignacao();
+			}
+		}
+		return "---";
+	}
 }

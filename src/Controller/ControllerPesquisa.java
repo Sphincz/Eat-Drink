@@ -17,9 +17,8 @@ import java.util.ArrayList;
  * @author Nuno
  */
 public class ControllerPesquisa {
-    
-    private int userID;
-    private ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimetno = new ArrayList<ComentarioEstabelecimento>();
+    private String userID;
+    private ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento = new ArrayList<ComentarioEstabelecimento>();
     private ArrayList<Estabelecimento> listaEstabelecimentos = new ArrayList<Estabelecimento>();
     private ControllerComentario controlComent = new ControllerComentario();
     
@@ -33,7 +32,7 @@ public class ControllerPesquisa {
     }
     
     public ArrayList<ComentarioEstabelecimento> getComentariosEstabelecimento(){
-        return listaComentariosEstabelecimetno;
+        return listaComentariosEstabelecimento;
     }
 
     public void addFotografia() {
@@ -46,6 +45,7 @@ public class ControllerPesquisa {
         e.findAll(this, user, estabelecimento, prato, avaliacao, fotografia, comentario); 
         ComentarioEstabelecimento c = new ComentarioEstabelecimento();
         c.findAll(this, userID, listaEstabelecimentos, avaliacao, fotografia, comentario);
+        InterfacePesquisa.preencherPesquisa(listaEstabelecimentos, listaComentariosEstabelecimento);
         //interface vem buscar as listas depois
     }
     

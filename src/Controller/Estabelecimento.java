@@ -13,15 +13,16 @@ import java.util.ArrayList;
  */
 public class Estabelecimento {
     private int id;
-    private String nome;
-    private String prato;
-    private boolean fotografia;
+    private String nomeUser;
+    private String designacao;
     private ControllerPesquisa controller;
+    private String rating;
     
-    public Estabelecimento(int id, String nome, String prato, boolean fotografia){
-        this.nome=nome;
-        this.prato=prato;
-        this.fotografia=fotografia;
+    public Estabelecimento(ControllerPesquisa controller, int id, String nomeUser, String designacao, String rating){
+        this.nomeUser=nomeUser;
+        this.controller=controller;
+        this.rating=rating;
+        this.designacao=designacao;
         this.id=id;
         controller.getEstabelecimentos().add(this);
     }
@@ -30,20 +31,16 @@ public class Estabelecimento {
         
     }
 
-    public boolean isFotografia() {
-        return fotografia;
-    }
-
     public int getId() {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeUser() {
+        return nomeUser;
     }
 
-    public String getPrato() {
-        return prato;
+    public String getDesignacao() {
+        return designacao;
     }
     
     
@@ -52,7 +49,7 @@ public class Estabelecimento {
     public void findAll(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){
         this.controller=controller;
         DBConnector db = new DBConnector();
-        db.findEstabelecimentos(user, estabelecimento, prato, avaliacao, fotografia, comentario);
+        db.findEstabelecimentos(controller, user, estabelecimento, prato, avaliacao, fotografia, comentario);
     }
     
 }

@@ -4,6 +4,8 @@
  */
 package BaseDados;
 
+import Comentarios.ComentarioEstabelecimento;
+import Controller.ControllerPesquisa;
 import Controller.Estabelecimento;
 import Pratos.Prato;
 
@@ -77,14 +79,14 @@ public class DBConnector {
        // throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public void findEstabelecimentos(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
+    public void findEstabelecimentos(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
         try{
         	statement = con.createStatement();
-	        result = statement.executeQuery("SELECT GETDATE()");
+	        result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento, Estabelecimento.rating, Utilizador.nome, Estabelecimento.designacao, Estabelecimento.rating FROM Estabelecimento, Utilizador WHERE '"+user+"'=Utilizador.nome AND Estabelecimento.email = Utilizador.email"
+	        		+ " OR Estabelecimento.designacao='"+estabelecimento+"' OR Estabelecimento.rating = "+avaliacao+" ");
 	        
-	        if (result.next()) {
-	            Date currentDate = result.getDate(1); // get first column returned
-	            System.out.println("Current Date from Sybase is : "+currentDate);
+	        while (result.next()) {
+	        	Estabelecimento e = new Estabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("nome"), result.getString("designacao"), result.getString("rating"));
 	        }
 	        
 	        result.close();
@@ -99,8 +101,28 @@ public class DBConnector {
         //Estabelecimento e = new Estabalecimento(id, nome, prato, fotografia);
     }
 
-    public void findComentarios(int userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
-        //throw new UnsupportedOperationException("Not yet implemented");
+    public void findComentarios(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
+    	try{
+        	statement = con.createStatement();
+        	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
+        		result = statement.executeQuery("SELECT Utilizador.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento WHERE"
+        				+ " "+listaEstabelecimentos.get(i).getId()+"=ComentarioAoEstabelecimento.idEstabelecimento");
+        		System.out.println(""+i);
+        		while (result.next()) {
+    	        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+    	        	System.out.println(e.getComentario());
+    	        }
+        	}
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+    	
+    	
+    	//throw new UnsupportedOperationException("Not yet implemented");
         //for
         //ComentarioEstabelecimento c = new ComentarioEstabelecimento(userID, comentarioID, comentario);
     }
@@ -109,7 +131,7 @@ public class DBConnector {
        // throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public void findAllComents(int userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+    public void findAllComents(String userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
         //throw new UnsupportedOperationException("Not yet implemented");
     }
 

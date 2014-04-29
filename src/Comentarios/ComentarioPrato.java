@@ -29,7 +29,7 @@ public class ComentarioPrato {
         db.destroyComent(idComent);
     }
 
-    public ArrayList<ComentarioPrato> findAll(int userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+    public ArrayList<ComentarioPrato> findAll(String userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
         DBConnector db = new DBConnector();
         db.findAllComents(userID, listaPratos, avaliacao, fotografia, comentario);
         return null;
