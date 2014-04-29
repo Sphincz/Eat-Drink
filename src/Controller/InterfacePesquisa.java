@@ -67,7 +67,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		prato.setBounds(80, 58, 200, 20);
 		getContentPane().add(prato);
 		
-		JLabel lblAvaliao = new JLabel("Avalia\u00E7\u00E3o >=");
+		JLabel lblAvaliao = new JLabel("Avaliação >=");
 		lblAvaliao.setBounds(344, 61, 68, 14);
 		getContentPane().add(lblAvaliao);
 		
@@ -79,7 +79,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		fotografia.setBounds(590, 57, 21, 23);
 		getContentPane().add(fotografia);
 		
-		JLabel lblComentrio = new JLabel("Coment\u00E1rio:");
+		JLabel lblComentrio = new JLabel("Comentário:");
 		lblComentrio.setBounds(10, 95, 61, 14);
 		getContentPane().add(lblComentrio);
 		
@@ -121,11 +121,11 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnNewButton.setBounds(22, 478, 170, 23);
 		getContentPane().add(btnNewButton);
 		
-		JButton btnVer = new JButton("Ver coment\u00E1rio");
+		JButton btnVer = new JButton("Ver comentário");
 		btnVer.setBounds(22, 444, 170, 23);
 		getContentPane().add(btnVer);
 		
-		JButton btnAdicionarComentrio = new JButton("Adicionar coment\u00E1rio");
+		JButton btnAdicionarComentrio = new JButton("Adicionar comentário");
 		btnAdicionarComentrio.setBounds(220, 444, 170, 23);
 		btnAdicionarComentrio.addActionListener(new ActionListener(){
 			@Override
@@ -158,13 +158,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		String[] columnNames = {"Utilizador",
                 "Estabelecimento",
                 "Prato",
-                "Avaliaï¿½ï¿½o",
-                "Comentï¿½rio",
+                "Avaliação",
+                "Comentário",
                 "Fotografia"};
 
 		
 		Object[][] data = {
-				{"Joï¿½o Ribeiro", "Toni",
+				{"João Ribeiro", "Toni",
 					"Snowboarding", new Integer(5), "Bom!",  new Boolean(true)},
 					{"Adolfo Rodrigues", "Toni",
 						"Rowing", new Integer(3), "Bom!", new Boolean(true)},
