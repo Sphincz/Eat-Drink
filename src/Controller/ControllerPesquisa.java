@@ -21,6 +21,8 @@ public class ControllerPesquisa {
     private ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento = new ArrayList<ComentarioEstabelecimento>();
     private ArrayList<Estabelecimento> listaEstabelecimentos = new ArrayList<Estabelecimento>();
     private ControllerComentario controlComent = new ControllerComentario();
+    private ArrayList<Prato> listaPratos = new ArrayList<Prato>();
+    private ArrayList<ComentarioPrato> listComentariosPrato = new ArrayList<ComentarioPrato>();
     
     public void createComentario() {
         InterfaceComentario window = new InterfaceComentario(controlComent);
@@ -49,10 +51,11 @@ public class ControllerPesquisa {
         //interface vem buscar as listas depois
     }
     
-    public void searchPrato(String user, String estabelecimento, String Prato, int avaliacao, boolean fotografia, String comentario){
-        Prato prato = new Prato();
-        ArrayList<Prato> listaPratos = prato.findAll(estabelecimento, prato, fotografia);
+    public void searchPrato(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){
+        Prato novoPrato = new Prato();
+        listaPratos = novoPrato.findAll(estabelecimento, prato, fotografia);
         ComentarioPrato coments = new ComentarioPrato();
-        ArrayList<ComentarioPrato> listaComentariosPrato = coments.findAll(user, listaPratos, avaliacao, fotografia, comentario);
+        listComentariosPrato = coments.findAll(user, listaPratos, avaliacao, fotografia, comentario);
+        InterfacePesquisa.preencherPesquisaPratos(listaPratos, listComentariosPrato, listaEstabelecimentos);
     }
 }

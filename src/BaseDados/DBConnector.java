@@ -5,6 +5,7 @@
 package BaseDados;
 
 import Comentarios.ComentarioEstabelecimento;
+import Comentarios.ComentarioPrato;
 import Controller.ControllerPesquisa;
 import Controller.Estabelecimento;
 import Pratos.Prato;
@@ -120,19 +121,78 @@ public class DBConnector {
         } catch (SQLException e) {
         	e.printStackTrace();
         }
-    	
-    	
-    	//throw new UnsupportedOperationException("Not yet implemented");
-        //for
-        //ComentarioEstabelecimento c = new ComentarioEstabelecimento(userID, comentarioID, comentario);
     }
 
-    public void findPratos(String estabelecimento, Prato prato, boolean fotografia) {
-       // throw new UnsupportedOperationException("Not yet implemented");
+    public ArrayList<Prato> findPratos(String estabelecimento, String prato, boolean fotografia) {
+    	ArrayList<Prato> resultList = new ArrayList<Prato>();
+    	try{
+        	statement = con.createStatement();
+        	if(estabelecimento == null || estabelecimento.isEmpty() && prato == null || prato.isEmpty()){//sem nada
+        		result = statement.executeQuery("SELECT * FROM Prato");
+        		while(result.next()){
+        			Prato p = new Prato(Integer.parseInt(result.getString("idPrato")), result.getString("descricao"), result.getString("preco"), Integer.parseInt(result.getString("tipoDePrato")), result.getString("rating"));
+        			resultList.add(p);
+        			System.out.println("bla");
+        		}
+        	}else{
+        		if(estabelecimento == null || estabelecimento.isEmpty() && prato != null || !prato.isEmpty()){//sem estabelecimento
+        			result = statement.executeQuery("SELECT * FROM Prato WHERE Prato.descricao='"+prato+"'");
+	        			while(result.next()){
+	        			Prato p = new Prato(Integer.parseInt(result.getString("idPrato")), result.getString("descricao"), result.getString("preco"), Integer.parseInt(result.getString("tipoDePrato")), result.getString("rating"));
+	        			resultList.add(p);
+	        			System.out.println("bla");
+        			}
+        		}else{
+        			if(estabelecimento != null || !estabelecimento.isEmpty() && prato == null || prato.isEmpty()){
+        				result = statement.executeQuery("SELECT * FROM Prato, menuDoEstabelecimento, Estabelecimento WHERE menuDoEstabelecimento.idEstabelecimento=Estabelecimento.idEstabelecimento AND Estabelecimento.designacao='"+estabelecimento+"'");//sem prato
+        				while(result.next()){	
+        					Prato p = new Prato(Integer.parseInt(result.getString("idPrato")), result.getString("descricao"), result.getString("preco"), Integer.parseInt(result.getString("tipoDePrato")), result.getString("rating"));
+	            			resultList.add(p);
+	            			System.out.println("bla");
+        				}
+        			}//tudo
+        			if(estabelecimento != null || !estabelecimento.isEmpty() && prato != null || !prato.isEmpty()){//sem estabelecimento
+        				result = statement.executeQuery("SELECT * FROM Prato, menuDoEstabelecimento, Estabelecimento WHERE menuDoEstabelecimento.idEstabelecimento=Estabelecimento.idEstabelecimento AND Estabelecimento.designacao='"+estabelecimento+"' AND Prato.descricao='"+prato+"'");
+        				while(result.next()){
+	        				Prato p = new Prato(Integer.parseInt(result.getString("idPrato")), result.getString("descricao"), result.getString("preco"), Integer.parseInt(result.getString("tipoDePrato")), result.getString("rating"));
+	            			resultList.add(p);
+	            			System.out.println("bla");
+        				}
+        			}
+        		}
+        	}
+        	
+	        result.close();
+	        statement.close();
+	        con.close();
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+    	return resultList;
     }
 
-    public void findAllComents(String userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
-        //throw new UnsupportedOperationException("Not yet implemented");
+    public ArrayList<ComentarioPrato> findAllComents(String username, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+    	ArrayList<ComentarioPrato> comentarios = new ArrayList<ComentarioPrato>();
+    	try{
+        	statement = con.createStatement();
+        	for (int i = 0; i < listaPratos.size(); i++) {
+        		result = statement.executeQuery("SELECT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato, ComentarioAoPrato.nota FROM ComentarioAoPrato WHERE"
+        				+ " "+listaPratos.get(i).getId()+"=ComentarioAoPrato.idPrato");
+        		System.out.println(""+i);
+        		while (result.next()) {
+        			ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+    	        	comentarios.add(e);
+        			System.out.println(e.getComentario());
+    	        }
+        	}
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+    	return comentarios;
     }
 
     public int destroyFoto(File file) {

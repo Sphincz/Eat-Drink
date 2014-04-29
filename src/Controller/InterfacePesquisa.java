@@ -27,8 +27,10 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 import Comentarios.ComentarioEstabelecimento;
+import Comentarios.ComentarioPrato;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
+import Pratos.Prato;
 
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
@@ -123,6 +125,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		JButton btnPrato = new JButton("Prato");
 		btnPrato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ControllerPesquisa controllerPes = new ControllerPesquisa();
+				controllerPes.searchPrato(user.getText(), estabelecimento.getText(), prato.getText(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 			}
 		});
 		btnPrato.setBounds(547, 91, 64, 23);
@@ -271,7 +275,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	public static void preencherPesquisa(ArrayList<Estabelecimento> listaEstabelecimentos, ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
 		tableModel.setRowCount(0);
 		for (int i = 0; i < listaComentariosEstabelecimento.size(); i++) {
-			System.out.println("merda");
 			Object[] data = {
 				listaComentariosEstabelecimento.get(i).getUserID(),
 				getEstabelecimentoNomeByComentID(listaEstabelecimentos, listaComentariosEstabelecimento.get(i).getIdEstabelecimento()),
@@ -291,6 +294,34 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		for (int i = 0; i < listaEstabelecimentos.size(); i++) {
 			if(listaEstabelecimentos.get(i).getId()==idEstabelecimento){
 				return listaEstabelecimentos.get(i).getDesignacao();
+			}
+		}
+		return "---";
+	}
+
+
+	public static void preencherPesquisaPratos(ArrayList<Prato> listaPratos, ArrayList<ComentarioPrato> listComentariosPrato, ArrayList<Estabelecimento> listaEstabelecimentos) {
+		System.out.println("merda");
+		tableModel.setRowCount(0);
+		for (int i = 0; i < listComentariosPrato.size(); i++) {
+			
+			Object[] data = {
+					listComentariosPrato.get(i).getEmail(),
+					"-----",
+					getPratoNomeByComentID(listaPratos, listComentariosPrato.get(i).getId()),
+				listComentariosPrato.get(i).getComentario(),
+				true
+			};
+		tableModel.addRow(data);
+		}
+		
+	}
+
+
+	private static Object getPratoNomeByComentID(ArrayList<Prato> listaPratos, int id) {
+		for (int i = 0; i < listaPratos.size(); i++) {
+			if(listaPratos.get(i).getId()==id){
+				return listaPratos.get(i).getDescricao();
 			}
 		}
 		return "---";
