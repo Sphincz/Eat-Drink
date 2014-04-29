@@ -44,7 +44,7 @@ public class ControllerPesquisa {
         Estabelecimento e = new Estabelecimento();
         e.findAll(this, user, estabelecimento, prato, avaliacao, fotografia, comentario); 
         ComentarioEstabelecimento c = new ComentarioEstabelecimento();
-        c.findAll(this, userID, listaEstabelecimentos, avaliacao, fotografia, comentario);
+        c.findAll(this, user, listaEstabelecimentos, avaliacao, fotografia, comentario);
         InterfacePesquisa.preencherPesquisa(listaEstabelecimentos, listaComentariosEstabelecimento);
         //interface vem buscar as listas depois
     }
@@ -53,6 +53,6 @@ public class ControllerPesquisa {
         Prato prato = new Prato();
         ArrayList<Prato> listaPratos = prato.findAll(estabelecimento, prato, fotografia);
         ComentarioPrato coments = new ComentarioPrato();
-        ArrayList<ComentarioPrato> listaComentariosPrato = coments.findAll(userID, listaPratos, avaliacao, fotografia, comentario);
+        ArrayList<ComentarioPrato> listaComentariosPrato = coments.findAll(user, listaPratos, avaliacao, fotografia, comentario);
     }
 }

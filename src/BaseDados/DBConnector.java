@@ -105,8 +105,8 @@ public class DBConnector {
     	try{
         	statement = con.createStatement();
         	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
-        		result = statement.executeQuery("SELECT Utilizador.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento WHERE"
-        				+ " "+listaEstabelecimentos.get(i).getId()+"=ComentarioAoEstabelecimento.idEstabelecimento");
+        		result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento WHERE"
+        				+ " "+listaEstabelecimentos.get(i).getId()+"=ComentarioAoEstabelecimento.idEstabelecimento AND '"+userID+"'=Utilizador.nome");
         		System.out.println(""+i);
         		while (result.next()) {
     	        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));

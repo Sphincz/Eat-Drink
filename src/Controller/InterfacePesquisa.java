@@ -269,10 +269,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 
 	public static void preencherPesquisa(ArrayList<Estabelecimento> listaEstabelecimentos, ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
-		for (int i = 0; i < tableModel.getRowCount(); i++) {
-			tableModel.removeRow(i);
-			frame.repaint();
-		}
+		tableModel.setRowCount(0);
 		for (int i = 0; i < listaComentariosEstabelecimento.size(); i++) {
 			System.out.println("merda");
 			Object[] data = {
