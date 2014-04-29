@@ -19,7 +19,6 @@ public class InterfaceUpload extends JFrame{
     }
 
     private boolean upload() {//ABRIR CARREGAR FOTOGRAFIA DO Utilizador
-        System.out.println("porraaaa");
         File file = null; //imagem carregada aqui
         ControllerUpload controller = new ControllerUpload();
         boolean result = controller.uploadFotografiaUtilizador(file);
