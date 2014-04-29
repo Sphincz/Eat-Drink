@@ -9,5 +9,5 @@ package APIs;
  * @author Nuno
  */
 public interface APIUtilizadores {
-    
+    public boolean uploadFotografiaUtilizador(String emailUtilizador);
 }

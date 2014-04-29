@@ -5,6 +5,7 @@
 package BaseDados;
 
 import Controller.Estabelecimento;
+import Pratos.Prato;
 
 import java.io.File;
 import java.sql.Connection;
@@ -32,6 +33,7 @@ public class DBConnector {
 	public DBConnector() {
         // Connect to Sybase Database
         try {
+                
 			con = DriverManager.getConnection(dburl, user, password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -43,10 +45,12 @@ public class DBConnector {
 
     public boolean inserirComentarioEstabelecimento(int id, String comentario, int nota) {
         throw new UnsupportedOperationException("Not yet implemented");
+        //se insistir atualiza
     }
     
     public boolean inserirComentarioPrato(int id, String comentario, int nota) {
         throw new UnsupportedOperationException("Not yet implemented");
+        //se insistir atualiza
     }
 
     public void saveFoto(int id, File foto) {
@@ -95,6 +99,19 @@ public class DBConnector {
         throw new UnsupportedOperationException("Not yet implemented");
         //for
         //ComentarioEstabelecimento c = new ComentarioEstabelecimento(userID, comentarioID, comentario);
+    }
+
+    public void findPratos(String estabelecimento, Prato prato, boolean fotografia) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void findAllComents(int userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public int destroyFoto(File file) {
+        throw new UnsupportedOperationException("Not yet implemented");
+        //devolver ID
     }
     
 }

@@ -5,9 +5,11 @@
 package Controller;
 
 import Comentarios.ComentarioEstabelecimento;
+import Comentarios.ComentarioPrato;
 import Comentarios.ControllerComentario;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
+import Pratos.Prato;
 import java.util.ArrayList;
 
 /**
@@ -45,5 +47,12 @@ public class ControllerPesquisa {
         ComentarioEstabelecimento c = new ComentarioEstabelecimento();
         c.findAll(this, userID, listaEstabelecimentos, avaliacao, fotografia, comentario);
         //interface vem buscar as listas depois
+    }
+    
+    public void searchPrato(String user, String estabelecimento, String Prato, int avaliacao, boolean fotografia, String comentario){
+        Prato prato = new Prato();
+        ArrayList<Prato> listaPratos = prato.findAll(estabelecimento, prato, fotografia);
+        ComentarioPrato coments = new ComentarioPrato();
+        ArrayList<ComentarioPrato> listaComentariosPrato = coments.findAll(userID, listaPratos, avaliacao, fotografia, comentario);
     }
 }

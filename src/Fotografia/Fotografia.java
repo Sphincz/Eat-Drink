@@ -39,5 +39,10 @@ public class Fotografia {
         DBConnector db = new DBConnector();
         db.destroyFoto(idFoto);
     }
+
+    public void save(File file) {
+        DBConnector db = new DBConnector();
+        int id = db.destroyFoto(file);
+    }
     
 }

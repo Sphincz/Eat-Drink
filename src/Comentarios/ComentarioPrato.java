@@ -5,6 +5,8 @@
 package Comentarios;
 
 import BaseDados.DBConnector;
+import Pratos.Prato;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,6 +27,12 @@ public class ComentarioPrato {
     public void destroy(int idComent) {
         DBConnector db = new DBConnector();
         db.destroyComent(idComent);
+    }
+
+    public ArrayList<ComentarioPrato> findAll(int userID, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+        DBConnector db = new DBConnector();
+        db.findAllComents(userID, listaPratos, avaliacao, fotografia, comentario);
+        return null;
     }
 
     

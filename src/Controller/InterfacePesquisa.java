@@ -1,5 +1,6 @@
 package Controller;
 
+import APIs.APIUtilizadores;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -26,7 +27,7 @@ import javax.swing.JScrollPane;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
 
-public class InterfacePesquisa extends JFrame {
+public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
 	
 	public InterfacePesquisa() {
@@ -157,13 +158,13 @@ public class InterfacePesquisa extends JFrame {
 		String[] columnNames = {"Utilizador",
                 "Estabelecimento",
                 "Prato",
-                "Avaliação",
-                "Comentário",
+                "Avaliaï¿½ï¿½o",
+                "Comentï¿½rio",
                 "Fotografia"};
 
 		
 		Object[][] data = {
-				{"João Ribeiro", "Toni",
+				{"Joï¿½o Ribeiro", "Toni",
 					"Snowboarding", new Integer(5), "Bom!",  new Boolean(true)},
 					{"Adolfo Rodrigues", "Toni",
 						"Rowing", new Integer(3), "Bom!", new Boolean(true)},
@@ -250,4 +251,11 @@ public class InterfacePesquisa extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 	}
+
+    @Override
+    public boolean uploadFotografiaUtilizador(String emailUtilizador) {
+        InterfaceUpload upload = new InterfaceUpload();
+        upload.init();
+        return true;
+    }
 }
