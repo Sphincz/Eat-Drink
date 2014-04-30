@@ -6,8 +6,11 @@ package Fotografia;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +19,7 @@ import javax.swing.UIManager;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,7 +29,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Nuno
  */
 public class InterfaceFotografia extends JFrame{
+	private static InterfaceFotografia frame;
 	private File file;
+	private final JPanel fotoPanel;
 	
 	public InterfaceFotografia() {
 		setTitle("Eat&Drink - Adicionar fotografia");
@@ -83,7 +89,7 @@ public class InterfaceFotografia extends JFrame{
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileFilter(filter);
 		
-		final JPanel fotoPanel = new JPanel();
+		fotoPanel = new JPanel();
 		fotoPanel.setBounds(260, 11, 89, 89);
 		fotoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		fotoPanel.addMouseListener(new MouseListener(){
@@ -92,8 +98,8 @@ public class InterfaceFotografia extends JFrame{
 				int returnVal = fc.showOpenDialog(fotoPanel);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 	                file = fc.getSelectedFile();
-	                System.out.println(file);
 	                uploadFotografia();
+	                System.out.println("[Fotografia] Caminho da imagem: "+file);
 				}
 			}
 			@Override
@@ -115,7 +121,7 @@ public class InterfaceFotografia extends JFrame{
         EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceFotografia frame = new InterfaceFotografia();
+					frame = new InterfaceFotografia();
 					frame.setVisible(true);
 					frame.setSize(375, 200);
 					frame.setLocation(475, 175);
@@ -128,10 +134,24 @@ public class InterfaceFotografia extends JFrame{
     }
     
     public void uploadFotografia(){
-        int comentID=0;
-        controlFoto.uploadFotografia(comentID, file);
+    	int comentID=0;
+    	controlFoto.uploadFotografia(comentID, file);
+    	try {
+    		BufferedImage img=ImageIO.read(file);
+    		ImageIcon icon=new ImageIcon(img);
+    		
+    		JLabel fotoLabel = new JLabel(icon);
+
+    		fotoPanel.add(fotoLabel);
+    		fotoPanel.revalidate(); 
+    		fotoPanel.repaint();
+    	}
+    	catch(IOException e) {
+    		e.printStackTrace();
+    	}
     }
-    
+
+
     public void delete(int idFoto){
         boolean apagou = controlFoto.deleteFotografia(idFoto);
         if(apagou){
