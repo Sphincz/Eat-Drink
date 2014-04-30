@@ -39,10 +39,10 @@ public class DBConnector {
 	public DBConnector() {
         // Connect to Sybase Database
         try {
-                
 			con = DriverManager.getConnection(dburl, user, password);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro na Base de dados!");
+			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
+			System.exit(0);
 		}
 	}
 
@@ -61,7 +61,19 @@ public class DBConnector {
     }
 
     public void saveFoto(int id, File foto) {
-        throw new UnsupportedOperationException("Not yet implemented");
+//    	 try{
+//         	statement = con.createStatement();
+// 	        result = statement.executeQuery("SELECT TipoDeComentario");
+// 	        
+// 	        while (result.next()) {
+// 	        }
+// 	        
+// 	        statement.close();
+// 	        con.close();
+//         
+//         } catch (SQLException e) {
+//         	e.printStackTrace();
+//         }
     }
 
     public boolean findComent(int idComent) {
