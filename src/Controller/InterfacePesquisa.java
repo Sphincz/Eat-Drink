@@ -49,7 +49,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private static InterfacePesquisa frame;
 	private static DefaultTableModel tableModel;
 	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
-	private int pesquisaEstabelecimento = 0;
 
 	public InterfacePesquisa() {
 		
@@ -141,7 +140,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
-				pesquisaEstabelecimento = 1;
 			}	
 		});
 		getContentPane().add(btnEstabelecimento);
@@ -152,7 +150,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchPrato(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
-				pesquisaEstabelecimento = 0;
 			}
 		});
 		btnPrato.setBounds(547, 91, 64, 23);
