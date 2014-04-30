@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -57,17 +58,15 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblUtilizador.setBounds(22, 26, 48, 14);
 		getContentPane().add(lblUtilizador);
 		
-		user = new JTextField();
+		user = new JComboBox<String>();
 		user.setBounds(80, 23, 200, 20);
 		getContentPane().add(user);
-		user.setColumns(10);
 		
 		JLabel lblEstabelecimento = new JLabel("Estabelecimento:");
 		lblEstabelecimento.setBounds(334, 29, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		estabelecimento = new JTextField();
-		estabelecimento.setColumns(10);
+		estabelecimento = new JComboBox<String>();
 		estabelecimento.setBounds(426, 26, 185, 20);
 		getContentPane().add(estabelecimento);
 		
@@ -75,8 +74,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblPrato.setBounds(40, 61, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		prato = new JTextField();
-		prato.setColumns(10);
+		prato = new JComboBox<String>();
 		prato.setBounds(80, 58, 200, 20);
 		getContentPane().add(prato);
 		
@@ -96,8 +94,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblComentrio.setBounds(10, 95, 61, 14);
 		getContentPane().add(lblComentrio);
 		
-		comentario = new JTextField();
-		comentario.setColumns(10);
+		comentario = new JComboBox<String>();
 		comentario.setBounds(80, 92, 200, 20);
 		getContentPane().add(comentario);
 		
@@ -116,8 +113,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
-				controllerPes.searchEstabelecimento(user.getText(), estabelecimento.getText(), prato.getText(), 
-						(int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
+				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
+						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getSelectedItem().toString());
 			}	
 		});
 		getContentPane().add(btnEstabelecimento);
@@ -126,7 +123,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnPrato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
-				controllerPes.searchPrato(user.getText(), estabelecimento.getText(), prato.getText(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
+				controllerPes.searchPrato(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
+						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getSelectedItem().toString());
 			}
 		});
 		btnPrato.setBounds(547, 91, 64, 23);
@@ -168,23 +166,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 				System.exit(0);
 			}
 		});
-		getContentPane().add(btnSair);
-		
-		
-
-		
-		Object[][] data = {
-				{"João Ribeiro", "Toni",
-					"Snowboarding", new Integer(5), "Bom!",  new Boolean(true)},
-					{"Adolfo Rodrigues", "Toni",
-						"Rowing", new Integer(3), "Bom!", new Boolean(true)},
-						{"Oscar Dias", "Toni",
-							"Knitting", new Integer(2), "Bom!", new Boolean(false)},
-							{"Jagodes Temivel", "Toni",
-								"Speed reading", new Integer(20), "Bom!", new Boolean(true)},
-								{"E eu", "Toni",
-									"Pool", new Integer(10), "Bom!", new Boolean(false)}
-		};
 
 		tableModel = new DefaultTableModel(null, columnNames) {
 			private static final long serialVersionUID = 1L;
@@ -215,10 +196,10 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 	private JPanel contentPane;
 	private ControllerPesquisa controlPesquisa;
-	private JTextField user;
-	private JTextField estabelecimento;
-	private JTextField prato;
-	private JTextField comentario;
+	private JComboBox<String> user;
+	private JComboBox<String> estabelecimento;
+	private JComboBox<String> prato;
+	private JComboBox<String> comentario;
 	private JSpinner avaliacao;
 	private JCheckBox fotografia;
 	private static JTable table;

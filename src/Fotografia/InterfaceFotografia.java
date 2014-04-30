@@ -44,33 +44,33 @@ public class InterfaceFotografia extends JFrame{
 		lblEm.setBounds(74, 36, 18, 14);
 		getContentPane().add(lblEm);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(102, 36, 46, 14);
-		getContentPane().add(lblNewLabel);
+		JLabel lblData = new JLabel("Data");
+		lblData.setBounds(102, 36, 46, 14);
+		getContentPane().add(lblData);
 		
 		JLabel lblEstabelecimento = new JLabel("Estabelecimento:");
 		lblEstabelecimento.setBounds(10, 61, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(102, 60, 118, 17);
-		getContentPane().add(comboBox);
+		JLabel lblBarDoToni = new JLabel("Bar do Toni");
+		lblBarDoToni.setBounds(102, 61, 54, 14);
+		getContentPane().add(lblBarDoToni);
 		
 		JLabel lblPrato = new JLabel("Prato:");
 		lblPrato.setBounds(62, 86, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setBounds(102, 85, 118, 17);
-		getContentPane().add(comboBox_1);
+		JLabel lblMenuEspecial = new JLabel("Menu Especial");
+		lblMenuEspecial.setBounds(102, 86, 67, 14);
+		getContentPane().add(lblMenuEspecial);
 		
 		JButton btnApagar = new JButton("Apagar");
 		btnApagar.setBounds(10, 128, 89, 23);
 		getContentPane().add(btnApagar);
 		
-		JButton btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.setBounds(260, 128, 89, 23);
-		getContentPane().add(btnAdicionar);
+		JButton btnUpload = new JButton("Upload");
+		btnUpload.setBounds(260, 128, 89, 23);
+		getContentPane().add(btnUpload);
 		
 		UIManager.put("FileChooser.lookInLabelText","Procurar em:"); 
 		UIManager.put("FileChooser.filesOfTypeLabelText","Tipo de ficheiros:"); 
@@ -118,7 +118,7 @@ public class InterfaceFotografia extends JFrame{
 					InterfaceFotografia frame = new InterfaceFotografia();
 					frame.setVisible(true);
 					frame.setSize(375, 200);
-					frame.setLocation(350, 75);
+					frame.setLocation(475, 175);
 					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
