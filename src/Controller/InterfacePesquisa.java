@@ -185,6 +185,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 		JButton btnSair = new JButton("Sair");
 		btnSair.setBounds(551, 478, 60, 23);
+		getContentPane().add(btnSair);
 		btnSair.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -91,7 +91,6 @@ public class DBConnector {
 	        	Estabelecimento e = new Estabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("nome"), result.getString("designacao"), result.getString("rating"));
 	        }
 	        
-	        result.close();
 	        statement.close();
 	        con.close();
         
@@ -112,7 +111,6 @@ public class DBConnector {
     	        	System.out.println(e.getComentario());
     	        }
         	}
-	        result.close();
 	        statement.close();
 	        con.close();
         
@@ -159,8 +157,6 @@ public class DBConnector {
         			}
         		}
         	}
-        	
-	        result.close();
 	        statement.close();
 	        con.close();
         } catch (SQLException e) {
@@ -183,7 +179,6 @@ public class DBConnector {
         			System.out.println(e.getComentario());
     	        }
         	}
-	        result.close();
 	        statement.close();
 	        con.close();
         
@@ -219,7 +214,6 @@ public class DBConnector {
 	        	lista.add(e);
 	        }
 	        
-	        result.close();
 	        statement.close();
 	        con.close();
         
@@ -242,7 +236,6 @@ public class DBConnector {
 	        	lista.add(e);
 	        }
 	        
-	        result.close();
 	        statement.close();
 	        con.close();
         
@@ -265,7 +258,6 @@ public class DBConnector {
 	        	lista.add(e);
 	        }
 	        
-	        result.close();
 	        statement.close();
 	        con.close();
         
