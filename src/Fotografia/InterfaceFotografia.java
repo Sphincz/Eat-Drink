@@ -25,6 +25,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Nuno
  */
 public class InterfaceFotografia extends JFrame{
+	private File file;
+	
 	public InterfaceFotografia() {
 		setTitle("Eat&Drink - Adicionar fotografia");
 		getContentPane().setLayout(null);
@@ -89,8 +91,9 @@ public class InterfaceFotografia extends JFrame{
 			public void mouseClicked(MouseEvent arg0) {
 				int returnVal = fc.showOpenDialog(fotoPanel);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-	                File file = fc.getSelectedFile();
+	                file = fc.getSelectedFile();
 	                System.out.println(file);
+	                uploadFotografia();
 				}
 			}
 			@Override
@@ -125,7 +128,6 @@ public class InterfaceFotografia extends JFrame{
     }
     
     public void uploadFotografia(){
-        File file=null;
         int comentID=0;
         controlFoto.uploadFotografia(comentID, file);
     }

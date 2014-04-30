@@ -178,7 +178,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarFotografia.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InterfaceFotografia.init();
+				ControllerPesquisa control = new ControllerPesquisa();
+				control.addFotografia();
 			}
 		});
 		getContentPane().add(btnAdicionarFotografia);
