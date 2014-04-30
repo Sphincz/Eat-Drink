@@ -12,8 +12,9 @@ import javax.swing.JFrame;
  * @author Nuno
  */
 public class InterfaceUpload extends JFrame{
-    
-    public void init(){//pseudo-construtor
+	private static final long serialVersionUID = 1L;
+
+	public void init(){//pseudo-construtor
         upload();//ABRIR CARREGAR FOTOGRAFIA DO Utilizador
         
     }

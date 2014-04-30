@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
 

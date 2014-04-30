@@ -5,7 +5,6 @@
 package Pratos;
 
 import BaseDados.DBConnector;
-import Controller.ControllerPesquisa;
 import java.util.ArrayList;
 
 /**

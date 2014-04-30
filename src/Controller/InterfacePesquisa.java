@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
@@ -64,7 +64,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 		ControllerPesquisa controllUsers = new ControllerPesquisa();
 		ArrayList<Utilizador> listaU = controllUsers.getAllUsers();
-		Vector v3 = new Vector();
+		Vector<String> v3 = new Vector<String>();
 		v3.add("*");
 		for (int i = 0; i < listaU.size(); i++) {
 			v3.add(listaU.get(i).getNome());
@@ -79,7 +79,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 		ControllerPesquisa controllOne = new ControllerPesquisa();
 		ArrayList<Estabelecimento> listaE = controllOne.setWindowData();
-		Vector v = new Vector();
+		Vector<String> v = new Vector<String>();
 		v.add("*");
 		for (int i = 0; i < listaE.size(); i++) {
 			v.add(listaE.get(i).getDesignacao());
@@ -94,7 +94,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 		ControllerPesquisa controllTwo = new ControllerPesquisa();
 		ArrayList<Prato> listaP = controllTwo.setWindowDataPratos();
-		Vector v1 = new Vector();
+		Vector<String> v1 = new Vector<String>();
 		v1.add("*");
 		for (int i = 0; i < listaP.size(); i++) {
 			v1.add(listaP.get(i).getDescricao());
@@ -119,7 +119,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblComentrio.setBounds(10, 95, 61, 14);
 		getContentPane().add(lblComentrio);
 		
-		comentario = new JComboBox<String>();
+		comentario = new JTextArea();
 		comentario.setBounds(80, 92, 200, 20);
 		getContentPane().add(comentario);
 		
@@ -139,7 +139,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
-						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getSelectedItem().toString());
+						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 			}	
 		});
 		getContentPane().add(btnEstabelecimento);
@@ -149,7 +149,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			public void actionPerformed(ActionEvent arg0) {
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchPrato(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
-						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getSelectedItem().toString());
+						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 			}
 		});
 		btnPrato.setBounds(547, 91, 64, 23);
@@ -224,7 +224,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private JComboBox<String> user;
 	private JComboBox<String> estabelecimento;
 	private JComboBox<String> prato;
-	private JComboBox<String> comentario;
+	private JTextArea comentario;
 	private JSpinner avaliacao;
 	private JCheckBox fotografia;
 	private static JTable table;
