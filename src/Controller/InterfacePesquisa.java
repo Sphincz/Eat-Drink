@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -32,6 +33,7 @@ import Comentarios.ComentarioPrato;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
 import Pratos.Prato;
+import Utilizador.Utilizador;
 
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
@@ -45,6 +47,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
             "Fotografia"};
 
 	public InterfacePesquisa() {
+		
+		
 		setTitle("Eat&Drink - Pesquisar");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -58,7 +62,14 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblUtilizador.setBounds(22, 26, 48, 14);
 		getContentPane().add(lblUtilizador);
 		
-		user = new JComboBox<String>();
+		ControllerPesquisa controllUsers = new ControllerPesquisa();
+		ArrayList<Utilizador> listaU = controllUsers.getAllUsers();
+		Vector v3 = new Vector();
+		v3.add("*");
+		for (int i = 0; i < listaU.size(); i++) {
+			v3.add(listaU.get(i).getNome());
+		}
+		user = new JComboBox<String>(v3);
 		user.setBounds(80, 23, 200, 20);
 		getContentPane().add(user);
 		
@@ -66,7 +77,14 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblEstabelecimento.setBounds(334, 29, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		estabelecimento = new JComboBox<String>();
+		ControllerPesquisa controllOne = new ControllerPesquisa();
+		ArrayList<Estabelecimento> listaE = controllOne.setWindowData();
+		Vector v = new Vector();
+		v.add("*");
+		for (int i = 0; i < listaE.size(); i++) {
+			v.add(listaE.get(i).getDesignacao());
+		}
+		estabelecimento = new JComboBox<String>(v);
 		estabelecimento.setBounds(426, 26, 185, 20);
 		getContentPane().add(estabelecimento);
 		
@@ -74,7 +92,14 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblPrato.setBounds(40, 61, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		prato = new JComboBox<String>();
+		ControllerPesquisa controllTwo = new ControllerPesquisa();
+		ArrayList<Prato> listaP = controllTwo.setWindowDataPratos();
+		Vector v1 = new Vector();
+		v1.add("*");
+		for (int i = 0; i < listaP.size(); i++) {
+			v1.add(listaP.get(i).getDescricao());
+		}
+		prato = new JComboBox<String>(v1);
 		prato.setBounds(80, 58, 200, 20);
 		getContentPane().add(prato);
 		

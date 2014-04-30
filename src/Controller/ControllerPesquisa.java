@@ -10,6 +10,8 @@ import Comentarios.ControllerComentario;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
 import Pratos.Prato;
+import Utilizador.Utilizador;
+
 import java.util.ArrayList;
 
 /**
@@ -58,4 +60,20 @@ public class ControllerPesquisa {
         listComentariosPrato = coments.findAll(user, listaPratos, avaliacao, fotografia, comentario);
         InterfacePesquisa.preencherPesquisaPratos(listaPratos, listComentariosPrato, listaEstabelecimentos);
     }
+
+	public ArrayList<Estabelecimento> setWindowData() {
+		Estabelecimento e = new Estabelecimento();
+		return e.findAllForStart();
+		
+	}
+
+	public ArrayList<Prato> setWindowDataPratos() {
+		Prato p = new Prato();
+		return p.findAllForStart();
+	}
+
+	public ArrayList<Utilizador> getAllUsers() {
+		Utilizador users = new Utilizador();
+		return users.getAll();
+	}
 }

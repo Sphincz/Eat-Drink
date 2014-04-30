@@ -9,6 +9,7 @@ import Comentarios.ComentarioPrato;
 import Controller.ControllerPesquisa;
 import Controller.Estabelecimento;
 import Pratos.Prato;
+import Utilizador.Utilizador;
 
 import java.io.File;
 import java.sql.Connection;
@@ -97,9 +98,6 @@ public class DBConnector {
         } catch (SQLException e) {
         	e.printStackTrace();
         }
-        
-        //for
-        //Estabelecimento e = new Estabalecimento(id, nome, prato, fotografia);
     }
 
     public void findComentarios(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
@@ -206,6 +204,75 @@ public class DBConnector {
 	public int saveFoto(File file) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+
+	public ArrayList<Estabelecimento> findAllE() {
+		ArrayList<Estabelecimento> lista = new ArrayList<Estabelecimento>();
+		try{
+        	statement = con.createStatement();
+	        result = statement.executeQuery("SELECT * FROM Estabelecimento");
+	        
+	        while (result.next()) {
+	        	Estabelecimento e = new Estabelecimento(Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("designacao"), result.getString("rating"));
+	        	lista.add(e);
+	        }
+	        
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+		return lista;
+	}
+
+
+
+	public ArrayList<Prato> findAllPratos() {
+		ArrayList<Prato> lista = new ArrayList<Prato>();
+		try{
+        	statement = con.createStatement();
+	        result = statement.executeQuery("SELECT * FROM Prato");
+	        
+	        while (result.next()) {
+	        	Prato e = new Prato(Integer.parseInt(result.getString("idPrato")), result.getString("descricao"), result.getString("preco"), Integer.parseInt(result.getString("tipoDePrato")), result.getString("rating"));
+	        	lista.add(e);
+	        }
+	        
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+		return lista;
+	}
+
+
+
+	public ArrayList<Utilizador> findAllUsers() {
+		ArrayList<Utilizador> lista = new ArrayList<Utilizador>();
+		try{
+        	statement = con.createStatement();
+	        result = statement.executeQuery("SELECT * FROM Utilizador");
+	        
+	        while (result.next()) {
+	        	Utilizador e = new Utilizador(result.getString("email"), Integer.parseInt(result.getString("idFotografia")), result.getString("nome"), result.getString("escola"));
+	        	lista.add(e);
+	        }
+	        
+	        result.close();
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+		return lista;
 	}
     
 }

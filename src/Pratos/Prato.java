@@ -63,5 +63,11 @@ public class Prato {
 		this.tipoPrato=tipoPrato;
 		this.rating=rating;
 	}
+
+
+	public ArrayList<Prato> findAllForStart() {
+		DBConnector db = new DBConnector();
+        return db.findAllPratos();
+	}
     
 }

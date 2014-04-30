@@ -26,6 +26,13 @@ public class Estabelecimento {
         this.id=id;
         controller.getEstabelecimentos().add(this);
     }
+    
+    public Estabelecimento(int id, String nomeUser, String designacao, String rating){
+        this.nomeUser=nomeUser;
+        this.rating=rating;
+        this.designacao=designacao;
+        this.id=id;
+    }
 
     public Estabelecimento() {
         
@@ -51,5 +58,10 @@ public class Estabelecimento {
         DBConnector db = new DBConnector();
         db.findEstabelecimentos(controller, user, estabelecimento, prato, avaliacao, fotografia, comentario);
     }
+
+	public ArrayList<Estabelecimento> findAllForStart() {
+		DBConnector db = new DBConnector();
+        return db.findAllE();
+	}
     
 }
