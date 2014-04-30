@@ -317,6 +317,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 					listComentariosPrato.get(i).getEmail(),
 					"-----",
 					getPratoNomeByComentID(listaPratos, listComentariosPrato.get(i).getId()),
+					listComentariosPrato.get(i).getNota(),
 				listComentariosPrato.get(i).getComentario(),
 				true
 			};

@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Nuno
@@ -40,8 +42,7 @@ public class DBConnector {
                 
 			con = DriverManager.getConnection(dburl, user, password);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na Base de dados!");
 		}
 	}
 
