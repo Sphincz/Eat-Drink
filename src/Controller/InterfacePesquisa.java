@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
@@ -31,20 +31,28 @@ import javax.swing.JScrollPane;
 import Comentarios.ComentarioEstabelecimento;
 import Comentarios.ComentarioPrato;
 import Comentarios.InterfaceComentario;
-import Fotografia.InterfaceFotografia;
 import Pratos.Prato;
+import Suporte.TipoComentario;
 import Utilizador.Utilizador;
+
+import javax.swing.JTextField;
 
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private ControllerPesquisa controlPesquisa;
+	private JComboBox<String> user;
+	private JComboBox<String> estabelecimento;
+	private JComboBox<String> prato;
+	private JSpinner avaliacao;
+	private JCheckBox fotografia;
+	private static JTable table;
+	private JTextField comentario;
 	private static InterfacePesquisa frame;
 	private static DefaultTableModel tableModel;
-	private static String[] columnNames = {"Utilizador",
-            "Estabelecimento",
-            "Prato",
-            "Avaliação",
-            "Comentário",
-            "Fotografia"};
+	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
+	public static TipoComentario tipoComentario;
 
 	public InterfacePesquisa() {
 		
@@ -119,10 +127,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblComentrio.setBounds(10, 95, 61, 14);
 		getContentPane().add(lblComentrio);
 		
-		comentario = new JTextArea();
-		comentario.setBounds(80, 92, 200, 20);
-		getContentPane().add(comentario);
-		
 		JLabel lblPesquisar = new JLabel("Pesquisar:");
 		lblPesquisar.setBounds(364, 95, 52, 14);
 		getContentPane().add(lblPesquisar);
@@ -140,6 +144,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
+				tipoComentario = TipoComentario.ESTABELECIMENTO;
 			}	
 		});
 		getContentPane().add(btnEstabelecimento);
@@ -150,10 +155,16 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchPrato(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
+				tipoComentario = TipoComentario.PRATO;
 			}
 		});
 		btnPrato.setBounds(547, 91, 64, 23);
 		getContentPane().add(btnPrato);
+		
+		comentario = new JTextField();
+		comentario.setBounds(80, 92, 200, 20);
+		getContentPane().add(comentario);
+		comentario.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Ver fotografia");
 		btnNewButton.setBounds(22, 478, 170, 23);
@@ -178,8 +189,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarFotografia.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ControllerPesquisa control = new ControllerPesquisa();
-				control.addFotografia();
+				if(table.getSelectedRow()!=-1)
+				addFotografia();
 			}
 		});
 		getContentPane().add(btnAdicionarFotografia);
@@ -210,6 +221,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		};
 		table = new JTable(tableModel);
 		table.setFillsViewportHeight(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getTableHeader().setReorderingAllowed(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -218,18 +230,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		getContentPane().add(scrollPane);
 
 	}
-	
-	private static final long serialVersionUID = 1L;
-
-	private JPanel contentPane;
-	private ControllerPesquisa controlPesquisa;
-	private JComboBox<String> user;
-	private JComboBox<String> estabelecimento;
-	private JComboBox<String> prato;
-	private JTextArea comentario;
-	private JSpinner avaliacao;
-	private JCheckBox fotografia;
-	private static JTable table;
 
 	/**
 	 * Launch the application.
@@ -259,8 +259,15 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
     }
     
     public void addFotografia(){
-        controlPesquisa.addFotografia();
+    	ControllerPesquisa control = new ControllerPesquisa();
+		control.addFotografia(frame);
     }
+    
+    
+
+	public static JTable getTable() {
+		return table;
+	}
 
 	/**
 	 * Create the frame.
@@ -282,18 +289,19 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 	public static void preencherPesquisa(ArrayList<Estabelecimento> listaEstabelecimentos, ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
 		tableModel.setRowCount(0);
-		for (int i = 0; i < listaComentariosEstabelecimento.size(); i++) {
+		int i;
+		for (i = 0; i < listaComentariosEstabelecimento.size(); i++) {
 			Object[] data = {
 				listaComentariosEstabelecimento.get(i).getUserID(),
 				getEstabelecimentoNomeByComentID(listaEstabelecimentos, listaComentariosEstabelecimento.get(i).getIdEstabelecimento()),
 				" ---- ", listaComentariosEstabelecimento.get(i).getNota(),
 				listaComentariosEstabelecimento.get(i).getComentario(),
 				true
-			
 			};
-		tableModel.addRow(data);
+			
+			tableModel.addRow(data);
 		}
-		
+		System.out.println("[E&D] Pesquisa por estabelecimentos. Encontrados "+i+" resultados");
 		
 	}
 
@@ -309,10 +317,9 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 
 	public static void preencherPesquisaPratos(ArrayList<Prato> listaPratos, ArrayList<ComentarioPrato> listComentariosPrato, ArrayList<Estabelecimento> listaEstabelecimentos) {
-		System.out.println("merda");
 		tableModel.setRowCount(0);
-		for (int i = 0; i < listComentariosPrato.size(); i++) {
-			
+		int i;
+		for (i = 0; i < listComentariosPrato.size(); i++) {
 			Object[] data = {
 					listComentariosPrato.get(i).getEmail(),
 					"-----",
@@ -323,7 +330,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			};
 		tableModel.addRow(data);
 		}
-		
+		System.out.println("[E&D] Pesquisa por pratos. Encontrados "+i+" resultados");
 	}
 
 

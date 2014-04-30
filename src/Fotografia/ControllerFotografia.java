@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
  */
 public class ControllerFotografia {
 
-    public void uploadFotografia(int id, File file) {
-        Fotografia foto = new Fotografia(id, file);//guarda temporariamente foto
+    public void uploadFotografia(String email, String coment, File file) {
+        Fotografia foto = new Fotografia(email, coment, file);//guarda temporariamente foto
         foto.save();//guarda na BD
     }
 

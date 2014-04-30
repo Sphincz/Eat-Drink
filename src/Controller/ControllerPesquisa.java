@@ -39,9 +39,9 @@ public class ControllerPesquisa {
         return listaComentariosEstabelecimento;
     }
 
-    public void addFotografia() {
+    public void addFotografia(InterfacePesquisa frame) {
         InterfaceFotografia window = new InterfaceFotografia();
-        window.init();
+        window.init(frame);
     }
     
     public void searchEstabelecimento(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){

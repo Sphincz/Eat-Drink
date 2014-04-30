@@ -8,7 +8,9 @@ import Comentarios.ComentarioEstabelecimento;
 import Comentarios.ComentarioPrato;
 import Controller.ControllerPesquisa;
 import Controller.Estabelecimento;
+import Controller.InterfacePesquisa;
 import Pratos.Prato;
+import Suporte.TipoComentario;
 import Utilizador.Utilizador;
 
 import java.io.File;
@@ -39,10 +41,10 @@ public class DBConnector {
 	public DBConnector() {
         // Connect to Sybase Database
         try {
-                
 			con = DriverManager.getConnection(dburl, user, password);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro na Base de dados!");
+			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
+			System.exit(0);
 		}
 	}
 
@@ -60,8 +62,23 @@ public class DBConnector {
     	return true;
     }
 
-    public void saveFoto(int id, File foto) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void saveFoto(String email, String coment, File foto) {
+    	 try{
+         	statement = con.createStatement();
+         	if(InterfacePesquisa.tipoComentario == TipoComentario.ESTABELECIMENTO){
+         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento,emailUtilizador, idPrato, localizacao) VALUES ("+1+", '"+"pfl@iscte.pt"+"',"+1+", '"+"wffwf"+"')");
+         	}else{
+         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento,emailUtilizador, idPrato, localizacao) VALUES ("+1+", '"+"pfl@iscte.pt"+"',"+1+", '"+"wffwf"+"')");
+         	}
+ 	        
+ 	        
+ 	        
+ 	        statement.close();
+ 	        con.close();
+         
+         } catch (SQLException e) {
+         	e.printStackTrace();
+         }
     }
 
     public boolean findComent(int idComent) {

@@ -5,6 +5,7 @@
 package Fotografia;
 
 import BaseDados.DBConnector;
+
 import java.io.File;
 
 /**
@@ -13,20 +14,23 @@ import java.io.File;
  */
 public class Fotografia {
     private File foto;
-    private int id;
-    
-    public Fotografia(int id, File foto) {
-        this.foto=foto;
-        this.id=id;
+	private String coment;
+	private String email;
+
+
+    public Fotografia(String email, String coment, File file) {
+    	this.foto=foto;
+        this.coment=coment;
+        this.email=email;
     }
 
     public Fotografia() {
-        
-    }
+		// TODO Auto-generated constructor stub
+	}
 
-    public void save() {
+	public void save() {
         DBConnector db = new DBConnector();
-        db.saveFoto(id, foto);
+        db.saveFoto(email, coment, foto);
     }
 
     public boolean find(int idFoto) {
