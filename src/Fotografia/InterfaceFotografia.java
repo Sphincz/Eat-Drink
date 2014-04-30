@@ -166,7 +166,7 @@ public class InterfaceFotografia extends JFrame{
     	String email = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 0);
     	String coment = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 4);
     	controlFoto.uploadFotografia(email, coment, file);
-    	
+    	this.dispose();
     }
 
 
