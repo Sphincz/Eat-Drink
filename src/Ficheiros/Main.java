@@ -18,5 +18,6 @@ public class Main {
     public static void main(String[] args) {
         InterfacePesquisa window = new InterfacePesquisa();
         window.execute();
+        System.out.println("feger");
     }
 }
