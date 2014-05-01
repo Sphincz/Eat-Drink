@@ -5,6 +5,7 @@
 package Pratos;
 
 import BaseDados.DBConnector;
+
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,7 @@ public class Prato {
 	private String preco;
 	private int tipoPrato;
 	private String rating;
+	private String idEstabelecimento;
 	
 
     public int getId() {
@@ -67,6 +69,12 @@ public class Prato {
 	public ArrayList<Prato> findAllForStart() {
 		DBConnector db = new DBConnector();
         return db.findAllPratos();
+	}
+
+
+	public void setIDEstabelecimento(String id) {
+		this.idEstabelecimento=id;
+		
 	}
     
 }

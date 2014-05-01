@@ -32,8 +32,10 @@ public class ControllerPesquisa {
     }
     
     public int getEstabelecimentoByName(String name){
+    	System.out.println(listaEstabelecimentos.size());
     	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
 			if(listaEstabelecimentos.get(i).getDesignacao().equals(name))
+				System.out.println(name + "-" +listaEstabelecimentos.get(i).getDesignacao());
 				return listaEstabelecimentos.get(i).getId();
 		}
     	return 0;
@@ -65,13 +67,15 @@ public class ControllerPesquisa {
         Prato novoPrato = new Prato();
         listaPratos = novoPrato.findAll(estabelecimento, prato, fotografia);
         ComentarioPrato coments = new ComentarioPrato();
-        listComentariosPrato = coments.findAll(user, listaPratos, avaliacao, fotografia, comentario);
+        listComentariosPrato = coments.findAll(this, user, prato, estabelecimento, avaliacao, fotografia, comentario);
+        listComentariosPrato = ComentarioPrato.checkForDuplicated(listComentariosPrato);
         InterfacePesquisa.preencherPesquisaPratos(listaPratos, listComentariosPrato, listaEstabelecimentos);
     }
 
 	public ArrayList<Estabelecimento> setWindowData() {
 		Estabelecimento e = new Estabelecimento();
-		return e.findAllForStart();
+		listaEstabelecimentos =  e.findAllForStart();
+		return listaEstabelecimentos;
 		
 	}
 

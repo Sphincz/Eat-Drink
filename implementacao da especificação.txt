@@ -7,3 +7,12 @@ segundo diagrama de sequencia:
 nao faz sentido ir pesquisar todos os comentarios se j· foram carregados antes e se para adicionar uma foto ao comentario ja temos esse comentario. n„o foi feita essa pesquisa, considerada desnecessaria.
 
 no metodo uploadFotografia foi preciso adicionar o ID do comentario para que possa se adicionar na base de dados a fotografia ao comentario correto. o ultimo save() tem de ter argumentos!
+
+
+- A coluna 'coment√°rios' nao deveria existir, visto que existe uma fun√ß√£o que permite ver os coment√°rios (Ver comentarios);
+- A avaliaÁao poderia ter um limite pre-definido. Nao deveria ser baseado em suposiÁao atraves da imagem fornecida.
+- Foram alteradas algumas TextArea para ComboBox, pois fazem mais sentido quando se pretende adicionar um comentario/fotografia.
+
+
+
+porque receber uma lista de pratos para pesquisa comentarios aos pratos se um select faz isso tudo com um select all?? N„o daz sentido mas foi implementado

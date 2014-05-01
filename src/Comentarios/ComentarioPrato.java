@@ -64,10 +64,20 @@ public class ComentarioPrato {
         db.destroyComent(idComent);
     }
 
-    public ArrayList<ComentarioPrato> findAll(String username, ArrayList<Prato> listaPratos, int avaliacao, boolean fotografia, String comentario) {
+    public ArrayList<ComentarioPrato> findAll(ControllerPesquisa controller,String username, String prato, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {
         DBConnector db = new DBConnector();
-        return db.findAllComents(username, listaPratos, avaliacao, fotografia, comentario);
+        return db.findAllComents(controller, username, prato, estabelecimento, avaliacao, fotografia, comentario);
     }
+
+	public static ArrayList<ComentarioPrato> checkForDuplicated(ArrayList<ComentarioPrato> listComentariosPrato) {
+		for (int i = 1; i < listComentariosPrato.size(); i++) {
+			if(listComentariosPrato.get(i).getComentario().equals(listComentariosPrato.get(i-1).getComentario()) && listComentariosPrato.get(i).getId()==listComentariosPrato.get(i-1).getId() && listComentariosPrato.get(i).getEmail().equals(listComentariosPrato.get(i-1).getEmail())){
+				listComentariosPrato.remove(i);
+				i--;
+			}
+		}
+		return listComentariosPrato;
+	}
 
     
 }

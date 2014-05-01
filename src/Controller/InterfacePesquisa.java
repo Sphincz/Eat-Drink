@@ -43,7 +43,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private JPanel contentPane;
 	private ControllerPesquisa controlPesquisa;
 	private JComboBox<String> user;
-	private JComboBox<String> estabelecimento;
+	private static JComboBox<String> estabelecimento;
 	private JComboBox<String> prato;
 	private JSpinner avaliacao;
 	private JCheckBox fotografia;
@@ -53,6 +53,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private static DefaultTableModel tableModel;
 	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
 	public static TipoComentario tipoComentario;
+	private ControllerPesquisa controllerPes = new ControllerPesquisa();
 
 	public InterfacePesquisa() {
 		
@@ -85,8 +86,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblEstabelecimento.setBounds(334, 29, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		ControllerPesquisa controllOne = new ControllerPesquisa();
-		ArrayList<Estabelecimento> listaE = controllOne.setWindowData();
+
+		ArrayList<Estabelecimento> listaE = controllerPes.setWindowData();
 		Vector<String> v = new Vector<String>();
 		v.add("*");
 		for (int i = 0; i < listaE.size(); i++) {
@@ -100,8 +101,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		lblPrato.setBounds(40, 61, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		ControllerPesquisa controllTwo = new ControllerPesquisa();
-		ArrayList<Prato> listaP = controllTwo.setWindowDataPratos();
+		ArrayList<Prato> listaP = controllerPes.setWindowDataPratos();
 		Vector<String> v1 = new Vector<String>();
 		v1.add("*");
 		for (int i = 0; i < listaP.size(); i++) {
@@ -141,7 +141,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnEstabelecimento.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 				tipoComentario = TipoComentario.ESTABELECIMENTO;
@@ -152,7 +151,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		JButton btnPrato = new JButton("Prato");
 		btnPrato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ControllerPesquisa controllerPes = new ControllerPesquisa();
 				controllerPes.searchPrato(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 				tipoComentario = TipoComentario.PRATO;
@@ -322,7 +320,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		for (i = 0; i < listComentariosPrato.size(); i++) {
 			Object[] data = {
 					listComentariosPrato.get(i).getEmail(),
-					"-----",
+					estabelecimento.getSelectedItem().toString(),
 					getPratoNomeByComentID(listaPratos, listComentariosPrato.get(i).getId()),
 					listComentariosPrato.get(i).getNota(),
 				listComentariosPrato.get(i).getComentario(),
