@@ -44,7 +44,6 @@ public class ComentarioEstabelecimento {
         
     }
 
-
     public String getUserID() {
 		return userID;
 	}
@@ -85,14 +84,24 @@ public class ComentarioEstabelecimento {
         db.destroyComent(idComent);
     }
 
-    public void findAll(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
+    public void findAll(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {
         this.controller=controller;
         DBConnector db = new DBConnector();
-        db.findComentarios(controller, userID, listaEstabelecimentos, avaliacao, fotografia, comentario);
+        db.findComentarios(controller, userID, estabelecimento, listaEstabelecimentos, avaliacao, fotografia, comentario);
     }
 
 	public String getNota() {
 		return nota;
+	}
+
+	public static ArrayList<ComentarioEstabelecimento> checkForDuplicated(ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
+		for (int i = 1; i < listaComentariosEstabelecimento.size(); i++) {
+			if(listaComentariosEstabelecimento.get(i).getComentario().equals(listaComentariosEstabelecimento.get(i-1).getComentario()) && listaComentariosEstabelecimento.get(i).getIdEstabelecimento()==listaComentariosEstabelecimento.get(i-1).getIdEstabelecimento() && listaComentariosEstabelecimento.get(i).getUserID().equals(listaComentariosEstabelecimento.get(i-1).getUserID())){
+				listaComentariosEstabelecimento.remove(i);
+				i--;
+			}
+		}
+		return listaComentariosEstabelecimento;
 	}
     
 }

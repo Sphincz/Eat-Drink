@@ -31,6 +31,14 @@ public class ControllerPesquisa {
         window.init();
     }
     
+    public int getEstabelecimentoByName(String name){
+    	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
+			if(listaEstabelecimentos.get(i).getDesignacao().equals(name))
+				return listaEstabelecimentos.get(i).getId();
+		}
+    	return 0;
+    }
+    
     public ArrayList<Estabelecimento> getEstabelecimentos(){
         return listaEstabelecimentos;
     }
@@ -48,9 +56,9 @@ public class ControllerPesquisa {
         Estabelecimento e = new Estabelecimento();
         e.findAll(this, user, estabelecimento, prato, avaliacao, fotografia, comentario); 
         ComentarioEstabelecimento c = new ComentarioEstabelecimento();
-        c.findAll(this, user, listaEstabelecimentos, avaliacao, fotografia, comentario);
+        c.findAll(this, user, listaEstabelecimentos, estabelecimento, avaliacao, fotografia, comentario);
+        listaComentariosEstabelecimento = ComentarioEstabelecimento.checkForDuplicated(listaComentariosEstabelecimento);
         InterfacePesquisa.preencherPesquisa(listaEstabelecimentos, listaComentariosEstabelecimento);
-        //interface vem buscar as listas depois
     }
     
     public void searchPrato(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){

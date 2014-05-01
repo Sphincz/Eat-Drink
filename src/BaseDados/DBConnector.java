@@ -102,8 +102,7 @@ public class DBConnector {
     public void findEstabelecimentos(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
         try{
         	statement = con.createStatement();
-	        result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento, Estabelecimento.rating, Utilizador.nome, Estabelecimento.designacao, Estabelecimento.rating FROM Estabelecimento, Utilizador WHERE '"+user+"'=Utilizador.nome AND Estabelecimento.email = Utilizador.email"
-	        		+ " OR Estabelecimento.designacao='"+estabelecimento+"' OR Estabelecimento.rating = "+avaliacao+" ");
+	        result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento, Estabelecimento.rating, Utilizador.nome, Estabelecimento.designacao, Estabelecimento.rating FROM Estabelecimento, Utilizador");
 	        
 	        while (result.next()) {
 	        	Estabelecimento e = new Estabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("nome"), result.getString("designacao"), result.getString("rating"));
@@ -117,18 +116,48 @@ public class DBConnector {
         }
     }
 
-    public void findComentarios(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
+    public void findComentarios(ControllerPesquisa controller, String nome, String estabelecimento, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
     	try{
-        	statement = con.createStatement();
-        	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
-        		result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento WHERE"
-        				+ " "+listaEstabelecimentos.get(i).getId()+"=ComentarioAoEstabelecimento.idEstabelecimento AND '"+userID+"'=Utilizador.nome");
-        		System.out.println(""+i);
-        		while (result.next()) {
-    	        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
-    	        	System.out.println(e.getComentario());
-    	        }
-        	}
+    		statement = con.createStatement();
+    		ArrayList<String> whereCase = new ArrayList<String>();
+    		if(!estabelecimento.equals("*")){
+    			whereCase.add(" WHERE "+controller.getEstabelecimentoByName(estabelecimento)+"=ComentarioAoEstabelecimento.idEstabelecimento AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento");
+    		}else{
+    			whereCase.add("");
+    		}
+    		if(!nome.equals("*")){
+    			if(whereCase.get(0).equals(""))
+    			whereCase.add(" WHERE '"+nome+"'=Utilizador.nome AND ComentarioAoEstabelecimento.email=Utilizador.email");
+    			else whereCase.add(" AND '"+nome+"'=Utilizador.nome AND ComentarioAoEstabelecimento.email=Utilizador.email");
+    		}else{
+    			whereCase.add("");
+    		}
+    		if(!comentario.isEmpty()){
+    			if(whereCase.get(1).equals("") && whereCase.get(0).equals(""))
+    			whereCase.add(" WHERE '"+comentario+"'=ComentarioAoEstabelecimento.comentario");
+    			else{
+    				if(whereCase.get(1).equals(""))
+    				whereCase.add(" AND '"+comentario+"'=ComentarioAoEstabelecimento.comentario");
+    			}
+    		}else{
+    			whereCase.add("");
+    		}
+    		System.out.println("->"+whereCase.get(0)+whereCase.get(1)+whereCase.get(2));
+    		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("")){
+    			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM ComentarioAoEstabelecimento");
+    			while (result.next()) {
+		        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+		        	System.out.println("Comentario: "+e.getComentario());
+		        }
+    		}else{
+    			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento"
+        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2));
+	    		while (result.next()) {
+		        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+		        }
+    		}
+        	
+        	
 	        statement.close();
 	        con.close();
         
