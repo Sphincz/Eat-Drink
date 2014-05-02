@@ -137,17 +137,20 @@ public class DBConnector {
     		}else{
     			whereCase.add("");
     		}
+    		ComentarioEstabelecimento e=null;
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("")){
     			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM ComentarioAoEstabelecimento");
     			while (result.next()) {
-		        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+		        	e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 		        }
+    			result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.idEstabelecimento="+e.getIdEstabelecimento()+" AND Fotografia.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento");
     		}else{
     			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento"
         			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2));
 	    		while (result.next()) {
-		        	ComentarioEstabelecimento e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
+		        	e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 		        }
+	    		
     		}
         	
         	
@@ -230,7 +233,6 @@ public class DBConnector {
     		}else{
     			whereCase.add("");
     		}
-    		System.err.println(whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("") && whereCase.get(3).equals("")){
     			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
     			while (result.next()) {
@@ -333,6 +335,98 @@ public class DBConnector {
         	e.printStackTrace();
         }
 		return lista;
+	}
+
+
+
+	public void findFotoComents(
+			ComentarioEstabelecimento comentarioEstabelecimento,
+			ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento, ArrayList<Estabelecimento> listaEstabelecimentos) {
+		
+		try {
+			statement = con.createStatement();
+			for (int i = 0; i < listaEstabelecimentos.size(); i++) {
+				result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.idEstabelecimento="+listaEstabelecimentos.get(i).getId()+" AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND Fotografia.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento");
+				if(result.next()){
+					for (int j = 0; j < listaComentariosEstabelecimento.size(); j++) {
+						if(listaComentariosEstabelecimento.get(j).getIdEstabelecimento()==listaEstabelecimentos.get(i).getId())
+							listaComentariosEstabelecimento.get(j).setFotografiaID(Integer.parseInt(result.getString("idFotografia")));
+					}
+				}
+					
+			}
+			statement.close();
+	        con.close();
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		
+	}
+
+
+
+	public void findFotoComentsPlates(ComentarioPrato comentarioPrato,
+			ArrayList<ComentarioPrato> listComentariosPrato,
+			ArrayList<Prato> listaPratos) {
+		try {
+			statement = con.createStatement();
+			for (int i = 0; i < listaPratos.size(); i++) {
+				result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, Prato, ComentarioAoPrato WHERE Prato.idPrato="+listaPratos.get(i).getId()+" AND Prato.idPrato=ComentarioAoPrato.idPrato AND Fotografia.idPrato=ComentarioAoPrato.idPrato");
+				if(result.next()){
+					for (int j = 0; j < listComentariosPrato.size(); j++) {
+						if(listComentariosPrato.get(j).getId()==listaPratos.get(i).getId())
+							listComentariosPrato.get(j).setFotografiaID(Integer.parseInt(result.getString("idFotografia")));
+					}
+				}
+					
+			}
+			statement.close();
+	        con.close();
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
+	public String findFotoForComentEstabelecimento(String email,
+			String estabelecimento, String comentario) {
+		String r="";
+		try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+email+"'");
+			if(result.next()){
+				return r=result.getString("localizacao");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return r;
+	}
+
+
+
+	public String findFotoForComentPrato(String email, String prato,
+			String comentario) {
+		String r="";
+		try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Prato, ComentarioAoPrato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+email+"'");
+			if(result.next()){
+				return r=result.getString("localizacao");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return r;
 	}
     
 }

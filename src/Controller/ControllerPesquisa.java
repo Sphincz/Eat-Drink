@@ -57,12 +57,24 @@ public class ControllerPesquisa {
         window.init(frame);
     }
     
+    public void viewFotografia(InterfacePesquisa frame, String email, String estabelecimento, String prato, String comentario) {
+    	InterfaceFotografia window = new InterfaceFotografia();
+    	String caminhoFoto="";
+    	if(frame.getTipoComentario().equals(TipoComentario.ESTABELECIMENTO)){
+    		caminhoFoto= ComentarioEstabelecimento.getFotoForComent(email, estabelecimento, comentario);
+    	}else{
+    		caminhoFoto= ComentarioPrato.getFotoForComent(email, prato, comentario);
+    	}
+        window.init2(frame, email, estabelecimento, prato, comentario, caminhoFoto);
+	}
+    
     public void searchEstabelecimento(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){
         Estabelecimento e = new Estabelecimento();
         e.findAll(this, user, estabelecimento, prato, avaliacao, fotografia, comentario); 
         ComentarioEstabelecimento c = new ComentarioEstabelecimento();
         c.findAll(this, user, listaEstabelecimentos, estabelecimento, avaliacao, fotografia, comentario);
         listaComentariosEstabelecimento = ComentarioEstabelecimento.checkForDuplicated(listaComentariosEstabelecimento);
+        c.findFotos(this, listaComentariosEstabelecimento, listaEstabelecimentos);
         InterfacePesquisa.preencherPesquisa(listaEstabelecimentos, listaComentariosEstabelecimento);
     }
     
@@ -72,6 +84,7 @@ public class ControllerPesquisa {
         ComentarioPrato coments = new ComentarioPrato();
         listComentariosPrato = coments.findAll(this, user, prato, estabelecimento, avaliacao, fotografia, comentario);
         listComentariosPrato = ComentarioPrato.checkForDuplicated(listComentariosPrato);
+        coments.findFotos(this, listComentariosPrato, listaPratos);
         InterfacePesquisa.preencherPesquisaPratos(listaPratos, listComentariosPrato, listaEstabelecimentos);
     }
 
@@ -95,4 +108,6 @@ public class ControllerPesquisa {
 	public void viewComentario(TipoComentario tipoComentario, String email, String avaliacao, String comentario, String estabelecimento, String prato) {
 		InterfaceComentario.init(false, tipoComentario, email, avaliacao, comentario, prato, estabelecimento);
 	}
+
+	
 }

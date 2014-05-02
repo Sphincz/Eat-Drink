@@ -34,7 +34,7 @@ public class InterfaceComentario extends JFrame{
 	private static JButton btnGravarAlteraes;
 
     public InterfaceComentario(ControllerComentario controlComent){
-    	setTitle("Eat&Drink - Adicionar coment\u00E1rio");
+    	//setTitle("Eat&Drink - Adicionar coment\u00E1rio");
     	getContentPane().setLayout(null);
     	
     	JLabel lblColocadoPor = new JLabel("Colocado por:");
@@ -123,11 +123,14 @@ public class InterfaceComentario extends JFrame{
 					prato.setText(p);
 					comentario.setText(c);
 					if(!editable){
+						frame.setTitle("Eat&Drink - Ver comentario");
 						avaliacao.setValue(Integer.parseInt(a));
 						comentario.setEditable(false);
 						btnApagar.setEnabled(false);
 						btnGravarAlteraes.setEnabled(false);
 						avaliacao.setEnabled(false);
+					}else{
+						frame.setTitle("Eat&Drink - Adicionar comentario");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

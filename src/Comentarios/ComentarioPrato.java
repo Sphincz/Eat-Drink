@@ -6,6 +6,7 @@ package Comentarios;
 
 import BaseDados.DBConnector;
 import Controller.ControllerPesquisa;
+import Pratos.Prato;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class ComentarioPrato {
 	private String email;
 	private String comentario;
 	private String nota;
+	private int idFoto;
 	
 	public ComentarioPrato(){
 		
@@ -30,6 +32,7 @@ public class ComentarioPrato {
 		this.email=email;
 		this.comentario=comentario;
 		this.nota=nota;
+		idFoto=0;
 	}
 
 	public int getId() {
@@ -76,6 +79,29 @@ public class ComentarioPrato {
 			}
 		}
 		return listComentariosPrato;
+	}
+
+	public void findFotos(ControllerPesquisa controllerPesquisa,
+			ArrayList<ComentarioPrato> listComentariosPrato,
+			ArrayList<Prato> listaPratos) {
+        DBConnector db = new DBConnector();
+        db.findFotoComentsPlates(this, listComentariosPrato, listaPratos);
+		
+	}
+
+	public void setFotografiaID(int idFoto) {
+		this.idFoto=idFoto;
+		
+	}
+
+	public int getIdFoto() {
+		return idFoto;
+	}
+
+	public static String getFotoForComent(String email, String prato,
+			String comentario) {
+		DBConnector db = new DBConnector();
+        return db.findFotoForComentPrato(email, prato, comentario);
 	}
 
     

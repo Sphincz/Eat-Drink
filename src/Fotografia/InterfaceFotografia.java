@@ -38,7 +38,14 @@ import Controller.InterfacePesquisa;
 public class InterfaceFotografia extends JFrame{
 	private static InterfaceFotografia frame;
 	private File file;
-	private final JPanel fotoPanel;
+	private static JPanel fotoPanel=null;
+	private static JButton btnUpload;
+	private static JLabel lblEm;
+	private static JLabel user;
+	private static JLabel comentario;
+	private static JLabel estabelecimento;
+	private static JLabel prato;
+	private static String caminhoFoto;
 	
 	public InterfaceFotografia() {
 		setTitle("Eat&Drink - Adicionar fotografia");
@@ -48,39 +55,48 @@ public class InterfaceFotografia extends JFrame{
 		lblColocadoPor.setBounds(25, 11, 67, 14);
 		getContentPane().add(lblColocadoPor);
 		
-		JLabel lblSphincz = new JLabel("Sphincz");
-		lblSphincz.setBounds(102, 11, 46, 14);
-		getContentPane().add(lblSphincz);
+		user = new JLabel("Sphincz");
+		user.setBounds(102, 11, 46, 14);
+		getContentPane().add(user);
 		
-		JLabel lblEm = new JLabel("Em:");
+		lblEm = new JLabel("Em:");
 		lblEm.setBounds(74, 36, 18, 14);
 		getContentPane().add(lblEm);
 		
-		JLabel lblData = new JLabel("Data");
-		lblData.setBounds(102, 36, 46, 14);
-		getContentPane().add(lblData);
+		comentario = new JLabel("Data");
+		comentario.setBounds(102, 40, 46, 14);
+		getContentPane().add(comentario);
 		
 		JLabel lblEstabelecimento = new JLabel("Estabelecimento:");
 		lblEstabelecimento.setBounds(10, 61, 82, 14);
 		getContentPane().add(lblEstabelecimento);
 		
-		JLabel lblBarDoToni = new JLabel("Bar do Toni");
-		lblBarDoToni.setBounds(102, 61, 54, 14);
-		getContentPane().add(lblBarDoToni);
+		estabelecimento = new JLabel("Bar do Toni");
+		estabelecimento.setBounds(102, 61, 54, 14);
+		getContentPane().add(estabelecimento);
 		
 		JLabel lblPrato = new JLabel("Prato:");
 		lblPrato.setBounds(62, 86, 30, 14);
 		getContentPane().add(lblPrato);
 		
-		JLabel lblMenuEspecial = new JLabel("Menu Especial");
-		lblMenuEspecial.setBounds(102, 86, 67, 14);
-		getContentPane().add(lblMenuEspecial);
+		prato = new JLabel("Menu Especial");
+		prato.setBounds(102, 86, 67, 14);
+		getContentPane().add(prato);
 		
 		JButton btnApagar = new JButton("Apagar");
 		btnApagar.setBounds(10, 128, 89, 23);
 		getContentPane().add(btnApagar);
+		btnApagar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
 		
-		JButton btnUpload = new JButton("Upload");
+		btnUpload = new JButton("Upload");
 		btnUpload.setBounds(260, 128, 89, 23);
 		getContentPane().add(btnUpload);
 		btnUpload.addActionListener(new ActionListener(){
@@ -148,6 +164,39 @@ public class InterfaceFotografia extends JFrame{
 	private static ControllerFotografia controlFoto;
 	private static InterfacePesquisa framePrincipal;
 
+	public static void init2(InterfacePesquisa frameP, final String email, final String e, final String p, final String c, final String caminho) {
+    	framePrincipal=frameP;
+        controlFoto = new ControllerFotografia();
+        EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frame = new InterfaceFotografia();
+					frame.setVisible(true);
+					frame.setSize(375, 200);
+					frame.setLocation(475, 175);
+					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+					lblEm.setText("Comentario");
+					estabelecimento.setText(e);
+					prato.setText(p);
+					comentario.setText(c);
+					btnUpload.setEnabled(false);
+					user.setText(email);
+					caminhoFoto=caminho;
+					BufferedImage img=ImageIO.read(new File(caminhoFoto));
+					Image resized = img.getScaledInstance(fotoPanel.getWidth(), fotoPanel.getHeight(), Image.SCALE_SMOOTH);
+					ImageIcon icon=new ImageIcon(resized);
+            		JLabel fotoLabel = new JLabel(icon);
+            		fotoLabel.setHorizontalAlignment(JLabel.CENTER);
+
+            		fotoPanel.add(fotoLabel, new GridBagConstraints());
+            		fotoPanel.revalidate(); 
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+    }
+	
     public static void init(InterfacePesquisa frameP) {
     	framePrincipal=frameP;
         controlFoto = new ControllerFotografia();

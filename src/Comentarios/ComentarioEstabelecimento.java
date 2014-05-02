@@ -16,12 +16,17 @@ import java.util.ArrayList;
  */
 public class ComentarioEstabelecimento {
     
-    private String userID;
+    public int getIdFoto() {
+		return idFoto;
+	}
+
+	private String userID;
     private String comentario;
     private int idEstabelecimento;
     
     private ControllerPesquisa controller;
 	private String nota;
+	private int idFoto;
 
     public int getIdEstabelecimento() {
 		return idEstabelecimento;
@@ -37,6 +42,7 @@ public class ComentarioEstabelecimento {
         this.comentario = comentario;
         this.idEstabelecimento=idEstabelecimento;
         this.controller=controller;
+        this.idFoto=0;
         controller.getComentariosEstabelecimento().add(this);
     }
 
@@ -102,6 +108,25 @@ public class ComentarioEstabelecimento {
 			}
 		}
 		return listaComentariosEstabelecimento;
+	}
+
+	public void setFotografiaID(int idFoto) {
+		this.idFoto=idFoto;
+		
+	}
+
+	public void findFotos(ControllerPesquisa controllerPesquisa,
+			ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento, ArrayList<Estabelecimento> listaEstabelecimentos) {
+		this.controller=controller;
+        DBConnector db = new DBConnector();
+        db.findFotoComents(this, listaComentariosEstabelecimento, listaEstabelecimentos);
+		
+	}
+
+	public static String getFotoForComent(String email, String estabelecimento,
+			String comentario) {
+		DBConnector db = new DBConnector();
+        return db.findFotoForComentEstabelecimento(email, estabelecimento, comentario);
 	}
     
 }

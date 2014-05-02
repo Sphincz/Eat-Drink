@@ -58,8 +58,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
 
 	public InterfacePesquisa() {
-		
-		
 		setTitle(PROJECT_NAME+" - Pesquisar");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -170,6 +168,23 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		JButton btnNewButton = new JButton("Ver fotografia");
 		btnNewButton.setBounds(22, 478, 170, 23);
 		getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) {
+					if(table.getModel().getValueAt(table.getSelectedRow(), 5).equals(true)){
+						viewFotografia();
+					}else{
+						JOptionPane.showMessageDialog(null, "Comentário sem foto");
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido.");
+				}
+			}
+
+			
+			
+		});
 		
 		JButton btnVer = new JButton("Ver comentário");
 		btnVer.setBounds(22, 444, 170, 23);
@@ -214,9 +229,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarFotografia.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow()!=-1)
-					addFotografia();
-				else
+				if(table.getSelectedRow()!=-1){
+					if(table.getModel().getValueAt(table.getSelectedRow(), 5).equals(false)){
+						addFotografia();
+					}else{
+							JOptionPane.showMessageDialog(null, "Comentário já tem fotografia", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}else
 					JOptionPane.showMessageDialog(null, "Para adicionar uma fotografia, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -290,6 +309,11 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		control.addFotografia(frame);
     }
     
+    private void viewFotografia() {
+    	ControllerPesquisa control = new ControllerPesquisa();
+    	control.viewFotografia(frame, table.getModel().getValueAt(table.getSelectedRow(), 0).toString(), table.getModel().getValueAt(table.getSelectedRow(), 1).toString(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), table.getModel().getValueAt(table.getSelectedRow(), 4).toString());
+		
+	}
     
 
 	public static JTable getTable() {
@@ -305,8 +329,14 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 	}
+	
+	
 
-    @Override
+    public static TipoComentario getTipoComentario() {
+		return tipoComentario;
+	}
+
+	@Override
     public boolean uploadFotografiaUtilizador(String emailUtilizador) {
         InterfaceUpload upload = new InterfaceUpload();
         upload.init();
@@ -318,12 +348,16 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		tableModel.setRowCount(0);
 		int i;
 		for (i = 0; i < listaComentariosEstabelecimento.size(); i++) {
+			boolean hasFoto=false;
+			if(listaComentariosEstabelecimento.get(i).getIdFoto()>0){
+				hasFoto=true;
+			}
 			Object[] data = {
 				listaComentariosEstabelecimento.get(i).getUserID(),
 				getEstabelecimentoNomeByComentID(listaEstabelecimentos, listaComentariosEstabelecimento.get(i).getIdEstabelecimento()),
 				" ---- ", listaComentariosEstabelecimento.get(i).getNota(),
 				listaComentariosEstabelecimento.get(i).getComentario(),
-				true
+				hasFoto
 			};
 			
 			tableModel.addRow(data);
@@ -347,13 +381,17 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		tableModel.setRowCount(0);
 		int i;
 		for (i = 0; i < listComentariosPrato.size(); i++) {
+			boolean hasFoto=false;
+			if(listComentariosPrato.get(i).getIdFoto()>0){
+				hasFoto=true;
+			}
 			Object[] data = {
 					listComentariosPrato.get(i).getEmail(),
 					estabelecimento.getSelectedItem().toString(),
 					getPratoNomeByComentID(listaPratos, listComentariosPrato.get(i).getId()),
 					listComentariosPrato.get(i).getNota(),
 				listComentariosPrato.get(i).getComentario(),
-				true
+				hasFoto
 			};
 		tableModel.addRow(data);
 		}
