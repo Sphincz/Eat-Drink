@@ -10,6 +10,7 @@ import Comentarios.ControllerComentario;
 import Comentarios.InterfaceComentario;
 import Fotografia.InterfaceFotografia;
 import Pratos.Prato;
+import Suporte.TipoComentario;
 import Utilizador.Utilizador;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class ControllerPesquisa {
     private ArrayList<ComentarioPrato> listComentariosPrato = new ArrayList<ComentarioPrato>();
     
     public void createComentario() {
-        InterfaceComentario window = new InterfaceComentario(controlComent);
-        window.init();
+        //InterfaceComentario window = new InterfaceComentario();
+        //window.init();
     }
     
     public int getEstabelecimentoByName(String name){
@@ -89,5 +90,9 @@ public class ControllerPesquisa {
 	public ArrayList<Utilizador> getAllUsers() {
 		Utilizador users = new Utilizador();
 		return users.getAll();
+	}
+
+	public void viewComentario(TipoComentario tipoComentario, String email, String avaliacao, String comentario, String estabelecimento, String prato) {
+		
 	}
 }

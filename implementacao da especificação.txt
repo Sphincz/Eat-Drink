@@ -13,6 +13,8 @@ no metodo uploadFotografia foi preciso adicionar o ID do comentario para que pos
 - A avaliaçao poderia ter um limite pre-definido. Nao deveria ser baseado em suposiçao atraves da imagem fornecida.
 - Foram alteradas algumas TextArea para ComboBox, pois fazem mais sentido quando se pretende adicionar um comentario/fotografia.
 
+ver comentario nao passa pelo controller de comentarios e não tem todos os argumentos necessários
 
+comentarios não tem data!!!!!
 
 porque receber uma lista de pratos para pesquisa comentarios aos pratos se um select faz isso tudo com um select all?? Não daz sentido mas foi implementado

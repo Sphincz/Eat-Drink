@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
@@ -172,13 +173,35 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		JButton btnVer = new JButton("Ver comentário");
 		btnVer.setBounds(22, 444, 170, 23);
 		getContentPane().add(btnVer);
+		btnVer.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) {
+					ControllerPesquisa controller = new ControllerPesquisa();
+					controller.viewComentario( 
+							tipoComentario,
+							table.getModel().getValueAt(table.getSelectedRow(),
+									0).toString(),
+							table.getModel().getValueAt(table.getSelectedRow(),
+									3).toString(),
+							table.getModel().getValueAt(table.getSelectedRow(),
+									4).toString(), table.getModel().getValueAt(table.getSelectedRow(),
+											1).toString(), table.getModel().getValueAt(table.getSelectedRow(),
+													2).toString());
+				}else{
+					JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido");
+				}
+			}
+
+		});
 		
 		JButton btnAdicionarComentrio = new JButton("Adicionar comentário");
 		btnAdicionarComentrio.setBounds(220, 444, 170, 23);
 		btnAdicionarComentrio.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InterfaceComentario.init();
+				//InterfaceComentario.init();
 			}
 		});
 		getContentPane().add(btnAdicionarComentrio);
