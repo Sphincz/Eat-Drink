@@ -56,8 +56,6 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
 
 	public InterfacePesquisa() {
-		
-		
 		setTitle("Eat&Drink - Comentários e Fotografias");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

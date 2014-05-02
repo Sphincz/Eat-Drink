@@ -84,16 +84,13 @@ public class DBConnector {
     }
 
     public void destroyComent(int idComent) {
-        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public boolean findFoto(int idFoto) {
-        //throw new UnsupportedOperationException("Not yet implemented");
     	return true;
     }
 
     public void destroyFoto(int idFoto) {
-       // throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public void findEstabelecimentos(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
