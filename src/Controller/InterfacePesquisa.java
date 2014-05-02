@@ -141,7 +141,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnEstabelecimento.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				controllerPes.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
+				ControllerPesquisa controllerPes2 = new ControllerPesquisa();
+				controllerPes2.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 				tipoComentario = TipoComentario.ESTABELECIMENTO;
 			}	
