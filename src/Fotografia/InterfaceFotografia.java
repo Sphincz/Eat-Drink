@@ -90,8 +90,8 @@ public class InterfaceFotografia extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				controlFoto.deleteFotografia(user.getText(), comentario.getText(), estabelecimento.getText(), prato.getText());
+				frame.dispose();
 			}
 			
 		});
@@ -225,9 +225,9 @@ public class InterfaceFotografia extends JFrame{
 
 
     public void delete(int idFoto){
-        boolean apagou = controlFoto.deleteFotografia(idFoto);
-        if(apagou){
+        //boolean apagou = controlFoto.deleteFotografia(idFoto);
+        /*if(apagou){
             this.setVisible(false);
-        }
+        }*/
     }
 }

@@ -9,6 +9,7 @@ import Comentarios.ComentarioPrato;
 import Controller.ControllerPesquisa;
 import Controller.Estabelecimento;
 import Controller.InterfacePesquisa;
+import Fotografia.Fotografia;
 import Pratos.Prato;
 import Suporte.TipoComentario;
 import Utilizador.Utilizador;
@@ -87,11 +88,48 @@ public class DBConnector {
     public void destroyComent(int idComent) {
     }
 
-    public boolean findFoto(int idFoto) {
-    	return true;
+    public boolean findFoto(Fotografia fotografia, String email, String comentario, String estabelecimento, String prato) {
+    	try {
+    		statement = con.createStatement();
+    		if(prato.equals(" ---- ")){
+    			System.out.println("estabelecimentos");
+        		result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, ComentarioAoEstabelecimento, Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+email+"' AND Estabelecimento.idEstabelecimento = Fotografia.idEstabelecimento");
+    		
+    		}else{
+    			System.out.println("pratos");
+        		result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, ComentarioAoPrato, Prato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+email+"' AND ComentarioAoPrato.idPrato=Fotografia.idPrato");
+    		}
+    		if(result.next()){
+    			fotografia.setId(Integer.parseInt(result.getString("idFotografia")));
+    			return true;
+    		}
+    		
+    		statement.close();
+ 	        con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+    	
+    	return false;
     }
 
     public void destroyFoto(int idFoto) {
+    	try{
+        	statement = con.createStatement();
+        	System.out.println("id foto: "+idFoto);
+        	result = statement.executeQuery("UPDATE Fotografia SET Fotografia.emailutilizador=NULL, Fotografia.idPrato=NULL, Fotografia.idEstabelecimento=NULL WHERE Fotografia.idFotografia="+idFoto);
+	        
+	        result = statement.executeQuery("DELETE Fotografia WHERE Fotografia.idFotografia="+idFoto);
+	        
+	        statement.close();
+	        con.close();
+        
+        } catch (SQLException e) {
+        	
+        	e.printStackTrace();
+        }
     }
 
     public void findEstabelecimentos(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {

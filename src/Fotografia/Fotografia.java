@@ -16,12 +16,14 @@ public class Fotografia {
     private File foto;
 	private String coment;
 	private String email;
+	private int idFoto;
 
 
     public Fotografia(String email, String coment, File file) {
     	this.foto=foto;
         this.coment=coment;
         this.email=email;
+        idFoto=0;
     }
 
     public Fotografia() {
@@ -33,9 +35,9 @@ public class Fotografia {
         db.saveFoto(email, coment, foto);
     }
 
-    public boolean find(int idFoto) {
+    public boolean find(String email, String comentario, String estabelecimento, String prato) {
         DBConnector db = new DBConnector();
-        boolean encontrou = db.findFoto(idFoto);
+        boolean encontrou = db.findFoto(this, email, comentario, estabelecimento, prato);
         return encontrou;
     }
 
@@ -48,5 +50,14 @@ public class Fotografia {
         DBConnector db = new DBConnector();
         int id = db.saveFoto(file);
     }
+
+	public void setId(int id) {
+		idFoto=id;
+		
+	}
+
+	public int getId() {
+		return idFoto;
+	}
     
 }

@@ -18,11 +18,13 @@ public class ControllerFotografia {
         foto.save();//guarda na BD
     }
 
-    public boolean deleteFotografia(int idFoto) {
+    public boolean deleteFotografia(String email, String comentario, String estabelecimento, String prato) {
         Fotografia foto = new Fotografia();
-        boolean encontrou = foto.find(idFoto);
+        boolean encontrou = foto.find(email, comentario, estabelecimento, prato);
+        System.out.println("ok");
         if(encontrou){
-            foto.destroy(idFoto);
+        	System.out.println("okok");
+            foto.destroy(foto.getId());
             JOptionPane.showMessageDialog(null, "Foto eliminada.");
             return true;
         }
