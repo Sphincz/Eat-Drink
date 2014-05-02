@@ -107,8 +107,8 @@ public class ControllerPesquisa {
 		return users.getAll();
 	}
 
-	public void viewComentario(TipoComentario tipoComentario, String email, String avaliacao, String comentario, String estabelecimento, String prato) {
-		InterfaceComentario.init(false, tipoComentario, email, avaliacao, comentario, prato, estabelecimento);
+	public void viewComentario(InterfacePesquisa pesquisa, TipoComentario tipoComentario, String email, String avaliacao, String comentario, String estabelecimento, String prato) {
+		InterfaceComentario.init(pesquisa, false, tipoComentario, email, avaliacao, comentario, prato, estabelecimento);
 	}
 
 	public int getPratoByName(String prato) {

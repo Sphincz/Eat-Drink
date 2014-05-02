@@ -17,6 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.FileAttribute;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Nuno
@@ -37,6 +39,7 @@ public class ControllerUpload {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		JOptionPane.showMessageDialog(null, "Foto inserida!");
 	}
     
 }

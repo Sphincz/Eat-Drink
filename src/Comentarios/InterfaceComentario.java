@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Controller.InterfacePesquisa;
 import Suporte.TipoComentario;
 
 import javax.swing.JFrame;
@@ -109,7 +110,7 @@ public class InterfaceComentario extends JFrame{
         InterfaceComentario.controlComent=controlComent;
     }
     
-    public static void init(final boolean editable, TipoComentario tipoComentario, final String name, final String a, final String c, final String p, final String e) {
+    public static void init(final InterfacePesquisa framePrincipal, final boolean editable, TipoComentario tipoComentario, final String name, final String a, final String c, final String p, final String e) {
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -132,6 +133,13 @@ public class InterfaceComentario extends JFrame{
 					}else{
 						frame.setTitle("Eat&Drink - Adicionar comentario");
 					}
+					frame.addWindowListener(new java.awt.event.WindowAdapter() {
+					    @Override
+					    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+					    	framePrincipal.notFocused=false;
+					    	frame.dispose();
+					    }
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

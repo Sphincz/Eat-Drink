@@ -56,6 +56,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
 	public static TipoComentario tipoComentario;
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
+	public static boolean notFocused=false;
 
 	public InterfacePesquisa() {
 		setTitle(PROJECT_NAME+" - Pesquisar");
@@ -171,19 +172,18 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnNewButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
+				if (table.getSelectedRow() != -1 && !notFocused) {
 					if(table.getModel().getValueAt(table.getSelectedRow(), 5).equals(true)){
 						viewFotografia();
+						notFocused=true;
 					}else{
 						JOptionPane.showMessageDialog(null, "Comentário sem foto");
 					}
 				}else{
-					JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido.");
+					if(notFocused) JOptionPane.showMessageDialog(null, "Já está a visualizar uma fotografia");
+					else JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido.");
 				}
 			}
-
-			
-			
 		});
 		
 		JButton btnVer = new JButton("Ver comentário");
@@ -193,9 +193,10 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (table.getSelectedRow() != -1) {
+				if (table.getSelectedRow() != -1 && !notFocused) {
+					notFocused=true;
 					ControllerPesquisa controller = new ControllerPesquisa();
-					controller.viewComentario( 
+					controller.viewComentario( frame,
 							tipoComentario,
 							table.getModel().getValueAt(table.getSelectedRow(),
 									0).toString(),
@@ -206,7 +207,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 											1).toString(), table.getModel().getValueAt(table.getSelectedRow(),
 													2).toString());
 				}else{
-					JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido");
+					if(notFocused)JOptionPane.showMessageDialog(null, "Já está a visualizar um comentário");
+					else JOptionPane.showMessageDialog(null, "Por favor, seleccione um comentário válido");
 				}
 			}
 
@@ -218,7 +220,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarComentrio.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					InterfaceComentario.init(true, tipoComentario, "", "", "", "", "");
+					if(!notFocused){
+						notFocused=true;
+						InterfaceComentario.init(frame, true, tipoComentario, "", "", "", "", "");
+					}else{
+						if(notFocused)JOptionPane.showMessageDialog(null, "Já está a adicionar um comentário");
+					}
+					
 				
 			}
 		});
@@ -229,14 +237,16 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarFotografia.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow()!=-1){
+				if(table.getSelectedRow()!=-1 && !notFocused){
 					if(table.getModel().getValueAt(table.getSelectedRow(), 5).equals(false)){
 						addFotografia();
+						notFocused=true;
 					}else{
 							JOptionPane.showMessageDialog(null, "Comentário já tem fotografia", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else
-					JOptionPane.showMessageDialog(null, "Para adicionar uma fotografia, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
+					if(notFocused) JOptionPane.showMessageDialog(null, "Já está a adicionar uma fotografia");
+					else JOptionPane.showMessageDialog(null, "Para adicionar uma fotografia, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		getContentPane().add(btnAdicionarFotografia);

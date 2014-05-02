@@ -85,6 +85,7 @@ public class InterfaceFotografia extends JFrame{
 		prato.setBounds(102, 86, 67, 14);
 		getContentPane().add(prato);
 		
+		
 		btnApagar = new JButton("Apagar");
 		btnApagar.setBounds(10, 128, 89, 23);
 		getContentPane().add(btnApagar);
@@ -93,7 +94,9 @@ public class InterfaceFotografia extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlFoto.deleteFotografia(user.getText(), comentario.getText(), estabelecimento.getText(), prato.getText());
+				framePrincipal.notFocused=false;
 				frame.dispose();
+				
 			}
 			
 		});
@@ -106,7 +109,7 @@ public class InterfaceFotografia extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 uploadFotografia();
-				
+                framePrincipal.notFocused=false;
 			}
 			
 		});
@@ -191,9 +194,15 @@ public class InterfaceFotografia extends JFrame{
 					ImageIcon icon=new ImageIcon(resized);
             		JLabel fotoLabel = new JLabel(icon);
             		fotoLabel.setHorizontalAlignment(JLabel.CENTER);
-
             		fotoPanel.add(fotoLabel, new GridBagConstraints());
             		fotoPanel.revalidate(); 
+            		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            		    @Override
+            		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            		    	framePrincipal.notFocused=false;
+            		    	frame.dispose();
+            		    }
+            		});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -219,6 +228,13 @@ public class InterfaceFotografia extends JFrame{
 					prato.setText(p);
 					comentario.setText(c);
 					user.setText(email);
+					frame.addWindowListener(new java.awt.event.WindowAdapter() {
+					    @Override
+					    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+					    	framePrincipal.notFocused=false;
+					    	frame.dispose();
+					    }
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
