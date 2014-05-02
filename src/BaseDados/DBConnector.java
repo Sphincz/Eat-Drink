@@ -7,6 +7,7 @@ package BaseDados;
 import Comentarios.ComentarioEstabelecimento;
 import Comentarios.ComentarioPrato;
 import Controller.ControllerPesquisa;
+import Controller.ControllerUpload;
 import Controller.Estabelecimento;
 import Controller.InterfacePesquisa;
 import Fotografia.Fotografia;
@@ -64,14 +65,17 @@ public class DBConnector {
     	return true;
     }
 
-    public void saveFoto(String email, String coment, File foto) {
+    public void saveFoto(ControllerPesquisa controller, String estabelecimento, String prato, String email, String coment, File foto) {
     	 try{
          	statement = con.createStatement();
          	if(InterfacePesquisa.tipoComentario == TipoComentario.ESTABELECIMENTO){
-         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento,emailUtilizador, idPrato, localizacao) VALUES ("+1+", '"+"pfl@iscte.pt"+"',"+1+", '"+"wffwf"+"')");
+         		int id=controller.getEstabelecimentoByName(estabelecimento);
+         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento, emailUtilizador, idPrato, localizacao) VALUES ("+id+", '"+email+"', NULL, 'img/"+foto.getName()+"')");
          	}else{
-         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento,emailUtilizador, idPrato, localizacao) VALUES ("+1+", '"+"pfl@iscte.pt"+"',"+1+", '"+"wffwf"+"')");
+         		int id=controller.getPratoByName(prato);
+         		result = statement.executeQuery("INSERT INTO Fotografia (idEstabelecimento, emailUtilizador, idPrato, localizacao) VALUES (NULL, '"+email+"',"+id+", 'img/"+foto.getName()+"')");
          	}
+         	ControllerUpload.copyFileToSystem(foto);
  	        statement.close();
  	        con.close();
          

@@ -5,7 +5,11 @@
 package Fotografia;
 
 import java.io.File;
+
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import Controller.ControllerPesquisa;
 
 /**
  *
@@ -13,8 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class ControllerFotografia {
 
-    public void uploadFotografia(String email, String coment, File file) {
-        Fotografia foto = new Fotografia(email, coment, file);//guarda temporariamente foto
+    public void uploadFotografia(ControllerPesquisa controller, String estabelecimento, String prato, String email, String coment, File file) {
+        Fotografia foto = new Fotografia(controller, estabelecimento, prato, email, coment, file);//guarda temporariamente foto
         foto.save();//guarda na BD
     }
 

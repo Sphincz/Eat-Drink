@@ -305,8 +305,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
     }
     
     public void addFotografia(){
-    	ControllerPesquisa control = new ControllerPesquisa();
-		control.addFotografia(frame);
+    	controlPesquisa = new ControllerPesquisa();
+    	controlPesquisa.addFotografia(frame, table.getModel().getValueAt(table.getSelectedRow(), 0).toString(), table.getModel().getValueAt(table.getSelectedRow(), 1).toString(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), table.getModel().getValueAt(table.getSelectedRow(), 4).toString());
     }
     
     private void viewFotografia() {

@@ -5,6 +5,7 @@
 package Fotografia;
 
 import BaseDados.DBConnector;
+import Controller.ControllerPesquisa;
 
 import java.io.File;
 
@@ -17,22 +18,36 @@ public class Fotografia {
 	private String coment;
 	private String email;
 	private int idFoto;
+	private String estabelecimento;
+	private String prato;
+	private ControllerPesquisa controller;
 
 
-    public Fotografia(String email, String coment, File file) {
-    	this.foto=foto;
+    public Fotografia(ControllerPesquisa controller, String estabelecimento, String prato, String email, String coment, File file) {
+    	this.foto=file;
         this.coment=coment;
         this.email=email;
         idFoto=0;
+        this.estabelecimento=estabelecimento;
+        this.prato=prato;
+        this.controller=controller;
     }
 
-    public Fotografia() {
+	public Fotografia() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public String getPrato() {
+		return prato;
 	}
 
 	public void save() {
         DBConnector db = new DBConnector();
-        db.saveFoto(email, coment, foto);
+        db.saveFoto(controller, estabelecimento, prato, email, coment, foto);
     }
 
     public boolean find(String email, String comentario, String estabelecimento, String prato) {

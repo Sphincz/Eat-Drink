@@ -32,12 +32,14 @@ public class ControllerPesquisa {
         //window.init();
     }
     
+    public ControllerPesquisa(){
+    	listaEstabelecimentos=setWindowData();
+    	listaPratos=setWindowDataPratos();
+    }
+    
     public int getEstabelecimentoByName(String name){
-    	System.out.println(listaEstabelecimentos.size());
     	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
-    		System.out.println("->"+listaEstabelecimentos.get(i).getDesignacao());
 			if(listaEstabelecimentos.get(i).getDesignacao().equals(name)){
-				System.out.println(name + "-" +listaEstabelecimentos.get(i).getDesignacao());
 				return listaEstabelecimentos.get(i).getId();
 			}
 		}
@@ -52,9 +54,9 @@ public class ControllerPesquisa {
         return listaComentariosEstabelecimento;
     }
 
-    public void addFotografia(InterfacePesquisa frame) {
+    public void addFotografia(InterfacePesquisa frame, String email, String estabelecimento, String prato, String comentario) {
         InterfaceFotografia window = new InterfaceFotografia();
-        window.init(frame);
+        window.init(this, frame, email, estabelecimento, prato, comentario);
     }
     
     public void viewFotografia(InterfacePesquisa frame, String email, String estabelecimento, String prato, String comentario) {
@@ -65,7 +67,7 @@ public class ControllerPesquisa {
     	}else{
     		caminhoFoto= ComentarioPrato.getFotoForComent(email, prato, comentario);
     	}
-        window.init2(frame, email, estabelecimento, prato, comentario, caminhoFoto);
+        window.init2(this, frame, email, estabelecimento, prato, comentario, caminhoFoto);
 	}
     
     public void searchEstabelecimento(String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario){
@@ -107,6 +109,15 @@ public class ControllerPesquisa {
 
 	public void viewComentario(TipoComentario tipoComentario, String email, String avaliacao, String comentario, String estabelecimento, String prato) {
 		InterfaceComentario.init(false, tipoComentario, email, avaliacao, comentario, prato, estabelecimento);
+	}
+
+	public int getPratoByName(String prato) {
+		for (int i = 0; i < listaPratos.size(); i++) {
+			if(listaPratos.get(i).getDescricao().equals(prato)){
+				return listaPratos.get(i).getId();
+			}
+		}
+    	return 0;
 	}
 
 	

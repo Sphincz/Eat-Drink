@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Controller.ControllerPesquisa;
 import Controller.InterfacePesquisa;
 
 /**
@@ -38,6 +39,7 @@ import Controller.InterfacePesquisa;
 public class InterfaceFotografia extends JFrame{
 	private static InterfaceFotografia frame;
 	private File file;
+	private static JButton btnApagar;
 	private static JPanel fotoPanel=null;
 	private static JButton btnUpload;
 	private static JLabel lblEm;
@@ -83,7 +85,7 @@ public class InterfaceFotografia extends JFrame{
 		prato.setBounds(102, 86, 67, 14);
 		getContentPane().add(prato);
 		
-		JButton btnApagar = new JButton("Apagar");
+		btnApagar = new JButton("Apagar");
 		btnApagar.setBounds(10, 128, 89, 23);
 		getContentPane().add(btnApagar);
 		btnApagar.addActionListener(new ActionListener(){
@@ -163,9 +165,11 @@ public class InterfaceFotografia extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private static ControllerFotografia controlFoto;
 	private static InterfacePesquisa framePrincipal;
+	private static ControllerPesquisa controllerPesquisa;
 
-	public static void init2(InterfacePesquisa frameP, final String email, final String e, final String p, final String c, final String caminho) {
-    	framePrincipal=frameP;
+	public static void init2(ControllerPesquisa controll, InterfacePesquisa frameP, final String email, final String e, final String p, final String c, final String caminho) {
+		controllerPesquisa=controll;
+		framePrincipal=frameP;
         controlFoto = new ControllerFotografia();
         EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -197,7 +201,8 @@ public class InterfaceFotografia extends JFrame{
 		});
     }
 	
-    public static void init(InterfacePesquisa frameP) {
+    public static void init(ControllerPesquisa controll, InterfacePesquisa frameP, final String email, final String e, final String p, final String c) {
+    	controllerPesquisa=controll;
     	framePrincipal=frameP;
         controlFoto = new ControllerFotografia();
         EventQueue.invokeLater(new Runnable() {
@@ -208,6 +213,12 @@ public class InterfaceFotografia extends JFrame{
 					frame.setSize(375, 200);
 					frame.setLocation(475, 175);
 					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+					lblEm.setText("Comentario");
+					estabelecimento.setText(e);
+					btnApagar.setEnabled(false);
+					prato.setText(p);
+					comentario.setText(c);
+					user.setText(email);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -219,7 +230,7 @@ public class InterfaceFotografia extends JFrame{
     	int comentID=0;
     	String email = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 0);
     	String coment = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 4);
-    	controlFoto.uploadFotografia(email, coment, file);
+    	controlFoto.uploadFotografia(controllerPesquisa, estabelecimento.getText(), prato.getText(), email, coment, file);
     	this.dispose();
     }
 
