@@ -34,9 +34,11 @@ public class ControllerPesquisa {
     public int getEstabelecimentoByName(String name){
     	System.out.println(listaEstabelecimentos.size());
     	for (int i = 0; i < listaEstabelecimentos.size(); i++) {
-			if(listaEstabelecimentos.get(i).getDesignacao().equals(name))
+    		System.out.println("->"+listaEstabelecimentos.get(i).getDesignacao());
+			if(listaEstabelecimentos.get(i).getDesignacao().equals(name)){
 				System.out.println(name + "-" +listaEstabelecimentos.get(i).getDesignacao());
 				return listaEstabelecimentos.get(i).getId();
+			}
 		}
     	return 0;
     }

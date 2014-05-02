@@ -190,7 +190,6 @@ public class DBConnector {
     public ArrayList<ComentarioPrato> findAllComents(ControllerPesquisa controller,String nome, String prato, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {
     	ArrayList<ComentarioPrato> comentarios = new ArrayList<ComentarioPrato>();
     	try{
-    		
     		statement = con.createStatement();
     		ArrayList<String> whereCase = new ArrayList<String>();
     		if(!estabelecimento.equals("*")){
@@ -220,13 +219,16 @@ public class DBConnector {
     			if(whereCase.get(2).equals("") && whereCase.get(1).equals("") && whereCase.get(0).equals(""))
     			whereCase.add(" WHERE '"+prato+"'=Prato.descricao AND Prato.idPrato=ComentarioAoPrato.idPrato");
     			else{
-    				if(!whereCase.get(2).equals("") || !whereCase.get(1).equals(""))
+    				if(!whereCase.get(2).equals("") || !whereCase.get(1).equals("") || !whereCase.get(0).equals(""))
     					whereCase.add(" AND '"+prato+"'=Prato.descricao AND Prato.idPrato=ComentarioAoPrato.idPrato AND menuDoEstabelecimento.idPrato=ComentarioAoPrato.idPrato");
-    				else whereCase.add("");
+    				else{
+    					whereCase.add("");
+    				}
     			}
     		}else{
     			whereCase.add("");
     		}
+    		System.err.println(whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("") && whereCase.get(3).equals("")){
     			result = statement.executeQuery("SELECT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
     			while (result.next()) {

@@ -6,7 +6,6 @@ package Comentarios;
 
 import BaseDados.DBConnector;
 import Controller.ControllerPesquisa;
-import Pratos.Prato;
 
 import java.util.ArrayList;
 
