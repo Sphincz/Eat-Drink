@@ -5,6 +5,9 @@
 package Fotografia;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
@@ -102,7 +105,7 @@ public class InterfaceFotografia extends JFrame{
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.setFileFilter(filter);
 		
-		fotoPanel = new JPanel();
+		fotoPanel = new JPanel(new GridBagLayout());;
 		fotoPanel.setBounds(260, 11, 89, 89);
 		fotoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		fotoPanel.addMouseListener(new MouseListener(){
@@ -113,14 +116,16 @@ public class InterfaceFotografia extends JFrame{
 	                file = fc.getSelectedFile();
 	                
 	                try {
+	                	fotoPanel.removeAll();
 	            		BufferedImage img=ImageIO.read(file);
-	            		ImageIcon icon=new ImageIcon(img);
+	            		Image resized = img.getScaledInstance(fotoPanel.getWidth(), fotoPanel.getHeight(), Image.SCALE_SMOOTH);
+	            		ImageIcon icon=new ImageIcon(resized);
 	            		
 	            		JLabel fotoLabel = new JLabel(icon);
+	            		fotoLabel.setHorizontalAlignment(JLabel.CENTER);
 
-	            		fotoPanel.add(fotoLabel);
+	            		fotoPanel.add(fotoLabel, new GridBagConstraints());
 	            		fotoPanel.revalidate(); 
-	            		fotoPanel.repaint();
 	            	}
 	            	catch(IOException e) {
 	            		e.printStackTrace();

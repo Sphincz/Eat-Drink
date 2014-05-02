@@ -41,6 +41,7 @@ import javax.swing.JTextField;
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
 	private static final long serialVersionUID = 1L;
+	private String PROJECT_NAME = "Eat&Drink";
 	private JPanel contentPane;
 	private ControllerPesquisa controlPesquisa;
 	private JComboBox<String> user;
@@ -59,7 +60,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	public InterfacePesquisa() {
 		
 		
-		setTitle("Eat&Drink - Pesquisar");
+		setTitle(PROJECT_NAME+" - Pesquisar");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
@@ -195,13 +196,17 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			}
 
 		});
+
 		
 		JButton btnAdicionarComentrio = new JButton("Adicionar comentário");
 		btnAdicionarComentrio.setBounds(220, 444, 170, 23);
 		btnAdicionarComentrio.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//InterfaceComentario.init();
+				if(table.getSelectedRow()!=-1)
+					InterfaceComentario.init();
+				else
+					JOptionPane.showMessageDialog(null, "Para adicionar um comentário, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		getContentPane().add(btnAdicionarComentrio);
@@ -212,7 +217,9 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow()!=-1)
-				addFotografia();
+					addFotografia();
+				else
+					JOptionPane.showMessageDialog(null, "Para adicionar uma fotografia, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		getContentPane().add(btnAdicionarFotografia);
