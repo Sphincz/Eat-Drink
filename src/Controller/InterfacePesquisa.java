@@ -203,10 +203,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnAdicionarComentrio.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(table.getSelectedRow()!=-1)
-					InterfaceComentario.init();
-				else
-					JOptionPane.showMessageDialog(null, "Para adicionar um comentário, por favor selecione um comentário.", PROJECT_NAME+" - Selecção inválida", JOptionPane.INFORMATION_MESSAGE);
+					InterfaceComentario.init(true, tipoComentario, "", "", "", "", "");
+				
 			}
 		});
 		getContentPane().add(btnAdicionarComentrio);

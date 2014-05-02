@@ -25,6 +25,13 @@ public class InterfaceComentario extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private static ControllerComentario controlComent;
 	private static InterfaceComentario frame;
+	private static JLabel estabelecimento;
+	private static JLabel username;
+	private static JLabel prato;
+	private static JSpinner avaliacao;
+	private static JTextArea comentario;
+	private static JButton btnApagar;
+	private static JButton btnGravarAlteraes;
 
     public InterfaceComentario(ControllerComentario controlComent){
     	setTitle("Eat&Drink - Adicionar coment\u00E1rio");
@@ -34,9 +41,9 @@ public class InterfaceComentario extends JFrame{
     	lblColocadoPor.setBounds(35, 20, 67, 14);
     	getContentPane().add(lblColocadoPor);
     	
-    	JLabel lblSphincz = new JLabel("Sphincz");
-    	lblSphincz.setBounds(112, 20, 46, 14);
-    	getContentPane().add(lblSphincz);
+    	username = new JLabel("Sphincz");
+    	username.setBounds(112, 20, 400, 14);
+    	getContentPane().add(username);
     	
     	JLabel lblEm = new JLabel("Em:");
     	lblEm.setBounds(84, 45, 18, 14);
@@ -58,35 +65,35 @@ public class InterfaceComentario extends JFrame{
     	lblEstabelecimento.setBounds(20, 70, 82, 14);
     	getContentPane().add(lblEstabelecimento);
     	
-    	JLabel lblBarDoToni = new JLabel("Bar do Toni");
-    	lblBarDoToni.setBounds(112, 70, 54, 14);
-    	getContentPane().add(lblBarDoToni);
+    	estabelecimento = new JLabel("Bar do Toni");
+    	estabelecimento.setBounds(112, 70, 54, 14);
+    	getContentPane().add(estabelecimento);
     	
     	JLabel lblPrato = new JLabel("Prato:");
     	lblPrato.setBounds(181, 70, 46, 14);
     	getContentPane().add(lblPrato);
     	
-    	JLabel lblMenuEspecial = new JLabel("Menu Especial");
-    	lblMenuEspecial.setBounds(222, 70, 67, 14);
-    	getContentPane().add(lblMenuEspecial);
+    	prato = new JLabel("Menu Especial");
+    	prato.setBounds(222, 70, 67, 14);
+    	getContentPane().add(prato);
     	
-    	JTextArea textArea = new JTextArea();
-    	textArea.setBounds(10, 96, 339, 94);
-    	getContentPane().add(textArea);
+    	comentario = new JTextArea();
+    	comentario.setBounds(10, 96, 339, 94);
+    	getContentPane().add(comentario);
     	
     	JLabel lblAvaliao = new JLabel("Avalia\u00E7\u00E3o:");
     	lblAvaliao.setBounds(108, 204, 50, 14);
     	getContentPane().add(lblAvaliao);
     	
-    	JSpinner spinner = new JSpinner(new SpinnerNumberModel(3, 0, 5, 1));
-    	spinner.setBounds(170, 201, 82, 20);
-    	getContentPane().add(spinner);
+    	avaliacao = new JSpinner(new SpinnerNumberModel(3, 0, 5, 1));
+    	avaliacao.setBounds(170, 201, 82, 20);
+    	getContentPane().add(avaliacao);
     	
-    	JButton btnGravarAlteraes = new JButton("Gravar altera\u00E7\u00F5es");
+    	btnGravarAlteraes = new JButton("Gravar altera\u00E7\u00F5es");
     	btnGravarAlteraes.setBounds(10, 253, 119, 23);
     	getContentPane().add(btnGravarAlteraes);
     	
-    	JButton btnApagar = new JButton("Apagar");
+    	btnApagar = new JButton("Apagar");
     	btnApagar.setBounds(171, 253, 67, 23);
     	getContentPane().add(btnApagar);
     	
@@ -102,7 +109,7 @@ public class InterfaceComentario extends JFrame{
         InterfaceComentario.controlComent=controlComent;
     }
     
-    public static void init() {
+    public static void init(final boolean editable, TipoComentario tipoComentario, final String name, final String a, final String c, final String p, final String e) {
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -111,6 +118,17 @@ public class InterfaceComentario extends JFrame{
 					frame.setSize(375, 325);
 					frame.setLocation(475, 175);
 					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+					estabelecimento.setText(e);
+					username.setText(name);
+					prato.setText(p);
+					comentario.setText(c);
+					if(!editable){
+						avaliacao.setValue(Integer.parseInt(a));
+						comentario.setEditable(false);
+						btnApagar.setEnabled(false);
+						btnGravarAlteraes.setEnabled(false);
+						avaliacao.setEnabled(false);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
