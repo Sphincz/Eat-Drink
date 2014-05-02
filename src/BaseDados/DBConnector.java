@@ -45,6 +45,7 @@ public class DBConnector {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Base de dados desligada ou username e/ou password inválidos!");
 			System.exit(0);
+			
 		}
 	}
 
