@@ -229,7 +229,6 @@ public class DBConnector {
     		}else{
     			whereCase.add("");
     		}
-    		System.err.println(whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("") && whereCase.get(3).equals("")){
     			result = statement.executeQuery("SELECT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
     			while (result.next()) {

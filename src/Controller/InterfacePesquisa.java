@@ -58,7 +58,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	public InterfacePesquisa() {
 		
 		
-		setTitle("Eat&Drink - Pesquisar");
+		setTitle("Eat&Drink - Comentários e Fotografias");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
