@@ -56,7 +56,9 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
 
 	public InterfacePesquisa() {
-		setTitle("Eat&Drink - Comentários e Fotografias");
+		
+		
+		setTitle("Eat&Drink - Pesquisar");
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (ClassNotFoundException | InstantiationException
@@ -139,9 +141,8 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		btnEstabelecimento.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ControllerPesquisa controllerPes2 = new ControllerPesquisa();
-				
-				controllerPes2.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
+				ControllerPesquisa controlPes2 = new ControllerPesquisa();
+				controlPes2.searchEstabelecimento(user.getSelectedItem().toString(), estabelecimento.getSelectedItem().toString(), 
 						prato.getSelectedItem().toString(), (int) avaliacao.getValue(), fotografia.isSelected(), comentario.getText());
 				tipoComentario = TipoComentario.ESTABELECIMENTO;
 			}	

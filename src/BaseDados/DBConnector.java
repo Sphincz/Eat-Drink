@@ -193,7 +193,8 @@ public class DBConnector {
     		statement = con.createStatement();
     		ArrayList<String> whereCase = new ArrayList<String>();
     		if(!estabelecimento.equals("*")){
-    			whereCase.add(" WHERE "+controller.getEstabelecimentoByName(estabelecimento)+"=Estabelecimento.idEstabelecimento AND Estabelecimento.idEstabelecimento=menuDoEstabelecimento.idEstabelecimento");
+    			whereCase.add(" WHERE "+controller.getEstabelecimentoByName(estabelecimento)+"=Estabelecimento.idEstabelecimento AND Estabelecimento.idEstabelecimento=menuDoEstabelecimento.idEstabelecimento AND menuDoEstabelecimento.idPrato = Prato.idPrato AND Prato.idPrato = ComentarioAoPrato.idPrato");
+    			System.out.println("Pesquisa apenas por pratos do estabelecimento!");
     		}else{
     			whereCase.add("");
     		}
@@ -216,6 +217,7 @@ public class DBConnector {
     			whereCase.add("");
     		}
     		if(!prato.equals("*")){
+    			System.out.println("Pesquisa apenas por pratos!");
     			if(whereCase.get(2).equals("") && whereCase.get(1).equals("") && whereCase.get(0).equals(""))
     			whereCase.add(" WHERE '"+prato+"'=Prato.descricao AND Prato.idPrato=ComentarioAoPrato.idPrato");
     			else{
@@ -230,13 +232,13 @@ public class DBConnector {
     		}
     		System.err.println(whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("") && whereCase.get(3).equals("")){
-    			result = statement.executeQuery("SELECT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
+    			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
     			while (result.next()) {
     				ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
     				comentarios.add(e);
     			}
     		}else{
-    			result = statement.executeQuery("SELECT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM Utilizador, ComentarioAoPrato, Prato, Estabelecimento, menuDoEstabelecimento"
+    			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM Utilizador, ComentarioAoPrato, Prato, Estabelecimento, menuDoEstabelecimento"
         			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
 	    		while (result.next()) {
 	    			ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
