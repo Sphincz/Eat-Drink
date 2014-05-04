@@ -220,6 +220,7 @@ public class InterfaceComentario extends JFrame{
 					frame.setVisible(true);
 					frame.setSize(375, 325);
 					frame.setLocation(475, 175);
+					frame.setResizable(false);
 					frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 					estabelecimento.setText(e);
 					username.setText(name);

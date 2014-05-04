@@ -189,6 +189,7 @@ public class InterfaceFotografia extends JFrame{
 					btnUpload.setEnabled(false);
 					user.setText(email);
 					caminhoFoto=caminho;
+					frame.setResizable(false);
 					BufferedImage img=ImageIO.read(new File(caminhoFoto));
 					Image resized = img.getScaledInstance(fotoPanel.getWidth(), fotoPanel.getHeight(), Image.SCALE_SMOOTH);
 					ImageIcon icon=new ImageIcon(resized);
@@ -225,6 +226,7 @@ public class InterfaceFotografia extends JFrame{
 					lblEm.setText("Comentario");
 					estabelecimento.setText(e);
 					btnApagar.setEnabled(false);
+					frame.setResizable(false);
 					prato.setText(p);
 					comentario.setText(c);
 					user.setText(email);

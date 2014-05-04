@@ -305,6 +305,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 					frame.setVisible(true);
 					frame.setSize(650, 550);
 					frame.setLocation(350, 75);
+					frame.setResizable(false);
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
