@@ -74,9 +74,9 @@ public class ComentarioEstabelecimento {
 		this.controller = controller;
 	}
 
-	public boolean save(int id, String comentario, int nota) {
+	public boolean save(String e, String user, String comentario, int nota) {
         DBConnector db = new DBConnector();
-        return db.inserirComentarioEstabelecimento(id, comentario, nota);
+        return db.inserirComentarioEstabelecimento(e, user, comentario, nota);
         
     }
 

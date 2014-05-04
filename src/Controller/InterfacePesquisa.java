@@ -56,6 +56,9 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
 	public static TipoComentario tipoComentario;
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
+	private Vector<String> v;
+	private Vector<String> v1;
+	private Vector<String> v3;
 	public static boolean notFocused=false;
 
 	public InterfacePesquisa() {
@@ -74,7 +77,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 		ControllerPesquisa controllUsers = new ControllerPesquisa();
 		ArrayList<Utilizador> listaU = controllUsers.getAllUsers();
-		Vector<String> v3 = new Vector<String>();
+		v3 = new Vector<String>();
 		v3.add("*");
 		for (int i = 0; i < listaU.size(); i++) {
 			v3.add(listaU.get(i).getNome());
@@ -89,7 +92,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		
 
 		ArrayList<Estabelecimento> listaE = controllerPes.setWindowData();
-		Vector<String> v = new Vector<String>();
+		v = new Vector<String>();
 		v.add("*");
 		for (int i = 0; i < listaE.size(); i++) {
 			v.add(listaE.get(i).getDesignacao());
@@ -103,7 +106,7 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		getContentPane().add(lblPrato);
 		
 		ArrayList<Prato> listaP = controllerPes.setWindowDataPratos();
-		Vector<String> v1 = new Vector<String>();
+		v1 = new Vector<String>();
 		v1.add("*");
 		for (int i = 0; i < listaP.size(); i++) {
 			v1.add(listaP.get(i).getDescricao());
@@ -314,7 +317,11 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
         controlPesquisa.createComentario();
     }
     
-    public void addFotografia(){
+    public ControllerPesquisa getControllerPes() {
+		return controllerPes;
+	}
+
+	public void addFotografia(){
     	controlPesquisa = new ControllerPesquisa();
     	controlPesquisa.addFotografia(frame, table.getModel().getValueAt(table.getSelectedRow(), 0).toString(), table.getModel().getValueAt(table.getSelectedRow(), 1).toString(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), table.getModel().getValueAt(table.getSelectedRow(), 4).toString());
     }
@@ -417,4 +424,19 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		}
 		return "---";
 	}
+
+	public Vector<String> getV() {
+		return v;
+	}
+
+	public Vector<String> getV1() {
+		return v1;
+	}
+
+	public Vector<String> getV3() {
+		return v3;
+	}
+
+	
+	
 }

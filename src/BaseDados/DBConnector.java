@@ -53,16 +53,62 @@ public class DBConnector {
 
 	
 
-    public boolean inserirComentarioEstabelecimento(int id, String comentario, int nota) {
-        //throw new UnsupportedOperationException("Not yet implemented");
-    	return true;
-        //se insistir atualiza
+    public boolean inserirComentarioEstabelecimento(String estabelecimento, String user, String comentario, int nota) {
+    	try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento, ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.nota FROM ComentarioAoEstabelecimento, Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+user+"'");
+         	if(result.next()){//update
+         		int id=Integer.parseInt(result.getString("idEstabelecimento"));
+         		result = statement.executeQuery("UPDATE ComentarioAoEstabelecimento SET ComentarioAoEstabelecimento.comentario='"+comentario+"', ComentarioAoEstabelecimento.nota="+nota+" WHERE "+id+"=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+user+"' AND ComentarioAoEstabelecimento.comentario='"+result.getString("comentario")+"'");
+         		return true;
+         	}else{//insert
+         		result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento FROM Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"'");
+         		if(result.next()){
+         			System.out.println("ha estabelecimento");
+         			int id=Integer.parseInt(result.getString("idEstabelecimento"));
+         			result = statement.executeQuery("SELECT Utilizador.email FROM Utilizador WHERE Utilizador.nome='"+user+"'");
+         			if(result.next()){
+         				System.out.println("inseriu E");
+         				String email = result.getString("email");
+                 		result = statement.executeQuery("INSERT INTO ComentarioAoEstabelecimento VALUES ("+id+", '"+email+"', '"+comentario+"', "+nota+", 1)");
+                 		return true;
+         			}
+         			
+         		}
+         	}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return false;
     }
     
-    public boolean inserirComentarioPrato(int id, String comentario, int nota) {
-        //throw new UnsupportedOperationException("Not yet implemented");
-        //se insistir atualiza
-    	return true;
+    public boolean inserirComentarioPrato(String prato, String user, String comentario, int nota) {
+    	try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Prato.idPrato, ComentarioAoPrato.email, ComentarioAoPrato.comentario, ComentarioAoPrato.nota FROM ComentarioAoPrato, Prato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+user+"'");
+         	if(result.next()){//update
+         		int id=Integer.parseInt(result.getString("idPrato"));
+         		result = statement.executeQuery("UPDATE ComentarioAoPrato SET ComentarioAoPrato.comentario='"+comentario+"', ComentarioAoPrato.nota="+nota+" WHERE "+id+"=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+user+"' AND ComentarioAoPrato.comentario='"+result.getString("comentario")+"'");
+         		return true;
+         	}else{//insert
+         		result = statement.executeQuery("SELECT Prato.idPrato FROM Prato WHERE Prato.descricao='"+prato+"'");
+         		if(result.next()){
+         			int id=Integer.parseInt(result.getString("idPrato"));
+         			result = statement.executeQuery("SELECT Utilizador.email FROM Utilizador WHERE Utilizador.nome='"+user+"'");
+         			if(result.next()){
+         				String email = result.getString("email");
+                 		result = statement.executeQuery("INSERT INTO ComentarioAoPrato VALUES ('"+email+"', "+id+",'"+comentario+"', "+nota+")");
+                 		return true;
+         			}
+         			
+         		}
+         	}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return false;
     }
 
     public void saveFoto(ControllerPesquisa controller, String estabelecimento, String prato, String email, String coment, File foto) {
@@ -181,14 +227,14 @@ public class DBConnector {
     		}
     		ComentarioEstabelecimento e=null;
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("")){
-    			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM ComentarioAoEstabelecimento");
+    			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM ComentarioAoEstabelecimento WHERE ComentarioAoEstabelecimento.nota>="+avaliacao);
     			while (result.next()) {
 		        	e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 		        }
     			result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.idEstabelecimento="+e.getIdEstabelecimento()+" AND Fotografia.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento");
     		}else{
     			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.email, ComentarioAoEstabelecimento.nota, ComentarioAoEstabelecimento.comentario, ComentarioAoEstabelecimento.idEstabelecimento FROM Utilizador, ComentarioAoEstabelecimento, Estabelecimento"
-        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2));
+        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+" AND ComentarioAoEstabelecimento.nota>="+avaliacao);
 	    		while (result.next()) {
 		        	e = new ComentarioEstabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 		        }
@@ -276,14 +322,14 @@ public class DBConnector {
     			whereCase.add("");
     		}
     		if(whereCase.get(0).equals("") && whereCase.get(1).equals("") && whereCase.get(2).equals("") && whereCase.get(3).equals("")){
-    			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato");
+    			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM ComentarioAoPrato  WHERE ComentarioAoPrato.nota>="+avaliacao);
     			while (result.next()) {
     				ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
     				comentarios.add(e);
     			}
     		}else{
     			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM Utilizador, ComentarioAoPrato, Prato, Estabelecimento, menuDoEstabelecimento"
-        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3));
+        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3)+"AND ComentarioAoPrato.nota>="+avaliacao);
 	    		while (result.next()) {
 	    			ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 	    			comentarios.add(e);

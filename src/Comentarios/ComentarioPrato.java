@@ -51,9 +51,9 @@ public class ComentarioPrato {
 		return nota;
 	}
 
-	public boolean save(int id, String comentario, int nota) {
+	public boolean save(String p, String user, String comentario, int nota) {
         DBConnector db = new DBConnector();
-        return db.inserirComentarioPrato(id, comentario, nota);
+        return db.inserirComentarioPrato(p, user, comentario, nota);
     }
 
     public boolean find(int idComent) {

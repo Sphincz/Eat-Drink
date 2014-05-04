@@ -16,12 +16,12 @@ public class ControllerComentario {
     private ComentarioPrato comentPrato = new ComentarioPrato();
     private ComentarioEstabelecimento comentEstabelecimento = new ComentarioEstabelecimento();
     
-    public boolean save(TipoComentario tipo, int id, String comentario, int nota) {
-        
+    public boolean save(TipoComentario tipo, String e, String p, String user, String comentario, int nota) {
         if(tipo.equals(TipoComentario.ESTABELECIMENTO)){
-            return comentEstabelecimento.save(id, comentario, nota);
+        	System.out.println("passou");
+            return comentEstabelecimento.save(e, user, comentario, nota);
         }else{
-            return comentPrato.save(id, comentario, nota);
+            return comentPrato.save(p, user, comentario, nota);
         }
     }
 

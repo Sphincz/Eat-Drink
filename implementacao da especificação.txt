@@ -17,6 +17,8 @@ ver comentario nao passa pelo controller de comentarios e não tem todos os argum
 
 comentarios não tem data!!!!!
 
+adicionar/ver/eliminar comentario. mais uma vez não existe ID de comentário, os argumentos foram alterados
+
 delete da fotografia não funciona porque não temos o ID da fotografia, logo foi modificado os argumentos do metodo
 
 para verificar se existe foto no comentario foi feito outro metodo, pois a query tem de ser feita no final do metodo e é preferivel fazer outro metodo
