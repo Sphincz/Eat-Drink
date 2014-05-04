@@ -56,14 +56,14 @@ public class ComentarioPrato {
         return db.inserirComentarioPrato(p, user, comentario, nota);
     }
 
-    public boolean find(int idComent) {
+    public boolean find(String prato, String user, String coment, int nota) {
         DBConnector db = new DBConnector();
-        return db.findComent(idComent);
+        return db.findComent(prato, user, coment, nota);
     }
 
-    public void destroy(int idComent) {
+    public void destroy(String prato, String user, String coment, int nota) {
         DBConnector db = new DBConnector();
-        db.destroyComent(idComent);
+        db.destroyComent(prato, user, coment, nota);
     }
 
     public ArrayList<ComentarioPrato> findAll(ControllerPesquisa controller,String username, String prato, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {

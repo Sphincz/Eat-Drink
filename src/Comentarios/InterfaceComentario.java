@@ -188,6 +188,15 @@ public class InterfaceComentario extends JFrame{
     	btnApagar = new JButton("Apagar");
     	btnApagar.setBounds(171, 253, 67, 23);
     	getContentPane().add(btnApagar);
+    	btnApagar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				delete(tipo, estabelecimento.getText(), prato.getText(), username.getText(), comentario.getText(), Integer.parseInt(avaliacao.getValue().toString()));
+				
+			}
+    		
+    	});
     	if(novo) btnApagar.setEnabled(false);
     	JButton btnSair = new JButton("Sair");
     	btnSair.setBounds(280, 253, 51, 23);
@@ -195,8 +204,8 @@ public class InterfaceComentario extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				framePrincipal.notFocused=false;
-				frame.dispose();
-			}
+		    	frame.dispose();
+		    	}
     	});
     	getContentPane().add(btnSair);
         InterfaceComentario.controlComent=controlComent;
@@ -243,10 +252,18 @@ public class InterfaceComentario extends JFrame{
     	return controlComent.save(tipo, e, p, user, comentario, nota);
     }
     
-    public void delete(int idComent){
-        boolean apagou = controlComent.delete(idComent);
+    public void delete(TipoComentario tipo, String e, String p, String user, String coment, int nota){
+    	ControllerComentario controlComent = new ControllerComentario();
+    	boolean apagou = controlComent.delete(tipo, p, e, user, coment, nota);
+        System.out.println("passou");
         if(apagou){
-            this.setVisible(false);
+        	JOptionPane.showMessageDialog(null, "Comentário apagado com sucesso!");
+        	framePrincipal.notFocused=false;
+	    	frame.dispose();
+        }else{
+        	JOptionPane.showMessageDialog(null, "Erro!");
+        	framePrincipal.notFocused=false;
+	    	frame.dispose();
         }
     }
     

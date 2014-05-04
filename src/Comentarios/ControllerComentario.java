@@ -5,6 +5,7 @@
 package Comentarios;
 
 import Suporte.TipoComentario;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -25,17 +26,24 @@ public class ControllerComentario {
         }
     }
 
-    public boolean delete(int idComent) {
-        boolean encontrouComentP = comentPrato.find(idComent);
-        boolean encontrouComentE = comentEstabelecimento.find(idComent);
-        if(encontrouComentP){
-            comentPrato.destroy(idComent);
-            JOptionPane.showMessageDialog(null, "Comentário Eliminado");
+    public boolean delete(TipoComentario tipo, String prato, String estabelecimento, String user, String coment, int nota) {
+        boolean encontrou=false;
+        if(tipo.equals(TipoComentario.ESTABELECIMENTO)){
+        	encontrou = comentEstabelecimento.find(estabelecimento, user, coment, nota);
+        	System.out.println("estb");
+        }
+        else{
+        	encontrou = comentPrato.find(prato, user, coment, nota);
+        	System.out.println("prato");
+        }
+        if(encontrou && tipo.equals(TipoComentario.ESTABELECIMENTO)){
+        	System.out.println("destoru etst");
+        	comentEstabelecimento.destroy(estabelecimento, user, coment, nota);
             return true;
         }else{
-            if(encontrouComentE){
-                comentEstabelecimento.destroy(idComent);
-                JOptionPane.showMessageDialog(null, "Comentário Eliminado");
+            if(encontrou && tipo.equals(TipoComentario.PRATO)){
+            	System.out.println("prato destory");
+            	comentPrato.destroy(prato, user, coment, nota);
                 return true;
             }
         }

@@ -80,14 +80,14 @@ public class ComentarioEstabelecimento {
         
     }
 
-    public boolean find(int idComent) {
+    public boolean find(String estabelecimento, String user, String coment, int nota) {
         DBConnector db = new DBConnector();
-        return db.findComent(idComent);
+        return db.findComentE(estabelecimento, user, coment, nota);
     }
 
-    public void destroy(int idComent) {
+    public void destroy(String estabelecimento, String user, String coment, int nota) {
         DBConnector db = new DBConnector();
-        db.destroyComent(idComent);
+        db.destroyComentE(estabelecimento, user, coment, nota);
     }
 
     public void findAll(ControllerPesquisa controller, String userID, ArrayList<Estabelecimento> listaEstabelecimentos, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {

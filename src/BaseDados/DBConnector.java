@@ -130,12 +130,31 @@ public class DBConnector {
          }
     }
 
-    public boolean findComent(int idComent) {
-        //throw new UnsupportedOperationException("Not yet implemented");
-    	return true;
+    public boolean findComent(String prato, String user, String coment, int nota) {
+    	try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT ComentarioAoPrato.idPrato FROM Prato, ComentarioAoPrato WHERE ComentarioAoPrato.email='"+user+"' AND ComentarioAoPrato.nota="+nota+" AND ComentarioAoPrato.comentario='"+coment+"' AND Prato.descricao='"+prato+"'");
+			if(result.next()){
+				return true;
+			}
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return false;
     }
 
-    public void destroyComent(int idComent) {
+    public void destroyComent(String prato, String user, String coment, int nota) {
+    	try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Prato.idPrato FROM Prato WHERE Prato.descricao='"+prato+"'");
+			if(result.next()){
+				result = statement.executeQuery("DELETE ComentarioAoPrato WHERE ComentarioAoPrato.idPrato="+result.getString("idPrato")+" AND ComentarioAoPrato.comentario='"+coment+"' AND ComentarioAoPrato.nota="+nota+" AND ComentarioAoPrato.email='"+user+"'");
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
     }
 
     public boolean findFoto(Fotografia fotografia, String email, String comentario, String estabelecimento, String prato) {
@@ -515,6 +534,39 @@ public class DBConnector {
 		}
 		
 		return r;
+	}
+
+
+
+	public boolean findComentE(String estabelecimento, String user, String coment, int nota) {
+		try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT ComentarioAoEstabelecimento.idEstabelecimento FROM Estabelecimento, ComentarioAoEstabelecimento WHERE ComentarioAoEstabelecimento.email='"+user+"' AND ComentarioAoEstabelecimento.nota="+nota+" AND ComentarioAoEstabelecimento.comentario='"+coment+"' AND Estabelecimento.designacao='"+estabelecimento+"'");
+			if(result.next()){
+				return true;
+			}
+    	} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return false;
+	}
+
+
+
+	public void destroyComentE(String estabelecimento, String user, String coment, int nota) {
+		try {
+			statement = con.createStatement();
+			result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento FROM Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"'");
+			if(result.next()){
+				result = statement.executeQuery("DELETE ComentarioAoEstabelecimento WHERE ComentarioAoEstabelecimento.idEstabelecimento="+result.getString("idEstabelecimento")+" AND ComentarioAoEstabelecimento.comentario='"+coment+"' AND ComentarioAoEstabelecimento.nota="+nota+" AND ComentarioAoEstabelecimento.email='"+user+"'");
+				System.err.println("passou");
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		
 	}
     
 }
