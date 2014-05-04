@@ -17,6 +17,9 @@ ver comentario nao passa pelo controller de comentarios e não tem todos os argum
 
 comentarios não tem data!!!!!
 
+GRAVE: Segundo a implementação, qualquer user pode alterar, eliminar um comentario de qq user
+
+
 adicionar/ver/eliminar comentario. mais uma vez não existe ID de comentário, os argumentos foram alterados
 
 delete da fotografia não funciona porque não temos o ID da fotografia, logo foi modificado os argumentos do metodo

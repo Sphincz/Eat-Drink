@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import APIs.APIEstabelecimentos;
 import Comentarios.ComentarioEstabelecimento;
 import Comentarios.ComentarioPrato;
 import Comentarios.ControllerComentario;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author Nuno
  */
-public class ControllerPesquisa {
+public class ControllerPesquisa implements APIEstabelecimentos{
     private String userID;
     private ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento = new ArrayList<ComentarioEstabelecimento>();
     private ArrayList<Estabelecimento> listaEstabelecimentos = new ArrayList<Estabelecimento>();
@@ -118,6 +119,16 @@ public class ControllerPesquisa {
 			}
 		}
     	return 0;
+	}
+
+	@Override
+	public void viewAllComentarioAoPrato(int idPrato, int idEstabelecimento) {
+		//não especificado ainda
+	}
+
+	@Override
+	public void viewAllComentarioAoEstabelecimento(int idEstabelecimento) {
+		//não especificado ainda
 	}
 	
 	

@@ -34,6 +34,7 @@ import Comentarios.ComentarioPrato;
 import Comentarios.InterfaceComentario;
 import Pratos.Prato;
 import Suporte.TipoComentario;
+import Suporte.TipoFotografia;
 import Utilizador.Utilizador;
 
 import javax.swing.JTextField;
@@ -435,6 +436,11 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 
 	public Vector<String> getV3() {
 		return v3;
+	}
+
+	@Override
+	public void viewFotografia(int idFotografia, TipoFotografia tipo) {
+		//não implementado por não estar especificado
 	}
 
 	

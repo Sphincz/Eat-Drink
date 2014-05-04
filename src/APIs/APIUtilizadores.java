@@ -4,10 +4,13 @@
  */
 package APIs;
 
+import Suporte.TipoFotografia;
+
 /**
  *
  * @author Nuno
  */
 public interface APIUtilizadores {
     public boolean uploadFotografiaUtilizador(String emailUtilizador);
+    public void viewFotografia(int idFotografia, TipoFotografia tipo);
 }

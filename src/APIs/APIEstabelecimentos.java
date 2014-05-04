@@ -9,5 +9,6 @@ package APIs;
  * @author Nuno
  */
 public interface APIEstabelecimentos {
-    
+    public void viewAllComentarioAoPrato(int idPrato, int idEstabelecimento);
+    public void viewAllComentarioAoEstabelecimento(int idEstabelecimento);
 }
