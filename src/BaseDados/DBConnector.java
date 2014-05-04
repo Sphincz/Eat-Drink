@@ -348,14 +348,12 @@ public class DBConnector {
     			}
     		}else{
     			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM Utilizador, ComentarioAoPrato, Prato, Estabelecimento, menuDoEstabelecimento"
-        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3)+"AND ComentarioAoPrato.nota>="+avaliacao);
+        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3)+" AND ComentarioAoPrato.nota>="+avaliacao);
 	    		while (result.next()) {
 	    			ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 	    			comentarios.add(e);
 	    		}
     		}
-        	
-        	
 	        statement.close();
 	        con.close();
         
