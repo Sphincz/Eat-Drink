@@ -190,7 +190,7 @@ public class DBConnector {
     }
 
     /**
-     * Eliminar um comentario ao prato.
+     * Elimina um comentario ao prato.
      *
      * @param prato o prato
      * @param user o user
@@ -244,7 +244,7 @@ public class DBConnector {
     }
 
     /**
-     * Eliminar uma fotografia da base de dados.
+     * Elimina uma fotografia da base de dados.
      * Antes de fazer o DELETE da base de dados, mete todos os campos a NULL,
      * para evitar erros de dependencias de chaves estrangeiras.
      *
@@ -484,7 +484,7 @@ public class DBConnector {
     }
 
     /**
-     * Eliminar uma fotografia.
+     * Elimina uma fotografia.
      *
      * @param file o ficheiro da fotografia
      * @return 0
@@ -498,7 +498,7 @@ public class DBConnector {
 
 
 	/**
-	 * Inserir uma fotografia.
+	 * Insere uma fotografia.
 	 *
 	 * @param file o ficheiro da fotografia
 	 * @return 0
@@ -726,7 +726,7 @@ public class DBConnector {
 
 
 	/**
-	 * Eliminar um comentario ao estabelecimento.
+	 * Elimina um comentario ao estabelecimento.
 	 * Remove um comentario ao estabelecimento da base de dados.
 	 *
 	 * @param estabelecimento o estabelecimento

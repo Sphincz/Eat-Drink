@@ -324,7 +324,7 @@ public class InterfaceComentario extends JFrame{
      * @param e o estabelecimento
      * @param p o prato
      * @param user o user
-     * @param comentario o comentario
+     * @param coment o comentario
      * @param nota a avaliacao
      *
      */

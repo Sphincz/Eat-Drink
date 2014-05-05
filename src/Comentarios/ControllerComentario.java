@@ -45,10 +45,10 @@ public class ControllerComentario {
      * na base de dados. Este metodo chama a classe que trata o comentario, consoante o tipo.
      *
      * @param tipo o tipo de comentario
-     * @param e o estabelecimento
-     * @param p o prato
+     * @param estabelecimento o estabelecimento
+     * @param prato o prato
      * @param user o user
-     * @param comentario o comentario
+     * @param coment o comentario
      * @param nota a avaliacao
      * @return true, se bem sucedido
      */
