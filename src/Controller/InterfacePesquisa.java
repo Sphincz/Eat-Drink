@@ -39,29 +39,78 @@ import Utilizador.Utilizador;
 
 import javax.swing.JTextField;
 
+/**
+ * Classe InterfacePesquisa.
+ * Esta classe cria o GUI necessario para efectuar uma pesquisa por estabelecimentos/pratos.
+ * 
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
+ */
 public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
+	/** a serialVersionUID auto-adicionada. */
 	private static final long serialVersionUID = 1L;
+	
+	/** O nome do projecto. */
 	private String PROJECT_NAME = "Eat&Drink";
+	
+	/** a content pane. */
 	private JPanel contentPane;
+	
+	/** o controlador de pesquisa. */
 	private ControllerPesquisa controlPesquisa;
+	
+	/** o user. */
 	private JComboBox<String> user;
+	
+	/** o estabelecimento. */
 	private static JComboBox<String> estabelecimento;
+	
+	/** o prato. */
 	private JComboBox<String> prato;
+	
+	/** a avaliacao. */
 	private JSpinner avaliacao;
+	
+	/** a fotografia. */
 	private JCheckBox fotografia;
+	
+	/** a tabela de resultados. */
 	private static JTable table;
+	
+	/** o comentario. */
 	private JTextField comentario;
+	
+	/** a janela/frame. */
 	private static InterfacePesquisa frame;
+	
+	/** o modelo da tabela de resultados. */
 	private static DefaultTableModel tableModel;
+	
+	/** o nome das colunas da tabela de resultados. */
 	private static String[] columnNames = {"Utilizador", "Estabelecimento", "Prato", "Avaliação", "Comentário", "Fotografia"};
+	
+	/** o tipo de comentario. */
 	public static TipoComentario tipoComentario;
+	
+	/** o controlador de pesquisa. */
 	private ControllerPesquisa controllerPes = new ControllerPesquisa();
+	
+	/** o vector auxiliar 1. */
 	private Vector<String> v;
+	
+	/** o vector auxiliar 2. */
 	private Vector<String> v1;
+	
+	/** o vector auxiliar 3. */
 	private Vector<String> v3;
+	
+	/** variavel que verifica se a janela esta segundo plano. */
 	public static boolean notFocused=false;
 
+	/**
+	 * Instancia a classe e cria todos os componentes necessarios para a GUI.
+	 * O 'Look and Feel' da GUI foi alterada para WindowsLookAndFeel.
+	 */
 	public InterfacePesquisa() {
 		setTitle(PROJECT_NAME+" - Pesquisar");
 		try {
@@ -292,13 +341,12 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
 
 	/**
-	 * Launch the application.
+	 * Executa a classe e cria a GUI.
+	 * Modifica tambem alguns dos parametros da frame/janela.
 	 */
 	public void execute() {
 		controlPesquisa = new ControllerPesquisa();
 		EventQueue.invokeLater(new Runnable() {
-			
-
 			public void run() {
 				try {
 					frame = new InterfacePesquisa();
@@ -315,19 +363,36 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
 	
 	
+    /**
+     * Cria um comentario.
+     * Esta classe interage com o controlador de pesquisa para criar um comentario.
+     */
     public void createComentario(){
         controlPesquisa.createComentario();
     }
     
+    /**
+     * Retorna o controlador de pesquisa.
+     *
+     * @return o controlador de pesquisa
+     */
     public ControllerPesquisa getControllerPes() {
 		return controllerPes;
 	}
 
+	/**
+	 * Adiciona uma fotografia.
+	 * Esta classe interage com o controlador de pesquisa para adicionar uma fotografia.
+	 */
 	public void addFotografia(){
     	controlPesquisa = new ControllerPesquisa();
     	controlPesquisa.addFotografia(frame, table.getModel().getValueAt(table.getSelectedRow(), 0).toString(), table.getModel().getValueAt(table.getSelectedRow(), 1).toString(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), table.getModel().getValueAt(table.getSelectedRow(), 4).toString());
     }
     
+    /**
+     * Ver uma fotografia.
+     * Esta classe interage com o controlador de pesquisa para ver uma fotografia.
+     */
     private void viewFotografia() {
     	ControllerPesquisa control = new ControllerPesquisa();
     	control.viewFotografia(frame, table.getModel().getValueAt(table.getSelectedRow(), 0).toString(), table.getModel().getValueAt(table.getSelectedRow(), 1).toString(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), table.getModel().getValueAt(table.getSelectedRow(), 4).toString());
@@ -335,12 +400,17 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
     
 
+	/**
+	 * Retorna a tabela de resultados.
+	 *
+	 * @return a tabela de resultados
+	 */
 	public static JTable getTable() {
 		return table;
 	}
 
 	/**
-	 * Create the frame.
+	 * Cria a frame/janela.
 	 */
 	public void initWindow() {
 		contentPane = new JPanel();
@@ -351,10 +421,18 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	
 	
 
+    /**
+     * Retorna o tipo de comentario.
+     *
+     * @return o tipo de comentario
+     */
     public static TipoComentario getTipoComentario() {
 		return tipoComentario;
 	}
 
+	/* (non-Javadoc)
+	 * @see APIs.APIUtilizadores#uploadFotografiaUtilizador(java.lang.String)
+	 */
 	@Override
     public boolean uploadFotografiaUtilizador(String emailUtilizador) {
         InterfaceUpload upload = new InterfaceUpload();
@@ -363,6 +441,12 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
     }
 
 
+	/**
+	 * Preenche tabela de pesquisa por estabelecimentos.
+	 *
+	 * @param listaEstabelecimentos a lista de estabelecimentos
+	 * @param listaComentariosEstabelecimento a lista comentarios aos estabelecimentos
+	 */
 	public static void preencherPesquisa(ArrayList<Estabelecimento> listaEstabelecimentos, ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento) {
 		tableModel.setRowCount(0);
 		int i;
@@ -386,6 +470,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
 
 
+	/**
+	 * Retorna o nome do estabelecimento, dando um id de comentario.
+	 *
+	 * @param listaEstabelecimentos a lista de estabelecimentos
+	 * @param idEstabelecimento o id do estabelecimento
+	 * @return o nome do estabelecimento por id de comentario
+	 */
 	private static Object getEstabelecimentoNomeByComentID(ArrayList<Estabelecimento> listaEstabelecimentos, int idEstabelecimento) {
 		for (int i = 0; i < listaEstabelecimentos.size(); i++) {
 			if(listaEstabelecimentos.get(i).getId()==idEstabelecimento){
@@ -396,6 +487,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
 
 
+	/**
+	 * Preenche tabela de pesquisa por pratos.
+	 *
+	 * @param listaPratos a lista de pratos
+	 * @param listComentariosPrato a lista de comentarios aos pratos
+	 * @param listaEstabelecimentos a lista estabelecimentos
+	 */
 	public static void preencherPesquisaPratos(ArrayList<Prato> listaPratos, ArrayList<ComentarioPrato> listComentariosPrato, ArrayList<Estabelecimento> listaEstabelecimentos) {
 		tableModel.setRowCount(0);
 		int i;
@@ -418,6 +516,13 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 	}
 
 
+	/**
+	 * Retorna o nome do prato, dando um id de comentario.
+	 *
+	 * @param listaPratos a lista de pratos
+	 * @param id o id do prato
+	 * @return o nome do prato por id de comentario
+	 */
 	private static Object getPratoNomeByComentID(ArrayList<Prato> listaPratos, int id) {
 		for (int i = 0; i < listaPratos.size(); i++) {
 			if(listaPratos.get(i).getId()==id){
@@ -427,23 +532,38 @@ public class InterfacePesquisa extends JFrame implements APIUtilizadores{
 		return "---";
 	}
 
+	/**
+	 * Retorna o vetor auxiliar 1.
+	 *
+	 * @return o vetor auxiliar 1
+	 */
 	public Vector<String> getV() {
 		return v;
 	}
 
+	/**
+	 * Retorna o vetor auxiliar 2.
+	 *
+	 * @return o vetor auxiliar 2
+	 */
 	public Vector<String> getV1() {
 		return v1;
 	}
 
+	/**
+	 * Retorna o vetor auxiliar 3.
+	 *
+	 * @return o vetor auxiliar 3
+	 */
 	public Vector<String> getV3() {
 		return v3;
 	}
 
+	/* (non-Javadoc)
+	 * @see APIs.APIUtilizadores#viewFotografia(int, Suporte.TipoFotografia)
+	 */
 	@Override
 	public void viewFotografia(int idFotografia, TipoFotografia tipo) {
 		//não implementado por não estar especificado
 	}
-
-	
-	
 }

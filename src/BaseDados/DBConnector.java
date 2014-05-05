@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package BaseDados;
 
 import Comentarios.ComentarioEstabelecimento;
@@ -17,7 +13,6 @@ import Utilizador.Utilizador;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,19 +22,33 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Classe DBConnector.
+ * Esta classe efectua operaçoes de pesquisa, introducao e remocao de conteudo na base de dados
  *
- * @author Nuno
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
  */
 
 
 public class DBConnector {
 	
+	/** O resultado de uma query. */
 	private ResultSet result; 
+	
+	/** Uma query de acesso a base de dados. */
 	private Statement statement;
+	
+	/** O URL para estabelecer ligacao a base de dados. localhost2638 significa que o servidor da base de dados e local, ligado na porta 2638. O nome da base de dados e EatDrink. */
 	private String dburl = "jdbc:sqlanywhere:Tds:localhost:2638?eng=EatDrink";
+	
+	/** O username e password de acesso a base de dados */
 	private String user = "dba", password = "sql";
+	
+	/** A ligacao a base de dados. */
 	private Connection con;
 	
+	/**
+	 * Construtor que cria e estabelece uma ligacao ao servidor da base de dados.
+	 */
 	public DBConnector() {
         // Connect to Sybase Database
         try {
@@ -53,6 +62,16 @@ public class DBConnector {
 
 	
 
+    /**
+     * Insere um comentario ao estabelecimento se ja existir algum nesse estabelecimento. 
+     * Caso nao exista, cria um novo comentario para o mesmo estabelecimento.
+     *
+     * @param estabelecimento o estabelecimento
+     * @param user o user
+     * @param comentario o comentario
+     * @param nota a avaliacao
+     * @return true, se bem sucedido
+     */
     public boolean inserirComentarioEstabelecimento(String estabelecimento, String user, String comentario, int nota) {
     	try {
 			statement = con.createStatement();
@@ -77,21 +96,30 @@ public class DBConnector {
          		}
          	}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return false;
     }
     
+    /**
+     * Insere um comentario ao prato se ja existir algum nesse prato. 
+     * Caso nao exista, cria um novo comentario para o mesmo prato.
+     *
+     * @param prato o prato
+     * @param user o user
+     * @param comentario o comentario
+     * @param nota a avaliacao
+     * @return true, se bem sucedido
+     */
     public boolean inserirComentarioPrato(String prato, String user, String comentario, int nota) {
     	try {
 			statement = con.createStatement();
 			result = statement.executeQuery("SELECT Prato.idPrato, ComentarioAoPrato.email, ComentarioAoPrato.comentario, ComentarioAoPrato.nota FROM ComentarioAoPrato, Prato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+user+"'");
-         	if(result.next()){//update
+         	if(result.next()){
          		int id=Integer.parseInt(result.getString("idPrato"));
          		result = statement.executeQuery("UPDATE ComentarioAoPrato SET ComentarioAoPrato.comentario='"+comentario+"', ComentarioAoPrato.nota="+nota+" WHERE "+id+"=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+user+"' AND ComentarioAoPrato.comentario='"+result.getString("comentario")+"'");
          		return true;
-         	}else{//insert
+         	}else{
          		result = statement.executeQuery("SELECT Prato.idPrato FROM Prato WHERE Prato.descricao='"+prato+"'");
          		if(result.next()){
          			int id=Integer.parseInt(result.getString("idPrato"));
@@ -101,16 +129,25 @@ public class DBConnector {
                  		result = statement.executeQuery("INSERT INTO ComentarioAoPrato VALUES ('"+email+"', "+id+",'"+comentario+"', "+nota+")");
                  		return true;
          			}
-         			
          		}
          	}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return false;
     }
 
+    /**
+     * Insere uma fotografia na base de dados.
+     * Verifica tambem se o comentario e feito a um estabelecimento ou prato.
+     *
+     * @param controller o controlador
+     * @param estabelecimento o estabelecimento
+     * @param prato o prato
+     * @param email o email do user
+     * @param coment o comentario
+     * @param foto o ficheiro da fotografia
+     */
     public void saveFoto(ControllerPesquisa controller, String estabelecimento, String prato, String email, String coment, File foto) {
     	 try{
          	statement = con.createStatement();
@@ -130,6 +167,15 @@ public class DBConnector {
          }
     }
 
+    /**
+     * Procura um comentario ao prato.
+     *
+     * @param prato o prato
+     * @param user o user
+     * @param coment o comentario
+     * @param nota a avaliacao
+     * @return true, se bem sucedido
+     */
     public boolean findComent(String prato, String user, String coment, int nota) {
     	try {
 			statement = con.createStatement();
@@ -138,12 +184,19 @@ public class DBConnector {
 				return true;
 			}
     	} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return false;
     }
 
+    /**
+     * Eliminar um comentario ao prato.
+     *
+     * @param prato o prato
+     * @param user o user
+     * @param coment o comentario
+     * @param nota a avaliacao
+     */
     public void destroyComent(String prato, String user, String coment, int nota) {
     	try {
 			statement = con.createStatement();
@@ -152,11 +205,20 @@ public class DBConnector {
 				result = statement.executeQuery("DELETE ComentarioAoPrato WHERE ComentarioAoPrato.idPrato="+result.getString("idPrato")+" AND ComentarioAoPrato.comentario='"+coment+"' AND ComentarioAoPrato.nota="+nota+" AND ComentarioAoPrato.email='"+user+"'");
 			}
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}
     }
 
+    /**
+     * Procura uma fotografia.
+     *
+     * @param fotografia a fotografia
+     * @param email o email do user
+     * @param comentario o comentario
+     * @param estabelecimento o estabelecimento
+     * @param prato o prato
+     * @return true, se bem sucedido
+     */
     public boolean findFoto(Fotografia fotografia, String email, String comentario, String estabelecimento, String prato) {
     	try {
     		statement = con.createStatement();
@@ -176,38 +238,49 @@ public class DBConnector {
     		statement.close();
  	        con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-    	
     	return false;
     }
 
+    /**
+     * Eliminar uma fotografia da base de dados.
+     * Antes de fazer o DELETE da base de dados, mete todos os campos a NULL,
+     * para evitar erros de dependencias de chaves estrangeiras.
+     *
+     * @param idFoto o id da fotografia
+     */
     public void destroyFoto(int idFoto) {
     	try{
         	statement = con.createStatement();
         	System.out.println("id foto: "+idFoto);
         	result = statement.executeQuery("UPDATE Fotografia SET Fotografia.emailutilizador=NULL, Fotografia.idPrato=NULL, Fotografia.idEstabelecimento=NULL WHERE Fotografia.idFotografia="+idFoto);
-	        
 	        result = statement.executeQuery("DELETE Fotografia WHERE Fotografia.idFotografia="+idFoto);
-	        
 	        statement.close();
 	        con.close();
-        
         } catch (SQLException e) {
-        	
         	e.printStackTrace();
         }
     }
 
+    /**
+     * Procura um estabelecimento.
+     *
+     * @param controller o controlador
+     * @param user o user
+     * @param estabelecimento o estabelecimento
+     * @param prato o prato
+     * @param avaliacao a avaliacao
+     * @param fotografia se tem fotografia
+     * @param comentario o comentario
+     */
     public void findEstabelecimentos(ControllerPesquisa controller, String user, String estabelecimento, String prato, int avaliacao, boolean fotografia, String comentario) {
         try{
         	statement = con.createStatement();
 	        result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento, Estabelecimento.rating, Utilizador.nome, Estabelecimento.designacao, Estabelecimento.rating FROM Estabelecimento, Utilizador");
 	        
 	        while (result.next()) {
-	        	Estabelecimento e = new Estabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("nome"), result.getString("designacao"), result.getString("rating"));
+	        	new Estabelecimento(controller, Integer.parseInt(result.getString("idEstabelecimento")), result.getString("nome"), result.getString("designacao"), result.getString("rating"));
 	        }
 	        
 	        statement.close();
@@ -218,6 +291,24 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Procura comentarios aos estabelecimentos.
+     * Esta classe interpreta as opcoes introduzidas pelo utilizador no sistema,
+     * e faz uma procura filtrada segundo os criterios do utilizador.
+     * Se o utilizador seleccionar a opçao '*' significa que quer ver todos os resultados
+     * que existem para o termo que pretende pesquisar.
+     * Se o utilizador introduzir p.ex 'Bom' na opcao de Comentario, ira filtrar todos os resultados
+     * e procurar todos os comentarios que tenham a palavra 'Bom'.
+     * Quanto mais o utilizador especificar, mais exacta sera a pesquisa.
+     *
+     * @param controller o controlador
+     * @param nome o nome do user
+     * @param estabelecimento o estabelecimento
+     * @param listaEstabelecimentos a lista de estabelecimentos
+     * @param avaliacao a avaliacao
+     * @param fotografia se tem fotografia
+     * @param comentario o comentario
+     */
     public void findComentarios(ControllerPesquisa controller, String nome, String estabelecimento, ArrayList<Estabelecimento> listaEstabelecimentos, int avaliacao, boolean fotografia, String comentario) {
     	try{
     		statement = con.createStatement();
@@ -269,6 +360,14 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Procura um prato.
+     *
+     * @param estabelecimento the estabelecimento
+     * @param prato the prato
+     * @param fotografia the fotografia
+     * @return the array list
+     */
     public ArrayList<Prato> findPratos(String estabelecimento, String prato, boolean fotografia) {
     	ArrayList<Prato> resultList = new ArrayList<Prato>();
     	try{
@@ -297,6 +396,25 @@ public class DBConnector {
     	return resultList;
     }
 
+    /**
+     * Procura todos os comentarios.
+     * Esta classe interpreta as opcoes introduzidas pelo utilizador no sistema,
+     * e faz uma procura filtrada segundo os criterios do utilizador.
+     * Se o utilizador seleccionar a opçao '*' significa que quer ver todos os resultados
+     * que existem para o termo que pretende pesquisar.
+     * Se o utilizador introduzir p.ex 'Bom' na opcao de Comentario, ira filtrar todos os resultados
+     * e procurar todos os comentarios que tenham a palavra 'Bom'.
+     * Quanto mais o utilizador especificar, mais exacta sera a pesquisa.
+     *
+     * @param controller the controller
+     * @param nome the nome
+     * @param prato the prato
+     * @param estabelecimento the estabelecimento
+     * @param avaliacao the avaliacao
+     * @param fotografia the fotografia
+     * @param comentario the comentario
+     * @return the array list
+     */
     public ArrayList<ComentarioPrato> findAllComents(ControllerPesquisa controller,String nome, String prato, String estabelecimento, int avaliacao, boolean fotografia, String comentario) {
     	ArrayList<ComentarioPrato> comentarios = new ArrayList<ComentarioPrato>();
     	try{
@@ -348,12 +466,14 @@ public class DBConnector {
     			}
     		}else{
     			result = statement.executeQuery("SELECT DISTINCT ComentarioAoPrato.email, ComentarioAoPrato.nota, ComentarioAoPrato.comentario, ComentarioAoPrato.idPrato FROM Utilizador, ComentarioAoPrato, Prato, Estabelecimento, menuDoEstabelecimento"
-        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3)+" AND ComentarioAoPrato.nota>="+avaliacao);
+        			+ ""+whereCase.get(0)+whereCase.get(1)+whereCase.get(2)+whereCase.get(3)+"AND ComentarioAoPrato.nota>="+avaliacao);
 	    		while (result.next()) {
 	    			ComentarioPrato e = new ComentarioPrato(Integer.parseInt(result.getString("idPrato")), result.getString("email"), result.getString("comentario"), result.getString("nota"));
 	    			comentarios.add(e);
 	    		}
     		}
+        	
+        	
 	        statement.close();
 	        con.close();
         
@@ -363,6 +483,12 @@ public class DBConnector {
     	return comentarios;
     }
 
+    /**
+     * Eliminar uma fotografia.
+     *
+     * @param file o ficheiro da fotografia
+     * @return 0
+     */
     public int destroyFoto(File file) {
         //throw new UnsupportedOperationException("Not yet implemented");
         //devolver ID
@@ -371,13 +497,23 @@ public class DBConnector {
 
 
 
+	/**
+	 * Inserir uma fotografia.
+	 *
+	 * @param file o ficheiro da fotografia
+	 * @return 0
+	 */
 	public int saveFoto(File file) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 
+	/**
+	 * Procura todos os estabelecimentos.
+	 *
+	 * @return lista de todos os estabelecimentos existentes
+	 */
 	public ArrayList<Estabelecimento> findAllE() {
 		ArrayList<Estabelecimento> lista = new ArrayList<Estabelecimento>();
 		try{
@@ -400,6 +536,11 @@ public class DBConnector {
 
 
 
+	/**
+	 * Procura todos os pratos.
+	 *
+	 * @return a lista todos os pratos.
+	 */
 	public ArrayList<Prato> findAllPratos() {
 		ArrayList<Prato> lista = new ArrayList<Prato>();
 		try{
@@ -422,6 +563,11 @@ public class DBConnector {
 
 
 
+	/**
+	 * Procura todos os utilizadores.
+	 *
+	 * @return lista de todos os utilizadores.
+	 */
 	public ArrayList<Utilizador> findAllUsers() {
 		ArrayList<Utilizador> lista = new ArrayList<Utilizador>();
 		try{
@@ -444,6 +590,13 @@ public class DBConnector {
 
 
 
+	/**
+	 * Procura todos os comentarios com fotografia aos estabelecimentos.
+	 *
+	 * @param comentarioEstabelecimento o comentario ao estabelecimento
+	 * @param listaComentariosEstabelecimento a lista comentarios ao estabelecimento
+	 * @param listaEstabelecimentos a lista de estabelecimentos
+	 */
 	public void findFotoComents(
 			ComentarioEstabelecimento comentarioEstabelecimento,
 			ArrayList<ComentarioEstabelecimento> listaComentariosEstabelecimento, ArrayList<Estabelecimento> listaEstabelecimentos) {
@@ -457,21 +610,24 @@ public class DBConnector {
 						if(listaComentariosEstabelecimento.get(j).getIdEstabelecimento()==listaEstabelecimentos.get(i).getId())
 							listaComentariosEstabelecimento.get(j).setFotografiaID(Integer.parseInt(result.getString("idFotografia")));
 					}
-				}
-					
+				}	
 			}
 			statement.close();
-	        con.close();
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-        
-		
 	}
 
 
 
+	/**
+	 * Procura todos os comentarios com fotografia aos pratos.
+	 *
+	 * @param comentarioPrato o comentario ao prato
+	 * @param listComentariosPrato a lista comentarios ao prato
+	 * @param listaPratos a lista de pratos
+	 */
 	public void findFotoComentsPlates(ComentarioPrato comentarioPrato,
 			ArrayList<ComentarioPrato> listComentariosPrato,
 			ArrayList<Prato> listaPratos) {
@@ -484,22 +640,26 @@ public class DBConnector {
 						if(listComentariosPrato.get(j).getId()==listaPratos.get(i).getId())
 							listComentariosPrato.get(j).setFotografiaID(Integer.parseInt(result.getString("idFotografia")));
 					}
-				}
-					
+				}	
 			}
 			statement.close();
-	        con.close();
-			} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
 
-
-
-	public String findFotoForComentEstabelecimento(String email,
-			String estabelecimento, String comentario) {
+	/**
+	 * Procura fotografia do comentario ao estabelecimento.
+	 * Retorna a localizacao/path/caminho do ficheiro da fotografia.
+	 * 
+	 * @param email o email do user
+	 * @param estabelecimento o estabelecimento
+	 * @param comentario o comentario
+	 * @return string que contem a localizacao/path da fotografia
+	 */
+	public String findFotoForComentEstabelecimento(String email, String estabelecimento, String comentario) {
 		String r="";
 		try {
 			statement = con.createStatement();
@@ -508,17 +668,23 @@ public class DBConnector {
 				return r=result.getString("localizacao");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return r;
 	}
 
 
 
-	public String findFotoForComentPrato(String email, String prato,
-			String comentario) {
+	/**
+	 * Procura fotografia do comentario ao prato.
+	 * Retorna a localizacao/path/caminho do ficheiro da fotografia.
+	 *
+	 * @param email o email do user
+	 * @param prato o prato
+	 * @param comentario o comentario
+	 * @return string que contem a localizacao/path da fotografia
+	 */
+	public String findFotoForComentPrato(String email, String prato, String comentario) {
 		String r="";
 		try {
 			statement = con.createStatement();
@@ -527,15 +693,23 @@ public class DBConnector {
 				return r=result.getString("localizacao");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return r;
 	}
 
 
 
+	/**
+	 * Procura um comentario ao estabelecimento.
+	 * Retorna verdadeiro se existir um comentario que corresponda aos argumentos passados.
+	 *
+	 * @param estabelecimento o estabelecimento
+	 * @param user o user
+	 * @param coment o comentario
+	 * @param nota a avaliacao
+	 * @return true, se bem sucedido
+	 */
 	public boolean findComentE(String estabelecimento, String user, String coment, int nota) {
 		try {
 			statement = con.createStatement();
@@ -544,7 +718,6 @@ public class DBConnector {
 				return true;
 			}
     	} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return false;
@@ -552,17 +725,24 @@ public class DBConnector {
 
 
 
+	/**
+	 * Eliminar um comentario ao estabelecimento.
+	 * Remove um comentario ao estabelecimento da base de dados.
+	 *
+	 * @param estabelecimento o estabelecimento
+	 * @param user o user
+	 * @param coment o comentario
+	 * @param nota a avalicao
+	 */
 	public void destroyComentE(String estabelecimento, String user, String coment, int nota) {
 		try {
 			statement = con.createStatement();
 			result = statement.executeQuery("SELECT Estabelecimento.idEstabelecimento FROM Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"'");
 			if(result.next()){
 				result = statement.executeQuery("DELETE ComentarioAoEstabelecimento WHERE ComentarioAoEstabelecimento.idEstabelecimento="+result.getString("idEstabelecimento")+" AND ComentarioAoEstabelecimento.comentario='"+coment+"' AND ComentarioAoEstabelecimento.nota="+nota+" AND ComentarioAoEstabelecimento.email='"+user+"'");
-				System.err.println("passou");
 			}
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 	}

@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package APIs;
 
 /**
+ * Interface APIFicheiros.
  *
- * @author Nuno
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
  */
 public interface APIFicheiros {
     

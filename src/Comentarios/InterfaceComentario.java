@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Comentarios;
 
 import java.awt.EventQueue;
@@ -21,30 +17,72 @@ import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
 
 /**
+ * Classe InterfaceComentario.
+ * Esta classe cria o GUI necessario para adicionar/ver/remover comentarios.
  *
- * @author Nuno
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
  */
 public class InterfaceComentario extends JFrame{
+	
+	/** a serialVersionUID auto-adicionada. */
 	private static final long serialVersionUID = 1L;
+	
+	/** o controlador do comentario. */
 	private static ControllerComentario controlComent;
+	
+	/** a janela/frame. */
 	private static InterfaceComentario frame;
+	
+	/** o estabelecimento. */
 	private static JLabel estabelecimento;
+	
+	/** o username. */
 	private static JLabel username;
+	
+	/** o prato. */
 	private static JLabel prato;
+	
+	/** a avaliacao. */
 	private static JSpinner avaliacao;
+	
+	/** o comentario. */
 	private static JTextArea comentario;
+	
+	/** o botao de apagar. */
 	private static JButton btnApagar;
+	
+	/** o botao para gravar alteraes. */
 	private static JButton btnGravarAlteraes;
+	
+	/** o tipo de comentario. */
 	private static TipoComentario tipo;
+	
+	/** a janela/frame principal. */
+	@SuppressWarnings("unused")
 	private static InterfacePesquisa framePrincipal;
+	
+	/** variavel que verifica se se trada de um comentario novo */
 	private static boolean novo;
+	
+	/** a lista de estabelecimentos. */
 	private JComboBox<String> estabelecimentos;
+	
+	/** a lista de pratos. */
 	private JComboBox<String> pratos;
+	
+	/** a lista de users. */
 	private JComboBox<String> users;
 
+    /**
+     * Instancia a classe e cria o GUI de adicionar/ver comentario.
+     * Todos os Swing Components estao definidos e identificados.
+     * Sao exibidas mensagens de aviso/erro/informacao caso o utilizador execute alguma operacao que nao e esperada.
+     *
+     * @param controll o controlador do comentario
+     * @param frameP a janela/frame principal
+     */
     public InterfaceComentario(ControllerComentario controll, InterfacePesquisa frameP){
     	controlComent=controll;
-    	//setTitle("Eat&Drink - Adicionar coment\u00E1rio");
     	getContentPane().setLayout(null);
     	
     	JLabel lblColocadoPor = new JLabel("Colocado por:");
@@ -178,7 +216,7 @@ public class InterfaceComentario extends JFrame{
 							JOptionPane.showMessageDialog(null, "Alterações feitas. Comentário adicionado com sucesso.");
 						}
 					}
-					framePrincipal.notFocused=false;
+					InterfacePesquisa.notFocused=false;
 					frame.dispose();
 				}
 				
@@ -203,14 +241,27 @@ public class InterfaceComentario extends JFrame{
     	btnSair.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				framePrincipal.notFocused=false;
+				InterfacePesquisa.notFocused=false;
 		    	frame.dispose();
 		    	}
     	});
     	getContentPane().add(btnSair);
-        InterfaceComentario.controlComent=controlComent;
+        //InterfaceComentario.controlComent=controlComent;
     }
     
+    /**
+     * Inicia a GUI de adicionar/ver comentario.
+     * Aqui sao ajustados os parametros referentes a janela/frame da GUI de comentarios.
+     *
+     * @param frameP a janela/frame principal
+     * @param novoComent o novo comentario
+     * @param t o tipo de comentario
+     * @param name o nome do user
+     * @param a a avaliacao
+     * @param c o comentario
+     * @param p o prato
+     * @param e o estabelecimento
+     */
     public static void init(final InterfacePesquisa frameP, final boolean novoComent, final TipoComentario t, final String name, final String a, final String c, final String p, final String e) {
     	EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -237,7 +288,7 @@ public class InterfaceComentario extends JFrame{
 					frame.addWindowListener(new java.awt.event.WindowAdapter() {
 					    @Override
 					    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-					    	framePrincipal.notFocused=false;
+					    	InterfacePesquisa.notFocused=false;
 					    	frame.dispose();
 					    }
 					});
@@ -248,22 +299,45 @@ public class InterfaceComentario extends JFrame{
 		});
     }
     
+    /**
+     * Insere um comentario.
+     * Estabelece comunicacao com a classe controladora dos comentarios (ControllerComentario).
+     *
+     * @param tipo o tipo de comentario
+     * @param e o estabelecimento
+     * @param p o prato
+     * @param user o user
+     * @param comentario o comentario
+     * @param nota a avaliacao
+     * @return true, se bem sucedido
+     */
     public static boolean save(TipoComentario tipo, String e, String p, String user, String comentario, int nota){
     	ControllerComentario controlComent = new ControllerComentario();
     	return controlComent.save(tipo, e, p, user, comentario, nota);
     }
     
+    /**
+     * Elimina um comentario.
+     * Estabelece comunicacao com a classe controladora dos comentarios (ControllerComentario).
+     *
+ 	 * @param tipo o tipo de comentario
+     * @param e o estabelecimento
+     * @param p o prato
+     * @param user o user
+     * @param comentario o comentario
+     * @param nota a avaliacao
+     *
+     */
     public void delete(TipoComentario tipo, String e, String p, String user, String coment, int nota){
     	ControllerComentario controlComent = new ControllerComentario();
     	boolean apagou = controlComent.delete(tipo, p, e, user, coment, nota);
-        System.out.println("passou");
         if(apagou){
         	JOptionPane.showMessageDialog(null, "Comentário apagado com sucesso!");
-        	framePrincipal.notFocused=false;
+        	InterfacePesquisa.notFocused=false;
 	    	frame.dispose();
         }else{
         	JOptionPane.showMessageDialog(null, "Erro!");
-        	framePrincipal.notFocused=false;
+        	InterfacePesquisa.notFocused=false;
 	    	frame.dispose();
         }
     }

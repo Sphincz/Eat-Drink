@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Fotografia;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -34,7 +30,7 @@ import Controller.InterfacePesquisa;
 
 /**
  *
- * @author Nuno
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
  */
 public class InterfaceFotografia extends JFrame{
 	private static InterfaceFotografia frame;
@@ -94,7 +90,7 @@ public class InterfaceFotografia extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controlFoto.deleteFotografia(user.getText(), comentario.getText(), estabelecimento.getText(), prato.getText());
-				framePrincipal.notFocused=false;
+				InterfacePesquisa.notFocused=false;
 				frame.dispose();
 				
 			}
@@ -109,7 +105,7 @@ public class InterfaceFotografia extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 uploadFotografia();
-                framePrincipal.notFocused=false;
+                InterfacePesquisa.notFocused=false;
 			}
 			
 		});
@@ -167,6 +163,7 @@ public class InterfaceFotografia extends JFrame{
 	}
 	private static final long serialVersionUID = 1L;
 	private static ControllerFotografia controlFoto;
+	@SuppressWarnings("unused")
 	private static InterfacePesquisa framePrincipal;
 	private static ControllerPesquisa controllerPesquisa;
 
@@ -200,7 +197,7 @@ public class InterfaceFotografia extends JFrame{
             		frame.addWindowListener(new java.awt.event.WindowAdapter() {
             		    @Override
             		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-            		    	framePrincipal.notFocused=false;
+            		    	InterfacePesquisa.notFocused=false;
             		    	frame.dispose();
             		    }
             		});
@@ -233,7 +230,7 @@ public class InterfaceFotografia extends JFrame{
 					frame.addWindowListener(new java.awt.event.WindowAdapter() {
 					    @Override
 					    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-					    	framePrincipal.notFocused=false;
+					    	InterfacePesquisa.notFocused=false;
 					    	frame.dispose();
 					    }
 					});
@@ -245,9 +242,10 @@ public class InterfaceFotografia extends JFrame{
     }
     
     public void uploadFotografia(){
-    	int comentID=0;
-    	String email = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 0);
-    	String coment = (String) framePrincipal.getTable().getModel().getValueAt(framePrincipal.getTable().getSelectedRow(), 4);
+    	@SuppressWarnings("unused")
+		int comentID=0;
+    	String email = (String) InterfacePesquisa.getTable().getModel().getValueAt(InterfacePesquisa.getTable().getSelectedRow(), 0);
+    	String coment = (String) InterfacePesquisa.getTable().getModel().getValueAt(InterfacePesquisa.getTable().getSelectedRow(), 4);
     	controlFoto.uploadFotografia(controllerPesquisa, estabelecimento.getText(), prato.getText(), email, coment, file);
     	this.dispose();
     }

@@ -1,18 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Ficheiros;
 
 import Controller.InterfacePesquisa;
 
 /**
+ * Class Main.
  *
- * @author Group 1 - LEI | 2014 © SID 
+ * @author Grupo 1 - LEI | 2014 - SID
+ * 
  */
 public class Main {
 
     /**
+     * O metodo main.
+     * Executa o sistema.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {

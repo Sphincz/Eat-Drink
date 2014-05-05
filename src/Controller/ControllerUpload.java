@@ -1,37 +1,40 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Fotografia.Fotografia;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.FileAttribute;
 
 import javax.swing.JOptionPane;
 
 /**
+ * Classe ControllerUpload.
+ * Esta classe controla as operacoes que sao necessarias no envio de fotografias para o sistema.
  *
- * @author Nuno
+ * @author Nuno Coelho, Antonio Raimundo, Jose Serro, Diogo Peres
  */
 public class ControllerUpload {
 
 	//NÃO IMPLEMENTADO POIS NÃO HÁ FORMULARIO/INTERFACE NO RELATORIO DE ESPECIFICAÇÃO
-    public boolean uploadFotografiaUtilizador(File file) {
+    /**
+	 * Upload fotografia do utilizador.
+	 *
+	 * @param file o ficheiro da fotografia
+	 * @return true, se bem sucedido
+	 */
+	public boolean uploadFotografiaUtilizador(File file) {
         Fotografia fotoPerfil = new Fotografia();
         fotoPerfil.save(file);
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+	/**
+	 * Copia o ficheiro da fotografia para o sistema.
+	 *
+	 * @param foto o ficheiro da fotografia
+	 */
 	public static void copyFileToSystem(File foto) {
 		File tempFile = new File("img/"+foto.getName()+"");
 		try {
