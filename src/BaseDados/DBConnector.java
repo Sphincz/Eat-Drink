@@ -663,7 +663,7 @@ public class DBConnector {
 		String r="";
 		try {
 			statement = con.createStatement();
-			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+email+"'");
+			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Estabelecimento, ComentarioAoEstabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+email+"'  AND Fotografia.idEstabelecimento IS NOT NULL");
 			if(result.next()){
 				return r=result.getString("localizacao");
 			}
@@ -688,7 +688,7 @@ public class DBConnector {
 		String r="";
 		try {
 			statement = con.createStatement();
-			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Prato, ComentarioAoPrato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+email+"'");
+			result = statement.executeQuery("SELECT Fotografia.localizacao FROM Fotografia, Prato, ComentarioAoPrato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+email+"' AND Fotografia.idPrato IS NOT NULL");
 			if(result.next()){
 				return r=result.getString("localizacao");
 			}
