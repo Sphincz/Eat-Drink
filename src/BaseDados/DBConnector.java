@@ -96,7 +96,7 @@ public class DBConnector {
          		}
          	}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     	return false;
     }
@@ -132,7 +132,7 @@ public class DBConnector {
          		}
          	}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     	return false;
     }
@@ -163,7 +163,7 @@ public class DBConnector {
  	        con.close();
          
          } catch (SQLException e) {
-         	e.printStackTrace();
+         	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
          }
     }
 
@@ -184,7 +184,7 @@ public class DBConnector {
 				return true;
 			}
     	} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     	return false;
     }
@@ -205,7 +205,7 @@ public class DBConnector {
 				result = statement.executeQuery("DELETE ComentarioAoPrato WHERE ComentarioAoPrato.idPrato="+result.getString("idPrato")+" AND ComentarioAoPrato.comentario='"+coment+"' AND ComentarioAoPrato.nota="+nota+" AND ComentarioAoPrato.email='"+user+"'");
 			}
 		} catch (SQLException e) {
-		e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     }
 
@@ -223,11 +223,9 @@ public class DBConnector {
     	try {
     		statement = con.createStatement();
     		if(prato.equals(" ---- ")){
-    			System.out.println("estabelecimentos");
         		result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, ComentarioAoEstabelecimento, Estabelecimento WHERE Estabelecimento.designacao='"+estabelecimento+"' AND Estabelecimento.idEstabelecimento=ComentarioAoEstabelecimento.idEstabelecimento AND ComentarioAoEstabelecimento.email='"+email+"' AND Estabelecimento.idEstabelecimento = Fotografia.idEstabelecimento");
     		
     		}else{
-    			System.out.println("pratos");
         		result = statement.executeQuery("SELECT Fotografia.idFotografia FROM Fotografia, ComentarioAoPrato, Prato WHERE Prato.descricao='"+prato+"' AND Prato.idPrato=ComentarioAoPrato.idPrato AND ComentarioAoPrato.email='"+email+"' AND ComentarioAoPrato.idPrato=Fotografia.idPrato");
     		}
     		if(result.next()){
@@ -238,7 +236,7 @@ public class DBConnector {
     		statement.close();
  	        con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     	return false;
     }
@@ -253,13 +251,12 @@ public class DBConnector {
     public void destroyFoto(int idFoto) {
     	try{
         	statement = con.createStatement();
-        	System.out.println("id foto: "+idFoto);
         	result = statement.executeQuery("UPDATE Fotografia SET Fotografia.emailutilizador=NULL, Fotografia.idPrato=NULL, Fotografia.idEstabelecimento=NULL WHERE Fotografia.idFotografia="+idFoto);
 	        result = statement.executeQuery("DELETE Fotografia WHERE Fotografia.idFotografia="+idFoto);
 	        statement.close();
 	        con.close();
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
     }
 
@@ -287,7 +284,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
     }
 
@@ -356,7 +353,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
     }
 
@@ -379,7 +376,7 @@ public class DBConnector {
         	}
 	        statement.close();
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
     	try {
 			statement = con.createStatement();
@@ -390,7 +387,7 @@ public class DBConnector {
 			statement.close();
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
         
     	return resultList;
@@ -478,7 +475,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
     	return comentarios;
     }
@@ -529,7 +526,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
 		return lista;
 	}
@@ -556,7 +553,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
 		return lista;
 	}
@@ -583,7 +580,7 @@ public class DBConnector {
 	        con.close();
         
         } catch (SQLException e) {
-        	e.printStackTrace();
+        	JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
         }
 		return lista;
 	}
@@ -615,7 +612,7 @@ public class DBConnector {
 			statement.close();
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
 	}
 
@@ -645,7 +642,7 @@ public class DBConnector {
 			statement.close();
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
 		
 	}
@@ -668,7 +665,7 @@ public class DBConnector {
 				return r=result.getString("localizacao");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
 		return r;
 	}
@@ -693,7 +690,7 @@ public class DBConnector {
 				return r=result.getString("localizacao");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
 		return r;
 	}
@@ -718,7 +715,7 @@ public class DBConnector {
 				return true;
 			}
     	} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
     	return false;
 	}
@@ -742,7 +739,7 @@ public class DBConnector {
 				result = statement.executeQuery("DELETE ComentarioAoEstabelecimento WHERE ComentarioAoEstabelecimento.idEstabelecimento="+result.getString("idEstabelecimento")+" AND ComentarioAoEstabelecimento.comentario='"+coment+"' AND ComentarioAoEstabelecimento.nota="+nota+" AND ComentarioAoEstabelecimento.email='"+user+"'");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro na base de dados. Contate o administrador!");
 		}
 		
 	}
